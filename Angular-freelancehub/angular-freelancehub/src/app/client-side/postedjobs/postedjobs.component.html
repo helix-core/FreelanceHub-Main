@@ -1,0 +1,66 @@
+<div class="whole-container">
+    <div class="navbar">
+      <div class="navbar-left">
+        <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" alt="Logo" class="logo" />
+        <span class="navbar-title">Freelancehub</span>
+      </div>
+    </div>
+  
+    <div class="dashboard-header">
+      <h1>Company <span>Dashboard</span></h1>
+      <div class="icons">
+        <span class="l1">
+          <a routerLink="/posted-jobs" class="button">
+            <img src="assets/images/account_circle.png" alt="" />
+          </a>
+        </span>
+        <span class="l2">
+          <a routerLink="/postjob" class="button">
+            <img src="assets/images/bookmark.png" alt="" />
+          </a>
+        </span>
+        <span class="l3">
+          <a routerLink="/assigned-jobs" class="button">
+            <img src="assets/images/Award.png" alt="" />
+          </a>
+        </span>
+      </div>
+    </div>
+  
+    <div class="container">
+      <h2>Posted Jobs</h2>
+      <div *ngIf="jobs && jobs.length > 0" class="posted-jobs" [class.scrollable]="jobs.length > 3">
+        <div *ngFor="let job of jobs" class="job">
+          <h3>{{ job.jobTitle }}</h3>
+          <p>
+            <span class="desc-span">{{ job.jobDesc }}</span><br />
+            Wages: ${{ job.costMax }}/Hr
+          </p>
+        </div>
+      </div>
+      <div *ngIf="!jobs || jobs.length === 0">
+        <p class="null-text">No new jobs posted at the moment</p>
+      </div>
+      <div class="common-bidding-btn-container">
+        <button class="bidding-btn">
+          <svg
+            width="16"
+            height="21"
+            viewBox="0 0 16 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14 18.1666V8.58325M8 18.1666V2.83325M2 18.1666V12.4166"
+              stroke="#1E1E1E"
+              stroke-width="4"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <a routerLink="/bidding">Bidding Page</a>
+        </button>
+      </div>
+    </div>
+  </div>
+  

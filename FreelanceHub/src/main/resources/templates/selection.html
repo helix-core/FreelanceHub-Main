@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancehub</title>
+    <link rel="stylesheet" th:href="@{/css/selection.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-left">
+            <img th:src="@{/images/Twitch.png}" class="logo">
+            <h1 class="navbar-title">Freelancehub</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <h2>Join as a client or <span class="freelancer-text">free<span class="freelancer-text-blue">lancer</span></span></h2>
+            <form action="" method="GET" id="selectionForm">
+            <div class="options">
+                
+                <label class="option">
+                	<input type="radio" name="role" value="client" form="selectionForm">
+                    <svg class="radio-btn" width="30" height="30" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="25" cy="25" r="22.5" fill="white" stroke="#232B50" stroke-width="5" />
+                    </svg>
+                    
+                    <span>I am a client, hiring for a project</span>
+                </label>
+                <label class="option">
+                    <input type="radio" name="role" value="freelancer" form="selectionForm">
+                    <svg  class="radio-btn" width="30" height="30" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="25" cy="25" r="22.5" fill="white" stroke="#232B50" stroke-width="5" />
+                    </svg>
+
+                    <span>I am a freelancer, looking for work</span>
+                </label>
+            </div>
+            <button class="create-account">Create Account</button>
+            </form>
+            <p class="login-text">Already have an account? <a th:href="@{/login}">Log In</a></p>
+        </main>
+    </div>
+    <script>
+        document.getElementById("selectionForm").addEventListener("submit", function (e) {
+            const selectedRole = document.querySelector('input[name="role"]:checked');
+            if (selectedRole) {
+                const form = e.target;
+                form.action = selectedRole.value === 'freelancer' ? '/signup/freelancer' : '/signup/client';
+            }
+        });
+    </script>
+</body>
+
+</html>
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancehub</title>
+    <link rel="stylesheet" href="selection.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="navbar-left">
+            <img src="/images/Twitch.png" alt="Logo" class="logo">
+            <h1 class="navbar-title">Freelancehub</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <main>
+            <h2>Join as a client or <span class="freelancer-text">free<span class="freelancer-text-blue">lancer</span></span></h2>
+            <form action="" method="GET" id="selectionForm">
+                <div class="options">
+                    Option for client
+                    <label class="option">
+                        <input type="radio" name="role" value="client" form="selectionForm">
+                        <svg class="radio-btn" width="30" height="30" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="25" cy="25" r="22.5" fill="white" stroke="#232B50" stroke-width="5" />
+                        </svg>
+                        <span>I am a client, hiring for a project</span>
+                    </label>
+
+                    Option for freelancer
+                    <label class="option">
+                        <input type="radio" name="role" value="freelancer" form="selectionForm">
+                        <svg class="radio-btn" width="30" height="30" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="25" cy="25" r="22.5" fill="white" stroke="#232B50" stroke-width="5" />
+                        </svg>
+                        <span>I am a freelancer, looking for work</span>
+                    </label>
+                </div>
+                <button type="submit" class="create-account">Create Account</button>
+            </form>
+            <p class="login-text">Already have an account? <a href="/login" class="login-link">Log In</a></p>
+        </main>
+    </div>
+
+    Script for redirection based on radio value
+    <script>
+        document.getElementById("selectionForm").addEventListener("submit", function (e) {
+            const selectedRole = document.querySelector('input[name="role"]:checked');
+            if (selectedRole) {
+                const form = e.target;
+                form.action = selectedRole.value === 'freelancer' ? '/signup/freelancer' : '/signup/client';
+            }
+        });
+    </script>
+</body>
+
+</html>
+ -->

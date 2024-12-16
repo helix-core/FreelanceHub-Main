@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freelancehub Profile</title>
+  <link rel="stylesheet" th:href="@{/css/clientprofile.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap" rel="stylesheet">
+  <script defer src="/js/notifs.js"></script>
+  <link rel="stylesheet" th:href="@{/css/notifs.css}">
+</head>
+<body>
+
+<div id="notification" 
+         th:classappend="${notificationType != null} ? 'visible ' + ${notificationType} : 'hidden'"
+         th:text="${notificationMessage}"></div>
+         
+  <header class="navbar">
+    <div class="navbar-left">
+      <img th:src="@{/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg}" class="logo" alt="Freelancehub Logo">
+      <h1 class="navbar-title">Freelancehub</h1>
+    </div>
+  </header>
+  
+  <br>
+  <br>
+
+  <div class="profile-section">
+    <div class="profile-header">
+      <div class="profile-pic">Profile Pic</div>
+      <div class="company-details"> 
+        <h2 th:text="${client.companyName}">Company Name</h2>
+        <p th:text="${client.companyDescription}">Description</p>
+      </div>
+      <button class="edit-btn"><a th:href="@{/client/edit/{clientId}(clientId=${client.clientId})}" class="edit-button">Edit Profile</a></button>
+    </div>
+
+    <div class="content">
+      <div class="account-details" style="height: 181.6px;">
+        <h3>Account Details</h3>
+        <p><strong>Representative Name:</strong> <span th:text="${client.repName}">Name</span></p>
+		<p><strong>Designation:</strong> <span th:text="${client.repDesignation}">Email</span></p>
+        <p><strong>Email:</strong> <span th:text="${client.compEmail}">Email</span></p>
+		<p><strong>Types of Projects:</strong> <span th:text="${client.typeOfProject}">Description</span></p>
+      </div>
+
+      <!--<div class="projects">
+        <div class="active-projects">
+          <h3>Active Projects</h3>
+          <div class="project-card">
+            <p><strong>Custom CRM Development</strong></p>
+            <p>Bid Amount: $4,500</p>
+            <p>Client: Tech Solutions Inc.</p>
+          </div>
+		  <div class="project-card">
+		              <p><strong>Custom CRM Development</strong></p>
+		              <p>Bid Amount: $4,500</p>
+		              <p>Client: Tech Solutions Inc.</p>
+		            </div>
+					<div class="project-card">
+					            <p><strong>Custom CRM Development</strong></p>
+					            <p>Bid Amount: $4,500</p>
+					            <p>Client: Tech Solutions Inc.</p>
+					          </div>
+							  <div class="project-card">
+							              <p><strong>Custom CRM Development</strong></p>
+							              <p>Bid Amount: $4,500</p>
+							              <p>Client: Tech Solutions Inc.</p>
+							            </div>
+        </div>
+
+        <div class="completed-projects">
+          <h3>Completed Projects</h3>
+          <div class="project-card">
+            <p><strong>Custom CRM Development</strong></p>
+            <p>Bid Amount: $4,500</p>
+            <p>Client: Tech Solutions Inc.</p>
+          </div>
+        </div>
+      </div>-->
+	  <div class="projects">
+	          <div class="active-projects">
+	              <h3>Active Projects</h3>
+	              <div class="project-card" th:each="project : ${ongoingJobs}">
+	                  <p><strong th:text="${project.jobId.jobTitle}"></strong></p>
+	                  <p>Freelancer: <span th:text="${project.FreeId.freeName}"></span></p>
+	                  <p>Wage: <span th:text="${project.salary}"></span></p>
+	              </div>
+	          </div>
+
+	          <div class="completed-projects">
+	              <h3>Completed Projects</h3>
+	              <div class="project-card" th:each="project : ${completedJobs}">
+	              	<p><strong th:text="${project.jobId.jobTitle}"></strong></p>
+	                  <p>Freelancer: <span th:text="${project.FreeId.freeName}"></span></p>
+	                  <p>Wage: <span th:text="${project.salary}"></span></p>
+	              </div>
+	          </div>
+	      </div>
+    </div>
+  </div>
+</body>
+</html>

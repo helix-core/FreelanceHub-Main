@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancehub Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/common-login.css}">
+    <script defer src="/js/notifs.js"></script>
+    <link rel="stylesheet" th:href="@{/css/notifs.css}">
+
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-left">
+            <div class="header">
+                <img th:src="@{/images/common-login.jpg}" class='logo'>  
+            </div> 
+            <h1 class="navbar-title">Freelancehub</h1>
+        </div>
+    </header>
+    <div id="notification" 
+         th:classappend="${notificationType != null} ? 'visible ' + ${notificationType} : 'hidden'"
+         th:text="${notificationMessage}"></div>
+         
+    <div class="container">
+        <!-- <div class="header">
+            <svg width="55" height="54" viewBox="0 0 55 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25.2083 24.75V15.75M36.6667 24.75V15.75M48.125 4.5H6.875V40.5H18.3333V49.5L27.5 40.5H38.9583L48.125 31.5V4.5Z" stroke="#232B50" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>                
+            <span>Freelancehub</span>
+        </div> -->
+        <div class="loginm">
+        <h1 class="login-title">Log <span class="highlight">In</span></h1>
+		<form th:action="@{/login}" method="post">
+        <div class="login-container">
+            <input type="email" placeholder="E-Mail *" class="input-field" name="email" required>
+            <input type="password" placeholder="Password *" class="input-field" name="password" required>
+            <button class="continue-button">Continue</button>
+        </div>
+        </form>
+        
+        
+        <p class="signup-text">Don’t have an account? <a th:href="@{/signup/selection}">Sign Up</a></p>
+        </div>
+    </div>
+</body>
+</html>

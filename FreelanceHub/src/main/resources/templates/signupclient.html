@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Signup</title>
+    <link rel="stylesheet" th:href="@{/css/signupclient.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+	<script defer src="/js/notifs.js"></script>
+    <link rel="stylesheet" th:href="@{/css/notifs.css}">
+</head>
+<body>
+<div id="notification" 
+         th:classappend="${notificationType != null} ? 'visible ' + ${notificationType} : 'hidden'"
+         th:text="${notificationMessage}"></div>
+    <header class="navbar">
+        <div class="navbar-left">
+            <img th:src="@{/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg}" class="logo" alt="Freelancehub Logo">
+            <h1 class="navbar-title">Freelancehub</h1>
+        </div>
+    </header>
+    <div class="form-container">
+        <form th:action="@{/signup/client}" method="post" th:object="${clientDTO}" class="registration-form">
+            <input type="email" th:field="*{compEmail}" placeholder="E-mail *" required>
+            <span th:if="${#fields.hasErrors('compEmail')}" th:errors="*{compEmail}" class="error-message"></span>
+            
+            <input type="text" th:field="*{companyName}" placeholder="Company Name *" required>
+            <span th:if="${#fields.hasErrors('companyName')}" th:errors="*{companyName}" class="error-message"></span>
+            
+            <input type="text" th:field="*{typeOfProject}" placeholder="Types of projects involved *" required>
+            <textarea th:field="*{companyDescription}" placeholder="Company Description *" required></textarea>
+            <span th:if="${#fields.hasErrors('companyDescription')}" th:errors="*{companyDescription}" class="error-message"></span>
+            
+            <input type="text" th:field="*{repName}" placeholder="Representative Name *" required>
+            <input type="text" th:field="*{repDesignation}" placeholder="Representative Designation *" required>
+            <input type="password" th:field="*{password}" placeholder="Password *" required>
+            <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message"></span>
+            <input type="password" placeholder="Re-type password *" required>
+            <div class="checkbox-container">
+                <input type="checkbox" required>
+                <label>I agree to the Privacy Policy of Freelancehub</label>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

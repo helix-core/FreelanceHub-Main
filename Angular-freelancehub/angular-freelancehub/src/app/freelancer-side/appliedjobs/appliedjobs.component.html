@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applied Jobs</title>
+    <link rel="stylesheet" th:href="@{/css/appliedjobs.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300..800&family=Roboto:wght@400..700&display=swap" rel="stylesheet">
+    <script defer src="/js/notifs.js"></script>
+    <link rel="stylesheet" th:href="@{/css/notifs.css}">
+</head>
+
+<body>
+<div id="notification" 
+         th:classappend="${notificationType != null} ? 'visible ' + ${notificationType} : 'hidden'"
+         th:text="${notificationMessage}"></div>
+<header class="navbar">
+    <div class="navbar-left">
+        <img th:src="@{/images/Twitch.png}" alt="Logo" class="logo">
+        <h1 class="navbar-title">Freelancehub</h1>
+    </div>
+</header>
+
+<div class="dashboard-header">
+    <h1>Freelancer <span>Dashboard</span></h1>
+    <div class="icons">
+        <span class="l1"><a href="#" class="button"><img th:src="@{/images/account_circle.png}" alt=""></a></span>
+        <span class="l2"><a href="/accepted-jobs" class="button"><img th:src="@{/images/bookmark.png}" alt=""></a></span>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Applied Jobs</h2>
+    <div id="posted-jobs" class="posted-jobs" th:classappend="${#lists.size(appliedJobs) > 3 ? 'scrollable' : ''}">
+        <!-- Loop through the applied jobs and display each one -->
+        <div th:each="job : ${appliedJobs}" class="job-card">
+            <div class="job-details">
+                <h3 th:text="${job.jobId.jobTitle}"></h3>
+                <p><strong>Duration:</strong> <span th:text="${job.duration}"></span></p>
+                <p><strong>Salary:</strong> <span th:text="${job.salary}"></span></p>
+                <p><strong>Client:</strong> <span th:text="${job.jobId.clientName}"></span></p>
+            </div>
+            <div class="job-status">
+                <span th:class="${job.status == 'Accepted' ? 'accepted' : 'pending'}"
+                      th:text="${job.status == 'Accepted' ? 'Verify' : 'Pending'}"></span>
+            </div>
+        </div>
+        <div th:if="${appliedJobs != null and #lists.size(appliedJobs) == 0}">
+            <p class="null-text">No currently pending applied jobs at the moment</p>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

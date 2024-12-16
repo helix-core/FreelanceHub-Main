@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post New Job</title>
+    <link rel="stylesheet" th:href="@{/css/assignedjobs.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"rel="stylesheet"> 
+	<script defer src="/js/notifs.js"></script>
+	<link rel="stylesheet" th:href="@{/css/notifs.css}">
+</head>
+
+<body>
+
+<div id="notification" 
+         th:classappend="${notificationType != null} ? 'visible ' + ${notificationType} : 'hidden'"
+         th:text="${notificationMessage}"></div>
+         
+    <header class="navbar">
+        <div class="navbar-left">
+            <img th:src="@{/images/Twitch.png}" alt="Logo" class="logo">
+            <h1 class="navbar-title">Freelancehub</h1>
+        </div>
+    </header>
+
+    <div class="dashboard-header">
+        <h1>Company <span>Dashboard</span></h1>
+        <div class="icons">
+            <span class="l1"><a href="/posted-jobs" class="button"><img th:src="@{/images/account_circle.png}" alt=""></a></span>
+            <span class="l2"><a href="/postjob" class="button"><img th:src="@{/images/bookmark.png}" alt=""></a></span>
+            <span class="l3"><a href="/assignedjobs" class="button"><img th:src="@{/images/Award.png}" alt=""></a></span>
+        </div>
+    </div>
+
+	
+    <div class="container">
+    <h2>Assigned Projects</h2>
+    <div class="project-card-container">
+        <!-- Ongoing Jobs -->
+        <div th:each="job : ${ongoingJobs}">
+            <div class="project-card">
+                <div class="project-header ongoing-header">
+                    <span class="project-title" th:text="${job.jobId.jobTitle}">Project Title</span>
+                    <div class="status-button ongoing">Ongoing</div>
+                </div>
+                <div class="project-body">
+                    <p th:text="'Freelancer Name: ' + ${job.freeId.freeName}">Freelancer Name</p>
+                    <p th:text="'Duration: ' + ${job.duration} + ' Days'">Duration</p>
+                    <p th:text="'Wage/Day: $' + ${job.salary}">Wage</p>
+                    <div th:if="${job.jobDetails.githublink != null}">
+                        <a th:href="${job.jobDetails.githublink}" target="_blank" class="btn-view-link">View Project</a>
+                        
+                        <form method="post" th:action="@{/verify-project}" class="verify-form">
+                            <input type="hidden" name="jobId" th:value="${job.jobDetails.Id}" />
+                            <button type="submit" class="btn-verify">Verify</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Completed Jobs -->
+        <div th:each="job : ${completedJobs}">
+            <div class="project-card">
+                <div class="project-header completed-header">
+                    <span class="project-title" th:text="${job.jobId.jobTitle}">Project Title</span>
+                    <div class="status-button completed">Completed</div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${ongoingJobs != null and #lists.size(ongoingJobs) == 0 and completedJobs != null and #lists.size(completedJobs) == 0}">
+            <p class="null-text">No jobs assigned at the moment</p>
+        	</div>
+    </div>
+</div>
+
+
+</body>
+</html>

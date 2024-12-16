@@ -1,0 +1,244 @@
+/* Basic Layout */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Mulish', sans-serif;
+}
+
+body {
+     background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    zoom:90%;
+    flex-direction: column;
+
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1000;
+}
+
+.header{
+    margin-bottom: 20px;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+}
+
+.navbar-title {
+    color: #232B50;
+    font-size: 34px;
+    font-weight: 800;
+    font-family: 'Mulish', sans-serif;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #232B50;
+    margin-top: 60px;
+    flex-direction: column;
+    border-bottom: 2px solid black;
+    width: 80%;
+}
+
+.dashboard-header h1 {
+    font-size: 40px;
+    font-weight: 200px;
+    margin-top: 10px;
+}
+
+.dashboard-header h1 span {
+    color: #4FD1C5;
+}
+.icons{
+    display: flex;
+    margin-top: 10px;
+}
+
+.l1,.l2{
+    border-right: 2px solid black;
+}
+
+.icons span{
+    font-size: 1.25rem;
+    position: relative;
+    left: 0px;
+    padding: 10px 10px 0px 10px;
+    margin-bottom: 0px;
+    top: 0px;
+}
+
+.circle{
+    border-radius: 80%;
+    background-color: rgb(162, 160, 160);
+    padding: 10px;
+}
+
+h2 {
+    text-align: center;
+    color: #232B50;
+    margin-bottom: 30px;
+}
+
+.container {
+    width: 100%;
+    padding: 20px;
+    margin-top: 5px;
+    justify-items: center;
+}
+
+.project-card-container {
+  width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+/* Project Card */
+.project-card {
+  position: relative;
+  width: 1032px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+/* Header Styles */
+.project-header {
+  height: 94px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.ongoing-header {
+  background: linear-gradient(270deg, rgba(21, 201, 180, 0.3) 0%, rgba(21, 201, 180, 0.27) 30%, rgba(32, 232, 160, 0.27) 70%, rgba(32, 232, 160, 0.3) 100%);
+}
+
+.completed-header {
+  background: linear-gradient(270deg, rgba(21, 201, 180, 0.3) 0%, rgba(21, 201, 180, 0.27) 30%, rgba(32, 232, 160, 0.27) 70%, rgba(32, 232, 160, 0.3) 100%);
+}
+
+.project-title {
+  font-size: 30px;
+  color: #232B50;
+}
+
+/* Body Styles */
+.project-body {
+  display:flex;
+  background: rgba(217, 217, 217, 0.4);
+  padding: 20px;
+  flex-direction:column;
+  border-radius: 0 0 15px 15px;
+}
+
+.project-body p {
+  margin-top: 10px;
+  font-size: 20px;
+  color: #232B50;
+  display: flex; /* Ensure elements are aligned horizontally */
+  align-items: center; /* Center align the text and button vertically */
+  gap: 10px;
+  justify-content:space-between;
+}
+
+.progress-button {
+  width: 154px;
+  height: 31px;
+  background: #232B50;
+  border-radius: 15px;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 5px 15px; /* Adjust padding for a compact button */
+  white-space: nowrap; 
+}
+
+/* Status Button */
+.status-button {
+  width: 154px;
+  height: 31px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: #232B50;
+}
+
+.ongoing {
+  background: linear-gradient(270deg, #ECECEC 20.1%, #ECECEC 52.1%, #E2E2E2 82.6%);
+}
+
+.completed {
+  background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
+}
+
+
+.btn-view-link {
+    text-decoration: none;
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    margin-top:20px;
+    position:relative;
+    top:20px;
+}
+
+.btn-view-link:hover {
+    background-color: #218838;
+}
+
+.verify-form {
+    display: inline-block;
+}
+
+.btn-verify {
+    background-color: #232B50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position:relative;
+    left:780px;
+    top:22px;
+}
+.null-text{
+	text-align: center;
+    color: #232B50;
+    margin-bottom: 10px;
+    margin-top: 0px;
+    font-size: x-large;
+}

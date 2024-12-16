@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Freelancehub</title>
+        <link rel="stylesheet" th:href="@{/css/explore.css}">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+                href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+                rel="stylesheet">
+        <script defer src="/js/search.js"></script>
+    </head>
+
+    <body>
+    <header class="header">
+        <div class="navbar">
+            <div class="navbar-left">
+                <img th:src="@{/images/Twitch.png}" class='logo'>
+                <h1 class="navbar-title">Freelancehub</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="search-bar-container">
+        <div class="heading">
+            <h2>Scale up your work with our freelancers</h2>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search for any service" oninput="performSearch()" onkeydown="checkEnter(event)">
+			<button onclick="performSearch()">Search</button>
+        </div>
+    </div>
+
+    <main>
+        <section class="job-listings">
+            <div th:each="job : ${clientJobs}" class="job-card">
+                <h2 th:text="${job.jobTitle}">Job Title</h2>
+                <div class="content-box">
+                <p><strong>Company:</strong> <span th:text="${job.clients.companyName}">Company Name</span></p>
+                <p><strong>Max Duration:</strong> <span th:text="${job.durMax} + ' months'">Duration</span></p>
+                <p><strong>Average Wage:</strong>
+                    <span th:text="(${job.costMin} + ${job.costMax}) / 2 + ' /hour'">Average Wage</span>
+                </p>
+                <p><strong>Experience:</strong> <span th:text="${job.expMin} + ' years'">Experience</span></p>
+                </div>
+                <a th:if="${role == 'freelancer'}" type="button" class="button-style"  th:href="@{/apply(id=${job.JobId})}">Apply</a>
+            </div>
+            <div th:if="${clientJobs != null and #lists.size(clientJobs) == 0}">
+            <p class="null-text">No jobs available to apply at the moment</p>
+        	</div>
+        </section>
+    </main>
+
+
+    </body>
+
+    </html>

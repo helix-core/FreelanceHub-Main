@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bidding Page</title>
+    <link rel="stylesheet" th:href="@{/css/bidding.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200..1000&family=Roboto:wght@100..900&display=swap"
+        rel="stylesheet">
+    <script defer src="/js/notifs.js"></script>
+	<link rel="stylesheet" th:href="@{/css/notifs.css}">
+        
+   
+</head>
+
+<body>
+
+<div id="notification" 
+         th:classappend="${notificationType != null} ? 'visible ' + ${notificationType} : 'hidden'"
+         th:text="${notificationMessage}"></div>
+         
+    <header class="navbar">
+        <div class="navbar-left">
+            <img th:src="@{/images/Twitch.png}" alt="Logo" class="logo">
+            <h1 class="navbar-title">Freelancehub</h1>
+        </div>
+    </header>
+
+    <div class="bidding-header">
+        <h1>Bidding <span>Page</span></h1>
+    </div>
+    <h2 class="bid-h2">Your Job Bids</h2>
+
+    <!-- Loop through all jobs -->
+    <div class="jobs-section" th:each="jobWithBids : ${jobsWithBids}">
+        <div class="job">
+            <!-- Job Heading -->
+            <h2 class="job-title" th:text="${jobWithBids.job.jobTitle}">Job Title</h2>
+            <p class="job-description" th:text="${jobWithBids.job.jobDesc}">Job Description</p>
+ 
+            <form action="/bidding" method="get">
+			    <label for="sortBy">Sort by: </label>
+			    <select name="sortBy" id="sortBy" onchange="this.form.submit()">
+			        <option value="duration" th:selected="${sortBy == 'duration'}">Duration</option>
+			        <option value="salary" th:selected="${sortBy == 'salary'}">Salary</option>
+			        <option value="experience" th:selected="${sortBy == 'experience'}">Experience</option>
+			        <option value="skillMatch" th:selected="${sortBy == 'skillMatch'}">Skill Match</option>
+			    </select>
+			</form>
+
+            <!-- Freewherlancer Bids -->
+            <div id="bids-container-${jobWithBids.job.jobId}" class="bids-container">
+                <h3>Freelancer Bids</h3>
+                <div class="bid" th:each="bid : ${jobWithBids.bids}">
+                    <div class="bid-details">
+                        <div class="bid-profile" th:text="${bid.freelancerName}">Freelancer Name</div>
+                        <div class="bid-stats">
+                            <span class="stat" th:text="${bid.freelancerJob.duration + ' Months'}">2 Months</span>
+                            <span class="stat" th:text="'₹' + ${bid.freelancerJob.salary}">₹2500</span>
+                            <span class="stat" th:text="${bid.freelancerJob.jobExp + ' Years'}">3 Years</span>
+                            <span class="stat" th:text="${bid.freelancerJob.skillMatch + '%'}">75%</span>
+                        </div>
+                        <form action="/acceptBid" method="post">
+						    <input type="hidden" name="jobId" th:value="${jobWithBids.job.jobId}" />
+						    <input type="hidden" name="userId" th:value="${bid.freelancerJob.FreeId.freeId}" />
+						    <button type="submit" class="bid-action">Accept</button>
+						</form>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+    <div th:if="${jobsWithBids != null and #lists.size(jobsWithBids) == 0}">
+            <p class="null-text">No jobs with bids yet!</p>
+        	</div>
+</body>
+
+</html>

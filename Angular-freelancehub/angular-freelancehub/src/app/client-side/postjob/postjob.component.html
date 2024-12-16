@@ -1,0 +1,144 @@
+<div class="whole-container">
+    <div class="navbar">
+      <div class="navbar-left">
+        <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" alt="Logo" class="logo" />
+        <span class="navbar-title">Freelancehub</span>
+      </div>
+    </div>
+  
+    <div class="dashboard-header">
+      <h1>Company <span>Dashboard</span></h1>
+      <div class="icons">
+        <span class="l1">
+          <a routerLink="/posted-jobs" class="button">
+            <img src="/assets/images/account_circle.png" alt="">
+          </a>
+        </span>
+        <span class="l2">
+          <a routerLink="/postjob" class="button">
+            <img src="/assets/images/bookmark.png" alt="">
+          </a>
+        </span>
+        <span class="l3">
+          <a routerLink="/assigned-jobs" class="button">
+            <img src="/assets/images/Award.png" alt="">
+          </a>
+        </span>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>Post a New Job</h2>
+      
+    <div class="form-container">
+      <form (ngSubmit)="submitJobForm()" #jobForm="ngForm">
+        <input
+          class="input-text"
+          type="text"
+          id="job-title"
+          [(ngModel)]="clientJob.jobTitle"
+          name="JobTitle"
+          placeholder="Job Title"
+          required
+          #JobTitle="ngModel"
+        />
+        <div *ngIf="JobTitle.invalid && JobTitle.touched" class="error-message">
+          Job Title is required.
+        </div>
+  
+        <input
+          class="input-text"
+          type="text"
+          id="job-description"
+          [(ngModel)]="clientJob.jobDesc"
+          name="jobDesc"
+          placeholder="Job Description"
+          required
+          #jobDesc="ngModel"
+        />
+        <div *ngIf="jobDesc.invalid && jobDesc.touched" class="error-message">
+          Job Description is required.
+        </div>
+  
+        <div id="skills-container">
+          <input
+            type="text"
+            id="skills-input"
+            placeholder="Add a skill and press Enter"
+            (keydown)="addSkill($event)"
+          />
+          <div id="skills-display">
+            <span class="skill-tag" *ngFor="let skill of clientJob.skillReq">
+              {{ skill }} <span (click)="removeSkill(skill)">&times;</span>
+            </span>
+          </div>
+        </div>
+  
+        <div class="number-inputs">
+          <div class="input-inc-dec">
+            <label>Duration (Months)</label>
+            <div class="number-range">
+              <span>Min:</span>
+              <input
+                type="number"
+                [(ngModel)]="clientJob.durMin"
+                name="DurMin"
+                placeholder="0"
+                required
+              />
+              <span>Max:</span>
+              <input
+                type="number"
+                [(ngModel)]="clientJob.durMax"
+                name="DurMax"
+                placeholder="0"
+                required
+              />
+            </div>
+          </div>
+  
+          <div class="input-inc-dec">
+            <label>Cost/Hr (in $)</label>
+            <div class="number-range">
+              <span>Min:</span>
+              <input
+                type="number"
+                [(ngModel)]="clientJob.costMin"
+                name="CostMin"
+                placeholder="0"
+                required
+              />
+              <span>Max:</span>
+              <input
+                type="number"
+                [(ngModel)]="clientJob.costMax"
+                name="CostMax"
+                placeholder="0"
+                required
+              />
+            </div>
+          </div>
+  
+          <div class="input-inc-dec">
+            <label>Experience (Years)</label>
+            <div class="number-range">
+              <span>Min:</span>
+              <input
+                type="number"
+                [(ngModel)]="clientJob.expMin"
+                name="ExpMin"
+                placeholder="0"
+                required
+              />
+            </div>
+          </div>
+        </div>
+  
+        <input type="hidden" [(ngModel)]="clientJob.jobStat" name="jobStat" />
+  
+        <button type="submit" [disabled]="jobForm.invalid">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+  

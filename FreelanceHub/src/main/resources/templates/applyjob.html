@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Job Details</title>
+    <link rel="stylesheet" th:href="@{/css/applyjob.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   
+    
+    <link
+            href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap"
+            rel="stylesheet">
+</head>
+
+<body>
+<header class="header">
+    <div class="navbar">
+        <div class="navbar-left">
+            <img th:src="@{/images/Twitch.png}" class='logo'>
+            <h1 class="navbar-title">Freelancehub</h1>
+        </div>
+    </div>
+</header>
+<div class="container">
+    <div class="left-section">
+        <h2>Job Title:</h2>
+        <p th:text="${job.jobTitle}">Job Title</p>
+        <h3>Job Description:</h3>
+        <p th:text="${job.jobDesc}">Job Description</p>
+        <div class="client-card">
+            <h3>Client Details</h3>
+            <p><strong>Company:</strong> <span th:text="${job.clients.companyName}">Client Name</span></p>
+            <p><strong>Description:</strong> <span th:text="${job.clients.companyDescription}">Description</span></p>
+            <p><strong>Representative Name:</strong> <span th:text="${job.clients.repName}">Representative Name</span></p>
+            <p><strong>Designation:</strong> <span th:text="${job.clients.repDesignation}">Designation</span></p>
+        </div>
+    </div>
+    <div class="right-section">
+        <h3>Your Comfortable Range</h3>
+
+        <!-- Form to submit values -->
+        <form th:action="@{/apply}" method="POST" id="jobForm" enctype="multipart/form-data">
+            <input type="hidden" name="jobId" th:value="${job.jobId}" />
+            <input type="hidden" name="jobTitle" value="${job.jobTitle}">
+
+            <!-- Salary Slider -->
+            <div class="slider-container">
+                <label>Salary Range:</label>
+                <div class="custom-slider">
+                    <input type="range" id="salarySlider" name="salary" th:attr="min=${salaryMin}, max=${salaryMax}, value=${(salaryMin + salaryMax) / 2}" />
+                </div>
+                <div class="slider-values">
+                    <span id="salaryMinValue" th:text="${salaryMin}">30000</span> -
+                    <span id="salaryMaxValue" th:text="${salaryMax}">100000</span>
+                </div>
+                <span id="salaryValue" class="slider-value" th:text="${(salaryMin + salaryMax) / 2}">50000</span>
+            </div>
+
+            <div class="slider-container">
+                <label>Duration:</label>
+                <div class="custom-slider">
+                    <input type="range" id="durationSlider" name="duration" th:attr="min=${durationMin}, max=${durationMax}, value=${(durationMin + durationMax) / 2}" />
+                </div>
+                <div class="slider-values">
+                    <span id="durationMinValue" th:text="${durationMin}">1</span> -
+                    <span id="durationMaxValue" th:text="${durationMax}">12</span>
+                </div>
+                <span id="durationValue" class="slider-value" th:text="${(durationMin + durationMax) / 2}">6</span>
+            </div>
+
+            <div class="slider-container">
+                <label>Experience:</label>
+                <div class="custom-slider">
+                    <input type="range" id="experienceSlider" name="experience" th:attr="min=${experienceMin}, max=${experienceMax}, value=${(experienceMin + experienceMax) / 2}" />
+                </div>
+                <div class="slider-values">
+                    <span id="experienceMinValue" th:text="${experienceMin}">1</span> -
+                    <span id="experienceMaxValue" th:text="${experienceMax}">50</span>
+                </div>
+                <span id="experienceValue" class="slider-value" th:text="${(experienceMin + experienceMax) / 2}">10</span>
+            </div>
+
+            <!-- Skills Matched and Missing -->
+            <div class="skills-container">
+                <h4>Skills Analysis</h4>
+
+                <!-- Circular Progress Bar -->
+                <div class="circular-progress" id="skillsMatchedBar" th:data-percentage="${matchedSkillsPercentage}">
+                    <div class="percentage" id="skillsMatchedPercent" th:text="${matchedSkillsPercentage + '%'}">0%</div>
+                </div>
+
+                <!-- Missing Skills -->
+                <div class="skills-missing-container">
+                    <h5>Missing Skills</h5>
+                    <ul>
+                        <li th:each="skill : ${missingSkills}" th:text="${skill}"></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Upload Previous Works -->
+            <div class="upload-container">
+                <label for="previousWorks">Upload Previous Works:</label>
+                <input type="file" id="previousWorks" name="previousWorks" multiple />
+                <div id="uploadedFilesList"></div>
+            </div>
+
+            <input type="submit" value="Submit" id="submitButton">
+        </form>
+
+    </div>
+</div>
+
+<script th:src="@{/js/applyjob.js}"></script>
+</body>
+
+</html>

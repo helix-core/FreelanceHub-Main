@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancehub Profile</title>
+    <link rel="stylesheet" th:href="@{/css/freelancerprofile.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&display=swap" rel="stylesheet">
+	<script defer src="/js/notifs.js"></script>
+	<link rel="stylesheet" th:href="@{/css/notifs.css}">
+</head>
+<body>
+
+<div id="notification" 
+         th:classappend="${notificationType != null} ? 'visible ' + ${notificationType} : 'hidden'"
+         th:text="${notificationMessage}"></div>
+         
+    <header class="navbar">
+        <div class="navbar-left">
+             <img th:src="@{/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg}" class="logo" alt="Freelancehub Logo">
+            <h1 class="navbar-title">Freelancehub</h1>
+        </div>
+    </header>
+
+    <br>
+	<br>
+
+    <!-- Freelancer Profile Section -->
+    <div class="profile-section">
+    <div class="profile-header">
+        <div class="profile-pic">Profile Pic</div>
+        <div class="profile-info">
+            <h2 th:text="${freelancer.freeName}">Freelancer Name</h2>
+            <p th:text="${freelancer.qualification}">Qualification</p>
+        </div>
+		<button class="edit-btn"><a th:href="@{/freelancer/edit/{freelancerId}(freelancerId=${freelancer.freeId})}" class="edit-button">Edit Profile</a></button>
+    </div>
+
+    <div class="main-content">
+        <!-- Left Section -->
+        <div class="left-section">
+        <!-- Education -->
+            <div class="education">
+                <h3>Account Details</h3>
+                <p><strong>Name: </strong><span th:text="${freelancer.freeName}">Name></span></p>
+                <p><strong>Email: </strong><span th:text="${freelancer.freeEmail}">experience</span></p>
+				<p><strong>Field of work: </strong><span th:text="${freelancer.fOW}">field></span></p>
+				<p><strong>Experience: </strong><span th:text="${freelancer.experience}+' Years'">experience></span></p>
+				<p><strong>Highest Qualification: </strong><span th:text="${freelancer.qualification}">qualification</span></p>
+				
+            </div>
+            
+            <!-- Skills -->
+            <div class="skills">
+                <h3>Skills</h3>
+                <ul>
+                    <li th:each="skill : ${freelancer.skillsAsList}" th:text="${skill}">Skill</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Section -->
+        <!--<div class="right-section">
+             Accepted Projects 
+            <div class="accepted-projects">
+                <h3>Accepted Projects</h3>
+                 Example static projects; replace with dynamic logic if applicable 
+                <div class="project">
+                    <p><strong>Custom CRM Development</strong></p>
+                    <p>Bid Amount: $4,500</p>
+                    <p>Client: Tech Solutions Inc.</p>
+                    <span class="status pending">Pending</span>
+                </div>
+                <div class="project">
+                    <p><strong>Custom CRM Development</strong></p>
+                    <p>Bid Amount: $4,500</p>
+                    <p>Client: Tech Solutions Inc.</p>
+                    <span class="status verify">Verify</span>
+                </div>
+            </div>
+
+             Completed Projects 
+            <div class="completed-projects">
+                <h3>Completed Projects</h3>
+                <div class="project">
+                    <p><strong>Custom CRM Development</strong></p>
+                    <p>Progress: 70%</p>
+                    <p>Due Date: 20th December 2024</p>
+                    <span class="status ongoing">Ongoing</span>
+                </div>
+                <div class="project">
+                    <p><strong>Custom CRM Development</strong></p>
+                    <p>Progress: 100%</p>
+                    <p>Due Date: 20th October 2024</p>
+                    <span class="status completed">Completed</span>
+                </div>
+            </div>
+        </div>-->
+		<div class="right-section">
+		             <!--Accepted Projects--> 
+		            <div class="accepted-projects">
+		                <h3>Accepted Projects</h3>
+						<div class="project" th:each="project : ${ongoingJobs}">
+						<p><strong th:text="${project.jobId.jobTitle}"></strong></p>
+						<p>Client: <span th:text="${project.jobId.clients.companyName}"></span></p>
+					    <p>Wage: <span th:text="${project.salary}"></span></p>
+						<p>Status: <span th:text="${project.jobDetails.progress}"></span></p>
+
+					</div>
+				</div>
+				
+				<div class="accepted-projects">
+						                <h3>Completed Projects</h3>
+										<div class="project" th:each="project : ${completedJobs}">
+										<p><strong th:text="${project.jobId.jobTitle}"></strong></p>
+										<p>Client: <span th:text="${project.jobId.clients.companyName}"></span></p>
+									    <p>Wage: <span th:text="${project.salary}"></span></p>
+									</div>
+								</div>
+		</div>
+    </div>
+    </div>
+</body>
+</html>

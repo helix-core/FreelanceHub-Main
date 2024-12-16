@@ -1,0 +1,262 @@
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Mulish", serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding-top: 80px; /* To adjust for fixed navbar */
+}
+
+/* Navbar Styles */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1000;
+    /*background-color: #232B50;*/
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+}
+
+.navbar-title {
+    color: #232B50;
+    font-size: 34px;
+    font-weight: 700;
+    font-family: 'Mulish', sans-serif;
+}
+
+/* .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1000;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+
+}
+
+.navbar-title {
+    color: #232B50;
+    font-size: 34px;
+    font-weight: 700;
+    font-family: 'Mulish', sans-serif;
+}*/
+
+/* Form Container */
+.form-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 25px 20px;
+    border-radius: 10px;
+    background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-container h1 {
+    text-align: center;
+    font-size: 1.8em;
+    color: #232B50;
+    margin-bottom: 20px;
+    font-weight: 800;
+}
+
+/* Form Elements */
+form input,
+form textarea {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+    background-color: #ffffff;
+    font-size: 0.9em;
+}
+
+form textarea {
+    height: 80px;
+    resize: none;
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1em;
+    color: #ffffff;
+    background: #232B50;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+form button:hover {
+    background: #1e2440;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        transform: none;
+        box-shadow: none;
+        padding: 20px;
+    }
+
+    .navbar-title {
+        font-size: 24px;
+    }
+}
+
+.email{
+    /*display: flex;*/
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Space between the label and input */
+}
+
+.email p {
+    margin: 0; /* Remove default margin to avoid extra spacing */
+	color: #232B50;
+	font-weight: bolder;
+	margin-bottom: revert;
+}
+
+/*.email input {
+    flex-shrink: 1;  Allow input to shrink if necessary 
+}*/
+/*#compEmail{
+	width:200%;
+}*/
+
+.companyname{
+    /*display: flex;*/
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Space between the label and input */
+}
+
+.companyname p {
+    margin: 0;  
+	color: #232B50;
+	font-weight: bolder;
+	margin-bottom: revert;
+}
+
+.companyname input {
+    flex-shrink: 1;   
+}
+
+.projects{
+    /*display: flex;*/
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Space between the label and input */
+}
+
+.projects p {
+    margin: 0; /* Remove default margin to avoid extra spacing */
+	color: #232B50;
+	font-weight: bolder;
+	margin-bottom: revert;
+}
+
+.desc{
+    /*display: flex;*/
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Space between the label and input */
+}
+
+.desc p {
+    margin: 0; /* Remove default margin to avoid extra spacing */
+	color: #232B50;
+	font-weight: bolder;
+	margin-bottom: revert;
+}
+.repname{
+    /*display: flex;*/
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Space between the label and input */
+}
+
+.repname p {
+    margin: 0; /* Remove default margin to avoid extra spacing */
+	color: #232B50;
+	font-weight: bolder;
+	margin-bottom: revert;
+}
+
+.desig{
+    /*display: flex;*/
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Space between the label and input */
+}
+
+.desig p {
+    margin: 0; /* Remove default margin to avoid extra spacing */
+	color: #232B50;
+	font-weight: bolder;
+	margin-bottom: revert;
+}
+
+.password{
+    /*display: flex;*/
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Space between the label and input */
+}
+
+.password p {
+    margin: 0; /* Remove default margin to avoid extra spacing */
+	color: #232B50;
+	font-weight: bolder;
+	margin-bottom: revert;
+}
+
+.retype{
+    /*display: flex;*/
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Space between the label and input */
+}
+
+.retype p {
+    margin: 0; /* Remove default margin to avoid extra spacing */
+	color: #232B50;
+	font-weight: bolder;
+	margin-bottom: revert;
+}
+

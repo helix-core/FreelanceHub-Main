@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post New Job</title>
+    <link rel="stylesheet" th:href="@{/css/postjob.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/notifs.css}">
+    <script defer src="/js/notifs.js"></script>
+</head>
+
+<body>
+<div id="notification" 
+         th:classappend="${notificationType != null} ? 'visible ' + ${notificationType} : 'hidden'"
+         th:text="${notificationMessage}"></div>
+    <header class="navbar">
+        <div class="navbar-left">
+            <img th:src="@{/images/Twitch.png}" alt="Logo" class="logo">
+            <h1 class="navbar-title">Freelancehub</h1>
+        </div>
+    </header>
+
+    <div class="dashboard-header">
+        <h1>Company <span>Dashboard</span></h1>
+        <div class="icons">
+            <span class="l1"><a href="/posted-jobs" class="button"><img th:src="@{/images/account_circle.png}" alt=""></a></span>
+            <span class="l2"><a href="/postjob" class="button"><img th:src="@{/images/bookmark.png}" alt=""></a></span>
+            <span class="l3"><a href="/assignedjobs" class="button"><img th:src="@{/images/Award.png}" alt=""></a></span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Post New Job</h2>
+
+        <div class="form-container">
+        
+            <form th:action="@{/postjob}" method="post" th:object="${clientJob}">
+                <input class="input-text" type="text" id="job-title" th:field="*{JobTitle}" placeholder="Job Title" required>
+                <span th:if="${#fields.hasErrors('JobTitle')}" th:errors="*{JobTitle}" class="error-message"></span>
+                
+                <input class="input-text" type="text" id="job-description" th:field="*{jobDesc}" placeholder="Job Description" required>
+                <span th:if="${#fields.hasErrors('jobDesc')}" th:errors="*{jobDesc}" class="error-message"></span>
+
+                <div id="skills-container">
+	                <input type="text" id="skills-input" placeholder="Job Skills" />
+	                <div id="skills-display">
+	                </div>
+	                <input type="hidden" id="skills-hidden" th:field="*{SkillReq}" />
+	                <span th:if="${#fields.hasErrors('SkillReq')}" th:errors="*{SkillReq}" class="error-message"></span>
+            	</div>
+
+                <div class="number-inputs">
+                    <div class="input-inc-dec">
+                        <label>Duration</label>
+                        <div class="number-range">
+                            <span>Min:</span>
+                            <input type="number" th:field="*{DurMin}"placeholder="0" required>     
+                            <span>Max:</span>
+                            <input type="number" th:field="*{DurMax}" placeholder="0" required>     
+                        </div>                                              
+                    </div>
+                    <span th:if="${#fields.hasErrors('DurMin') || #fields.hasErrors('DurMax')}" class="error-message">
+				            <span th:if="${#fields.hasErrors('DurMin')}" th:errors="*{DurMin}"></span>
+				            <span th:if="${#fields.hasErrors('DurMax')}" th:errors="*{DurMax}"></span>
+				        </span>
+
+                    <div class="input-inc-dec">
+                        <label>Cost/Hr</label>
+                        <div class="number-range">
+                            <span>Min:</span>
+                            <input type="number" th:field="*{CostMin}" placeholder="0" required>
+                            
+                            <span>Max:</span>
+                            <input type="number" th:field="*{CostMax}" placeholder="0" required>
+                        </div>
+                    </div>
+                    
+                        <span th:if="${#fields.hasErrors('CostMin') || #fields.hasErrors('CostMax')}" class="error-message">
+				            <span th:if="${#fields.hasErrors('CostMin')}" th:errors="*{CostMin}"></span>
+				            <span th:if="${#fields.hasErrors('CostMax')}" th:errors="*{CostMax}"></span>
+				        </span>
+
+                    <div class="input-inc-dec">
+                        <label>Experience</label>
+                        <div class="number-range">
+                            <span>Min:</span>
+                            <input type="number" th:field="*{ExpMin}" placeholder="0" required>                          
+                        </div>
+                    </div>
+                    <span th:if="${#fields.hasErrors('ExpMin')}" th:errors="*{ExpMin}" class="error-message"></span>
+                </div>
+
+				<input type="hidden" th:field="*{jobStat}" value="pending">
+				                
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('skills-input');
+        const display = document.getElementById('skills-display');
+        const hiddenInput = document.getElementById('skills-hidden');
+
+        // Initialize skills from hidden input value
+        let skills = hiddenInput.value ? hiddenInput.value.split(',') : [];
+
+        const updateHiddenInput = () => {
+            hiddenInput.value = skills.join(','); // Update hidden input with the current skills
+        };
+
+        const createSkillTag = (skill) => {
+            const skillTag = document.createElement('div');
+            skillTag.classList.add('skill-tag');
+            skillTag.innerHTML = `${skill} <span>&times;</span>`;
+            display.appendChild(skillTag);
+
+            // Add click event for removing skill
+            skillTag.querySelector('span').addEventListener('click', () => {
+                display.removeChild(skillTag);
+                skills = skills.filter((s) => s !== skill);
+                updateHiddenInput();
+            });
+        };
+
+        // Populate existing skills
+        skills.forEach((skill) => {
+            createSkillTag(skill);
+        });
+
+        // Add new skill on Enter key
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && input.value.trim() !== '') {
+                event.preventDefault();
+                const skill = input.value.trim();
+
+                if (!skills.includes(skill)) { // Prevent duplicates
+                    skills.push(skill);
+                    createSkillTag(skill);
+                    updateHiddenInput();
+                }
+
+                input.value = ''; // Clear input field
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

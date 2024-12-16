@@ -1,0 +1,61 @@
+<div class="whole-container">
+  
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="assets/images/Twitch.png" alt="Logo" class="logo" />
+      <h1 class="navbar-title">Freelancehub</h1>
+    </div>
+  </header>
+  
+  <div class="bidding-header">
+    <h1>Bidding <span>Page</span></h1>
+  </div>
+  
+  <h2 class="bid-h2">Your Job Bids</h2>
+  
+  <!-- Loop through jobs -->
+  <div class="jobs-section" *ngFor="let jobWithBids of jobsWithBids">
+    <div class="job">
+      <h2 class="job-title">{{ jobWithBids.job.jobTitle }}</h2>
+      <p class="job-description">{{ jobWithBids.job.jobDesc }}</p>
+  
+      <!-- Sort dropdown -->
+      <form>
+        <label for="sortBy">Sort by:</label>
+        <select id="sortBy" [(ngModel)]="sortBy" (change)="sortBids()" name="sortBy">
+          <option value="duration">Duration</option>
+          <option value="salary">Salary</option>
+          <option value="experience">Experience</option>
+          <option value="skillMatch">Skill Match</option>
+        </select>
+      </form>
+  
+      <!-- Freelancer bids -->
+      <div class="bids-container">
+        <h3>Freelancer Bids</h3>
+        <div *ngIf="jobWithBids.bids.length === 0">
+            <p class="null-text">No bids yet, please check back later</p>
+          </div>
+        <div class="bid" *ngFor="let bid of jobWithBids.bids">
+          <div class="bid-details">
+            <div class="bid-profile">{{ bid.freelancerName }}</div>
+            <div class="bid-stats">
+              <span class="stat">{{ bid.freelancerJob.duration }} Months</span>
+              <span class="stat">₹{{ bid.freelancerJob.salary }}</span>
+              <span class="stat">{{ bid.freelancerJob.jobExp }} Years</span>
+              <span class="stat">{{ bid.freelancerJob.skillMatch }}%</span>
+            </div>
+            <button (click)="acceptBid(jobWithBids.job.jobId, bid.freelancerJob.freeId.freeId)" class="bid-action">
+              Accept
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="jobsWithBids?.length === 0">
+    <p class="null-text">No jobs with bids yet!</p>
+  </div>
+</div>
+  

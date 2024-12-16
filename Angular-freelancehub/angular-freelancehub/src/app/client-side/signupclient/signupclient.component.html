@@ -1,0 +1,42 @@
+
+  <div *ngIf="notificationMessage" class="notification" [ngClass]="notificationType">
+    {{ notificationMessage }}
+  </div>
+  
+  <header class="navbar">
+    <div class="navbar-left">
+      <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" class="logo" alt="Freelancehub Logo">
+      <h1 class="navbar-title">Freelancehub</h1>
+    </div>
+  </header>
+  <div class="page-container">
+  <div class="form-container">
+    <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
+      <input type="email" [(ngModel)]="clientDTO.compEmail" name="compEmail" placeholder="E-mail *" required>
+      <div *ngIf="signupForm.submitted && !clientDTO.compEmail" class="error-message">E-mail is required.</div>
+  
+      <input type="text" [(ngModel)]="clientDTO.companyName" name="companyName" placeholder="Company Name *" required>
+      <div *ngIf="signupForm.submitted && !clientDTO.companyName" class="error-message">Company Name is required.</div>
+  
+      <input type="text" [(ngModel)]="clientDTO.typeOfProject" name="typeOfProject" placeholder="Types of projects involved *" required>
+  
+      <textarea [(ngModel)]="clientDTO.companyDescription" name="companyDescription" placeholder="Company Description *" required></textarea>
+      <div *ngIf="signupForm.submitted && !clientDTO.companyDescription" class="error-message">Description is required.</div>
+  
+      <input type="text" [(ngModel)]="clientDTO.repName" name="repName" placeholder="Representative Name *" required>
+      <input type="text" [(ngModel)]="clientDTO.repDesignation" name="repDesignation" placeholder="Representative Designation *" required>
+      <input type="password" [(ngModel)]="clientDTO.password" name="password" placeholder="Password *" required>
+  
+      <div *ngIf="signupForm.submitted && !clientDTO.password" class="error-message">Password is required.</div>
+  
+      <input type="password" placeholder="Re-type password *" required>
+      
+      <div class="checkbox-container">
+        <input type="checkbox" [(ngModel)]="agree" name="agree" required>
+        <label>I agree to the Privacy Policy of Freelancehub</label>
+      </div>
+      
+      <button type="submit" [disabled]="!signupForm.valid">Submit</button>
+    </form>
+  </div>
+</div>

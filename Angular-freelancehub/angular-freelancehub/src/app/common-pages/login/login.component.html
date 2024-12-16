@@ -1,0 +1,26 @@
+<header class="navbar">
+    <div class="navbar-left">
+        <div class="header">
+            <img src="assets/images/common-login.jpg" class="logo" alt="">
+        </div>
+        <h1 class="navbar-title">Freelancehub</h1>
+    </div>
+</header>
+
+<div class="body-container">
+<div class="container">
+    <div class="loginm">
+        <h1 class="login-title">Log <span class="highlight">In</span></h1>
+        <form (ngSubmit)="onLogin()">
+            <div class="login-container">
+                <input type="email" placeholder="E-Mail *" class="input-field" [(ngModel)]="email" name="email"
+                    required>
+                <input type="password" placeholder="Password *" class="input-field" [(ngModel)]="password"
+                    name="password" required>
+                <button class="continue-button" type="submit">Continue</button>
+            </div>
+        </form>
+        <p class="signup-text">Don’t have an account? <a routerLink="/signup/selection">Sign Up</a></p>
+    </div>
+</div>
+</div>

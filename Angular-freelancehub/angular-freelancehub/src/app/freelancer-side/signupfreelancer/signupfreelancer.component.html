@@ -1,0 +1,79 @@
+<header class="navbar">
+    <div class="navbar-left">
+        <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" class="logo"
+            alt="Freelancehub Logo">
+        <h1 class="navbar-title">Freelancehub</h1>
+    </div>
+</header>
+<div class="page-container">
+<div class="form-container">
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="registration-form">
+        <input type="email" formControlName="freeEmail" placeholder="E-mail *" required>
+        <span
+            *ngIf="signupForm.get('freeEmail')?.hasError('required') && (signupForm.get('freeEmail')?.touched || signupForm.get('freeEmail')?.dirty)"
+            class="error-message">Email is required</span>
+
+        <input type="text" formControlName="freeName" placeholder="Name *" required>
+        <span
+            *ngIf="signupForm.get('freeName')?.hasError('required') && (signupForm.get('freeName')?.touched || signupForm.get('freeName')?.dirty)"
+            class="error-message">Name is required</span>
+
+        <input type="number" formControlName="freeAge" placeholder="Age *" required>
+        <span
+            *ngIf="signupForm.get('freeAge')?.hasError('required') && (signupForm.get('freeAge')?.touched || signupForm.get('freeAge')?.dirty)"
+            class="error-message">Age is required</span>
+
+        <input type="text" formControlName="country" placeholder="Country *" required>
+        <span
+            *ngIf="signupForm.get('country')?.hasError('required') && (signupForm.get('country')?.touched || signupForm.get('country')?.dirty)"
+            class="error-message">Country is required</span>
+
+        <input type="text" formControlName="fow" placeholder="Field of Work *" required>
+        <span
+            *ngIf="signupForm.get('fow')?.hasError('required') && (signupForm.get('fow')?.touched || signupForm.get('fow')?.dirty)"
+            class="error-message">Field of Work is required</span>
+
+        <select formControlName="experience" required>
+            <option value="" disabled selected hidden>Experience *</option>
+            <option value="1">1-3 years</option>
+            <option value="2">3-5 years</option>
+            <option value="3">5+ years</option>
+        </select>
+        <span
+            *ngIf="signupForm.get('experience')?.hasError('required') && (signupForm.get('experience')?.touched || signupForm.get('experience')?.dirty)"
+            class="error-message">Experience is required</span>
+
+        <div id="skills-container">
+            <input type="text" id="skills-input" (keydown)="onSkillInput($event)"
+                placeholder="Type a skill and press Enter">
+            <div id="skills-display">
+                <div *ngFor="let skill of skills" class="skill-tag">{{ skill }} <span
+                        (click)="removeSkill(skill)">x</span></div>
+            </div>
+            <input type="hidden" formControlName="skills" [value]="skills.join(',')">
+        </div>
+
+        <input type="text" formControlName="qualification" placeholder="Highest Qualification *" required>
+        <span
+            *ngIf="signupForm.get('qualification')?.hasError('required') && (signupForm.get('qualification')?.touched || signupForm.get('qualification')?.dirty)"
+            class="error-message">Qualification is required</span>
+
+        <input type="password" formControlName="password" placeholder="Password *" required>
+        <span
+            *ngIf="signupForm.get('password')?.hasError('required') && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty)"
+            class="error-message">Password is required</span>
+
+        <input type="password" formControlName="rePassword" placeholder="Re-type password *" required>
+        <span
+            *ngIf="signupForm.get('rePassword')?.hasError('required') && (signupForm.get('rePassword')?.touched || signupForm.get('rePassword')?.dirty)"
+            class="error-message">Re-type password is required</span>
+
+        <div class="checkbox-container">
+            <input type="checkbox" required>
+            <label>I agree to the Privacy Policy of Freelancehub</label>
+        </div>
+
+        <button type="submit" [disabled]="signupForm.invalid">Submit</button>
+    </form>
+</div>
+</div>

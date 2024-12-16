@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accepted Jobs</title>
+    <link rel="stylesheet" th:href="@{/css/acceptedjobs.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300..800&family=Roboto:wght@400..700&display=swap" rel="stylesheet">
+	<script defer src="/js/notifs.js"></script>
+    <link rel="stylesheet" th:href="@{/css/notifs.css}">
+</head>
+
+<body>
+<div id="notification" 
+         th:classappend="${notificationType != null} ? 'visible ' + ${notificationType} : 'hidden'"
+         th:text="${notificationMessage}"></div>
+<header class="navbar">
+    <div class="navbar-left">
+        <img th:src="@{/images/Twitch.png}" alt="Logo" class="logo">
+        <h1 class="navbar-title">Freelancehub</h1>
+    </div>
+</header>
+
+<div class="dashboard-header">
+    <h1>Freelancer <span>Dashboard</span></h1>
+    <div class="icons">
+        <span class="l1"><a href="/applied-jobs" class="button"><img th:src="@{/images/account_circle.png}" alt=""></a></span>
+        <span class="l2"><a href="#" class="button"><img th:src="@{/images/bookmark.png}" alt=""></a></span>
+    </div>
+</div>
+
+<div class="container">
+    <h2>Accepted Jobs</h2>
+    <div id="posted-jobs" class="posted-jobs" th:classappend="${#lists.size(acceptedJobs) > 2 ? 'scrollable' : ''}">
+        <!-- Loop through the applied jobs and display each one -->
+        <div th:each="job : ${acceptedJobs}" class="job-card" th:id="'job-card-' + ${job.jobId.JobId}" th:onclick="'toggleUpload(' + ${job.jobId.JobId} + ', event)'">
+
+
+        <div class="job-details">
+                    <!-- Left Section: Job Details -->
+                    <h3 th:text="${job.jobId.jobTitle}"></h3>
+                    <p><strong>Client:</strong> <span th:text="${job.jobId.clientName}"></span></p>
+                    <p><strong>Salary:</strong> <span th:text="${job.salary}"></span></p>
+                </div>
+
+                <!-- Middle Section: Timer -->
+                <div class="job-timer">
+                    <p>
+                        <strong>Remaining Time:</strong>
+                        <span id="remaining-time"
+                              th:text="${T(java.time.temporal.ChronoUnit).DAYS.between(T(java.time.LocalDate).now(), T(java.time.LocalDate).now().plusDays(job.duration))} + ' days'"></span>
+
+                    </p>
+                </div>
+
+                <!-- Right Section: Status -->
+                <div class="job-status">
+                <span th:text="${job.jobDetails.progress}"></span>
+            	</div>
+
+            <div th:id="'upload-form-' + ${job.jobId.JobId}"
+                 class="upload-form"
+                 th:if="${job.jobDetails.progress != 'completed'}"
+                 style="display: none;">
+                <form method="post" th:action="@{/upload-project}" enctype="multipart/form-data">
+                    <input type="hidden" name="jobId" th:value="${job.jobId.JobId}" />
+                    <input type="url" name="githubLink" placeholder="Enter GitHub Link" required class="input-github-btn" />
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            </div>
+            <div th:if="${acceptedJobs != null and #lists.size(acceptedJobs) == 0}">
+            <p class="null-text">No active or completed jobs present at the moment</p>
+        	</div>
+
+            <!-- Hidden Upload Form -->
+
+        </div>
+
+        </div>
+<script>
+function toggleUpload(freelancerJobId, event) {
+    // Prevent the event from propagating to the parent elements
+    event.stopPropagation();
+
+    // Correctly use dynamic values inside JavaScript by wrapping them with string concatenation
+    const form = document.getElementById('upload-form-' + freelancerJobId); // Correctly reference the dynamic element
+    const jobCard = document.querySelector('#job-card-' + freelancerJobId); // Correctly reference the dynamic element
+
+    // If the form or any of its elements is clicked, do nothing further
+    if (form.contains(event.target)) {
+        return;
+    }
+
+    // If the form exists and the jobCard is found
+    if (form && jobCard) {
+        // Check if the form is already visible
+        const isVisible = form.style.display === 'block';
+
+        // Hide all forms
+        const allForms = document.querySelectorAll('.upload-form');
+        allForms.forEach(f => f.style.display = 'none');
+
+        // Remove the 'open' class from all job cards
+        const allJobCards = document.querySelectorAll('.job-card');
+        allJobCards.forEach(card => card.classList.remove('open'));
+
+        // Toggle the clicked form based on its previous state
+        form.style.display = isVisible ? 'none' : 'block';
+
+        // Add or remove the 'open' class on the clicked job card
+        if (!isVisible) {
+            jobCard.classList.add('open');
+        }
+    }
+
+    // Log to the console to ensure the freelancerJobId is properly passed
+    console.log('Toggling upload form for freelancerJobId: ' + freelancerJobId);
+}
+</script>
+
+
+</body>
+
+</html>

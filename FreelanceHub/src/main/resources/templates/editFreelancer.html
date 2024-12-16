@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Freelancer Profile</title>
+    <link rel="stylesheet" th:href="@{/css/editfreelancer.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="navbar">
+    <div class="navbar-left">
+        <img th:src="@{/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg}" class="logo" alt="Freelancehub Logo">
+        <h1 class="navbar-title">Freelancehub</h1>
+    </div>
+</header>
+<div class="form-container">
+    <h1>Edit Freelancer Profile</h1>
+    <form th:action="@{/freelancer/update}" method="post" th:object="${freelancer}">
+        <input type="hidden" th:field="*{id}" />
+		<input type="hidden" th:field="*{freeId}" readonly />
+        <div class="email"><p>Email</p><span><input type="email" th:field="*{freeEmail}" placeholder="E-mail *" required></span></div>
+        <div class="name"><p>Name</p><span><input type="text" th:field="*{freeName}" placeholder="Name *" required></span></div>
+        <div class="age"><p>Age</p><span><input type="number" th:field="*{freeAge}" placeholder="Age *" required></span></div>
+        <div class="country"><p>Country:</p><span><input type="text" th:field="*{country}" placeholder="Country *" required></span></div>
+        <div class="fields"><p>Field of work:</p><span><input type="text" th:field="*{fOW}" placeholder="Field of Work *" required></span></div>
+        <div class="experience"><p>Experience</p><span><select th:field="*{experience}" required>
+            <option th:value="1" th:text="'1-3 years'" />
+            <option th:value="2" th:text="'3-5 years'" />
+            <option th:value="3" th:text="'5+ years'" />
+        </select></span></div>
+
+  
+		<div id="skills-container">
+		    <input type="text" id="skills-input" placeholder="Type a skill and press Enter" />
+		    <div id="skills-display">
+		        <!--<span th:each="skill : ${freelancer.skillsAsList}" class="skill-tag" th:text="${skill}">
+		        </span>-->
+		    </div>
+		    <input type="hidden" id="skills-hidden" th:field="*{skills}" />
+		</div>
+
+
+        <div class="qual"><p>Highest Qualification</p><span><input type="text" th:field="*{qualification}" placeholder="Highest Qualification *" required></span></div>
+        <div class="password"><p>Password</p><span><input type="password" th:field="*{password}" placeholder="Password *" required></span></div>
+		<div class="retype"><p>Re-type password</p><span><input type="password" placeholder="Re-type password *" required></span></div>
+        
+        <button type="submit">Update</button>
+    </form>
+</div>
+<!--<script src="@{/js/skills.js}"></script>-->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const input = document.getElementById('skills-input');
+        const display = document.getElementById('skills-display');
+        const hiddenInput = document.getElementById('skills-hidden');
+
+        // Initialize skills from hidden input value
+        let skills = hiddenInput.value ? hiddenInput.value.split(',') : [];
+
+        const updateHiddenInput = () => {
+            hiddenInput.value = skills.join(','); // Update hidden input with the current skills
+        };
+
+        const createSkillTag = (skill) => {
+            const skillTag = document.createElement('div');
+            skillTag.classList.add('skill-tag');
+            skillTag.innerHTML = `${skill} <span>&times;</span>`;
+            display.appendChild(skillTag);
+
+            // Add click event for removing skill
+            skillTag.querySelector('span').addEventListener('click', () => {
+                display.removeChild(skillTag);
+                skills = skills.filter((s) => s !== skill);
+                updateHiddenInput();
+            });
+        };
+
+        // Populate existing skills
+        skills.forEach((skill) => {
+            createSkillTag(skill);
+        });
+
+        // Add new skill on Enter key
+        input.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' && input.value.trim() !== '') {
+                event.preventDefault();
+                const skill = input.value.trim();
+
+                if (!skills.includes(skill)) { // Prevent duplicates
+                    skills.push(skill);
+                    createSkillTag(skill);
+                    updateHiddenInput();
+                }
+
+                input.value = ''; // Clear input field
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
