@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FreelancerJob } from '../../freelancer-job.model';
+import { FreelancerService } from '../../freelancer.service';
 
 @Component({
   selector: 'app-appliedjobs',
@@ -7,6 +9,26 @@ import { Component } from '@angular/core';
   templateUrl: './appliedjobs.component.html',
   styleUrl: './appliedjobs.component.css'
 })
-export class AppliedjobsComponent {
+export class AppliedjobsComponent implements OnInit {appliedJobs: FreelancerJob[] = [];
+  notificationMessage: string = '';
+  notificationType: string = '';
 
+  constructor(private freelancerservice:FreelancerService) {}
+
+  ngOnInit(): void {
+    this.fetchAppliedJobs();
+  }
+
+  fetchAppliedJobs(): void {
+  this.freelancerservice.getAppliedJobs().subscribe(
+    (data) => {
+      this.appliedJobs = data;
+    },
+    (error) => {
+      console.error('Error fetching applied jobs:', error);
+      this.notificationMessage = 'Failed to load applied jobs.';
+      this.notificationType = 'error';
+    }
+  );
+}
 }
