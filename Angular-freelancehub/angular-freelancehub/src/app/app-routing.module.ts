@@ -9,6 +9,8 @@ import { PostjobComponent } from './client-side/postjob/postjob.component';
 import { PostedJobsComponent } from './client-side/postedjobs/postedjobs.component';
 import { AssignedjobsComponent } from './client-side/assignedjobs/assignedjobs.component';
 import { BiddingComponent } from './client-side/bidding/bidding.component';
+import { FreelancerProfileComponent } from './freelancer-side/freelancerprofile/freelancerprofile.component';
+import { FreelancerEditComponent } from './freelancer-side/edit-freelancer/edit-freelancer.component';
 import { ExploreComponent } from './common-pages/explore/explore.component';
 import { ApplyjobComponent } from './freelancer-side/applyjob/applyjob.component';
 import { AppliedjobsComponent } from './freelancer-side/appliedjobs/appliedjobs.component';
@@ -26,6 +28,8 @@ const routes: Routes = [
   { path: 'posted-jobs',component:PostedJobsComponent},
   { path: 'assigned-jobs', component: AssignedjobsComponent},
   { path: 'bidding', component: BiddingComponent},
+  { path: 'profile/freelancer', component:FreelancerProfileComponent },
+  {path:'freelancer/edit' ,component:FreelancerEditComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
    { path: 'explore', component: ExploreComponent },
   {path:'apply',component:ApplyjobComponent},
@@ -33,8 +37,7 @@ const routes: Routes = [
   {path:'accepted-jobs',component:AcceptedjobsComponent},
   {path:'profile-client',component:ClientprofileComponent},
   {path:'profile-client-edit',component:EditClientFormComponent}
-  
-];
+  ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

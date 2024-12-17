@@ -16,6 +16,8 @@ import { PostjobComponent } from './client-side/postjob/postjob.component';
 import { PostedJobsComponent } from './client-side/postedjobs/postedjobs.component';
 import { AssignedjobsComponent } from './client-side/assignedjobs/assignedjobs.component';
 import { BiddingComponent } from './client-side/bidding/bidding.component';
+import { FreelancerEditComponent } from './freelancer-side/edit-freelancer/edit-freelancer.component';
+import { FreelancerProfileComponent } from './freelancer-side/freelancerprofile/freelancerprofile.component';
 import { ApplyjobComponent } from './freelancer-side/applyjob/applyjob.component';
 import { AppliedjobsComponent } from './freelancer-side/appliedjobs/appliedjobs.component';
 import { AcceptedjobsComponent } from './freelancer-side/acceptedjobs/acceptedjobs.component';
@@ -33,6 +35,8 @@ import { AcceptedjobsComponent } from './freelancer-side/acceptedjobs/acceptedjo
     PostedJobsComponent,
     AssignedjobsComponent,
     BiddingComponent,
+    FreelancerEditComponent,
+    FreelancerProfileComponent
     ApplyjobComponent,
     AppliedjobsComponent,
     AcceptedjobsComponent

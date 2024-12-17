@@ -281,21 +281,22 @@ public class FreelancerController {
     }
 
     @GetMapping("/freelancer/edit/{freelancerId}")
-    public String showEditForm2(@PathVariable("freelancerId") String freelancerId, Model model) {
+    public ResponseEntity<Freelancer> getFreelancerProfile1(@PathVariable("freelancerId") String freelancerId) {
         Optional<Freelancer> freelancer = freelancerRepository.findByFreeId(freelancerId);
-        if (freelancer == null) {
-            return "redirect:/error"; // Redirect if freelancer not found
+        if (freelancer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        model.addAttribute("freelancer", freelancer);
-        return "editFreelancer"; // Template name for editing
+        
+        return ResponseEntity.ok(freelancer.get());
     }
 
-    // Update the freelancer's profile
     @PostMapping("/freelancer/update")
-    public String updateFreelancer(@ModelAttribute Freelancer freelancer, Model model,
-            RedirectAttributes redirectAttributes) {
-        Freelancer existingFreelancer = freelancerRepository.findById(freelancer.getId())
-                .orElseThrow(() -> new RuntimeException("Freelancer not found"));
+    public ResponseEntity<Map<String, String>> updateFreelancer(@RequestBody Freelancer freelancer) {
+    	Optional<Freelancer> optionalFreelancer = freelancerRepository.findByFreeId(freelancer.getFreeId());
+
+    	Freelancer existingFreelancer = optionalFreelancer
+    	        .orElseThrow(() -> new RuntimeException("Freelancer not found"));
+
 
         // Update only editable fields
         existingFreelancer.setFreeEmail(freelancer.getFreeEmail());
@@ -307,12 +308,12 @@ public class FreelancerController {
         existingFreelancer.setQualification(freelancer.getQualification());
         existingFreelancer.setSkills(freelancer.getSkills());
         existingFreelancer.setPassword(freelancer.getPassword());
-        freelancerRepository.save(freelancer);
-        redirectAttributes.addFlashAttribute("notificationType", "success");
-        redirectAttributes.addFlashAttribute("notificationMessage", "Profile edited successfully!");// Save updated
-                                                                                                    // freelancer to
-                                                                                                    // database
-        return "redirect:/profile/freelancer"; // Redirect to a success page or profile page
+
+        freelancerRepository.save(existingFreelancer);
+        
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Profile updated successfully");
+        return ResponseEntity.ok(response);
     }
 
 }
