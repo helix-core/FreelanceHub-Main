@@ -56,7 +56,7 @@
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
 }
 
@@ -266,3 +266,7 @@ button {
     display:block;
     align-self:center;
 }
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }

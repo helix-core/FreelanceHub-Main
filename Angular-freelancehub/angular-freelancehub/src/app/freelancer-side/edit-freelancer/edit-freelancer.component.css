@@ -4,18 +4,29 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Mulish", serif;
+    font-family: "Mulish", sans-serif;
 }
 
-body {
+.body-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
     background-color: #f8f9fa;
-    padding-top: 80px; /* To adjust for fixed navbar */
+    padding-top: 80px;
+    /* To adjust for fixed navbar */
 }
+
+/* body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    padding-top: 80px;
+} */
 
 /* Navbar Styles */
 .navbar {
@@ -23,7 +34,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    position: fixed;
+    position: absolute;
     top: 0;
     width: 100%;
     height: 60px;
@@ -254,3 +265,7 @@ form button:hover {
 	font-weight: bolder;
 	margin-bottom: revert;
 }
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }

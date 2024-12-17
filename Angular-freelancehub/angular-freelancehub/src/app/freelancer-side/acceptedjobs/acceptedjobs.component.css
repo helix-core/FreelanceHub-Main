@@ -48,7 +48,7 @@
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
 }
 
@@ -316,3 +316,7 @@ h2 {
     margin-top: 0px;
     font-size: x-large;
 }
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }

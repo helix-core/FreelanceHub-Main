@@ -1,3 +1,14 @@
+
+<header class="header">
+  <div class="navbar">
+      <div class="navbar-left">
+          <img src="assets/images/Twitch.png" class="logo" alt="Freelancehub Logo" />
+          <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub</a></span>
+      </div>
+  </div>
+</header>
+
+<div class="body-container">
 <div class="form-container">
     <h1>Edit Freelancer Profile</h1>
     <form [formGroup]="freelancerForm" (ngSubmit)="updateFreelancer()">
@@ -47,4 +58,4 @@
       <button type="submit">Update</button>
     </form>
   </div>
-  
+  </div>

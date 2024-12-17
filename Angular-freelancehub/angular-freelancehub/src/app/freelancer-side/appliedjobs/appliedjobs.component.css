@@ -50,8 +50,19 @@
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
+}
+
+.body-container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    /* zoom: 90%; */
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .dashboard-header {
@@ -202,3 +213,7 @@ h2 {
     top: 5px;
     border-radius: 20px;
 }
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }
