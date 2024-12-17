@@ -35,7 +35,7 @@ const routes: Routes = [
   {path:'apply',component:ApplyjobComponent},
   {path:'applied-jobs',component:AppliedjobsComponent},
   {path:'accepted-jobs',component:AcceptedjobsComponent},
-  {path:'profile-client',component:ClientprofileComponent},
+  {path:'profile/client',component:ClientprofileComponent},
   {path:'profile-client-edit',component:EditClientFormComponent}
 
   ];

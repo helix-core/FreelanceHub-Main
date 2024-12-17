@@ -23,6 +23,7 @@ import { ClientprofileComponent } from './client-side/clientprofile/clientprofil
 import { EditClientFormComponent } from './client-side/edit-client-form/edit-client-form.component';
 import { FreelancerEditComponent } from './freelancer-side/edit-freelancer/edit-freelancer.component';
 import { FreelancerProfileComponent } from './freelancer-side/freelancerprofile/freelancerprofile.component';
+import { ExploreComponent } from './common-pages/explore/explore.component';
 
 // import { AuthInterceptor } from './auth.interceptor';
 
@@ -42,9 +43,10 @@ import { FreelancerProfileComponent } from './freelancer-side/freelancerprofile/
     AppliedjobsComponent,
     AcceptedjobsComponent,
     ClientprofileComponent,
-    EditClientFormComponent
+    EditClientFormComponent,
     FreelancerEditComponent,
-    FreelancerProfileComponent
+    FreelancerProfileComponent,
+    ExploreComponent
   ],
   imports: [
     BrowserModule,

@@ -33,7 +33,7 @@ export class FreelancerService {
   updateFreelancer(freelancer: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrledit}/update`, freelancer);
   }
-}
+
 
   private isBrowser(): boolean {
     return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
