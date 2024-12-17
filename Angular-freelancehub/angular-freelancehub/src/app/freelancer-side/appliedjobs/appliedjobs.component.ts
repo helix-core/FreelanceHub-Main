@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FreelancerJob } from '../../freelancer-job.model';
+import { FreelancerJob } from '../../models/freelancer-job.model';
 import { FreelancerService } from '../../freelancer.service';
 
 @Component({

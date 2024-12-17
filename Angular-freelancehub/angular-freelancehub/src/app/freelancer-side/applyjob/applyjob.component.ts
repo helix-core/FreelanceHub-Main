@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-applyjob',
@@ -23,7 +24,8 @@ jobForm: FormGroup;
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.jobForm = this.fb.group({
       salary: [0],
@@ -129,6 +131,7 @@ removeLink(index: number): void {
     // Handle successful submission
     console.log('Application submitted successfully:', response.message);
     alert(response.message);  // Show the success message
+    this.router.navigate(['/applied-jobs']);
   },
   (error) => {
     // Handle error

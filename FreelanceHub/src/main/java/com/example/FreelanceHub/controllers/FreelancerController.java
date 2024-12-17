@@ -145,14 +145,6 @@ public class FreelancerController {
                     .body(Map.of("message", "Failed to save job application: " + e.getMessage()));
         }
 
-        model.addAttribute("job", freelancerJob);
-        model.addAttribute("clientName", job.getClientName());
-        model.addAttribute("status", "pending");
-        notificationService.addNotification(job.getClientId(), "One of your jobs got an application!");
-
-        redirectAttributes.addFlashAttribute("notificationType", "success");
-        redirectAttributes.addFlashAttribute("notificationMessage", "Application Successful!");
-
         // Return JSON response with message
         return ResponseEntity.ok(Map.of("message", "Application submitted successfully"));
     }
@@ -233,68 +225,50 @@ public class FreelancerController {
     }
 
     @GetMapping("/profile/freelancer")
-    public String showFreelancerProfile(Model model, HttpSession session) {
-        String freeId = (String) session.getAttribute("userId"); // Ensure "FreeId" matches the login session key
+    public ResponseEntity<Map<String, Object>> getFreelancerProfile(@RequestParam String userId) {
+        try {
+            // Fetch freelancer profile by userId
+            Optional<Freelancer> freelancer = freelancerRepository.findByFreeId(userId);
+            if (freelancer.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Freelancer not found"));
+            }
 
-        if (freeId == null) {
-            return "redirect:/login"; // Redirect to login if FreeId is not found
+            // Fetch ongoing and completed jobs for the freelancer
+            List<FreelancerJob> ongoingJobs = freeJobRepository.findByFreeIdAndProgress(userId, "ongoing");
+            for (FreelancerJob job : freeJobRepository.findByFreeIdAndProgress(userId, "unverified")) {
+                ongoingJobs.add(job); // Include unverified jobs in ongoing jobs
+            }
+            List<FreelancerJob> completedJobs = freeJobRepository.findByFreeIdAndProgress(userId, "completed");
+
+            // Prepare the response
+            Map<String, Object> response = new HashMap<>();
+            response.put("freelancer", freelancer.get()); // Add freelancer data
+            response.put("ongoingJobs", ongoingJobs); // Add ongoing jobs
+            response.put("completedJobs", completedJobs); // Add completed jobs
+
+            return ResponseEntity.ok(response); // Return the response as JSON
+        } catch (Exception e) {
+            // Handle error and return an internal server error response
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "An error occurred while fetching freelancer profile"));
         }
-
-        Optional<Freelancer> freelancer = freelancerRepository.findByFreeId(freeId); // Ensure findByFreeId exists and
-                                                                                     // matches case
-
-        if (freelancer == null) {
-            model.addAttribute("error", "Freelancer not found.");
-            return "error"; // Display error page if freelancer doesn't exist
-        } else {
-            model.addAttribute("freelancer", freelancer.orElse(null));
-        }
-        /*
-         * List<Jobs> ongoingJobs = jobRepository.findByFreeIdAndprogress(freeId,
-         * "ongoing"); for(Jobs job: jobRepository.findByFreeIdAndprogress(freeId,
-         * "Unverified")){ ongoingJobs.add(job); } List<Jobs> completedJobs =
-         * jobRepository.findByFreeIdAndprogress(freeId, "completed");
-         * 
-         * Map<String, Map<String, Object>> jobDetails = new HashMap<>();
-         * 
-         * for (Jobs job : ongoingJobs) { String freesId = job.getFreeId().getFreeId();
-         * FreelancerJob freeJob =
-         * freeJobRepository.findByJobIdAndFreeId(job.getJobId(), freesId);
-         * 
-         * if (freeJob != null) { Map<String, Object> jobInfo = new HashMap<>();
-         * jobInfo.put("duration", freeJob.getDuration()); jobInfo.put("salary",
-         * freeJob.getSalary()); jobDetails.put(freesId, jobInfo); } }
-         * 
-         * model.addAttribute("ongoingJobs", ongoingJobs);
-         * model.addAttribute("completedJobs", completedJobs);
-         * model.addAttribute("jobDetails", jobDetails);
-         */
-        List<FreelancerJob> ongoingJobs = freeJobRepository.findByFreeIdAndProgress(freeId, "ongoing");
-        for (FreelancerJob job : freeJobRepository.findByFreeIdAndProgress(freeId, "unverified")) {
-            ongoingJobs.add(job);
-        }
-        List<FreelancerJob> completedJobs = freeJobRepository.findByFreeIdAndProgress(freeId, "completed");
-
-        model.addAttribute("ongoingJobs", ongoingJobs);
-        model.addAttribute("completedJobs", completedJobs);
-        return "freelancerprofile";
     }
 
     @GetMapping("/freelancer/edit/{freelancerId}")
-    public String showEditForm2(@PathVariable("freelancerId") String freelancerId, Model model) {
+    public ResponseEntity<Freelancer> getFreelancerProfile1(@PathVariable("freelancerId") String freelancerId) {
         Optional<Freelancer> freelancer = freelancerRepository.findByFreeId(freelancerId);
-        if (freelancer == null) {
-            return "redirect:/error"; // Redirect if freelancer not found
+        if (freelancer.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        model.addAttribute("freelancer", freelancer);
-        return "editFreelancer"; // Template name for editing
+
+        return ResponseEntity.ok(freelancer.get());
     }
 
-    // Update the freelancer's profile
     @PostMapping("/freelancer/update")
-    public String updateFreelancer(@ModelAttribute Freelancer freelancer, Model model,
-            RedirectAttributes redirectAttributes) {
-        Freelancer existingFreelancer = freelancerRepository.findById(freelancer.getId())
+    public ResponseEntity<Map<String, String>> updateFreelancer(@RequestBody Freelancer freelancer) {
+        Optional<Freelancer> optionalFreelancer = freelancerRepository.findByFreeId(freelancer.getFreeId());
+
+        Freelancer existingFreelancer = optionalFreelancer
                 .orElseThrow(() -> new RuntimeException("Freelancer not found"));
 
         // Update only editable fields
@@ -307,12 +281,12 @@ public class FreelancerController {
         existingFreelancer.setQualification(freelancer.getQualification());
         existingFreelancer.setSkills(freelancer.getSkills());
         existingFreelancer.setPassword(freelancer.getPassword());
-        freelancerRepository.save(freelancer);
-        redirectAttributes.addFlashAttribute("notificationType", "success");
-        redirectAttributes.addFlashAttribute("notificationMessage", "Profile edited successfully!");// Save updated
-                                                                                                    // freelancer to
-                                                                                                    // database
-        return "redirect:/profile/freelancer"; // Redirect to a success page or profile page
+
+        freelancerRepository.save(existingFreelancer);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Profile updated successfully");
+        return ResponseEntity.ok(response);
     }
 
 }
