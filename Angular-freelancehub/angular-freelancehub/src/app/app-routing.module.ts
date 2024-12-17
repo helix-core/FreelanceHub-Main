@@ -9,6 +9,8 @@ import { PostjobComponent } from './client-side/postjob/postjob.component';
 import { PostedJobsComponent } from './client-side/postedjobs/postedjobs.component';
 import { AssignedjobsComponent } from './client-side/assignedjobs/assignedjobs.component';
 import { BiddingComponent } from './client-side/bidding/bidding.component';
+import { FreelancerProfileComponent } from './freelancer-side/freelancerprofile/freelancerprofile.component';
+import { FreelancerEditComponent } from './freelancer-side/edit-freelancer/edit-freelancer.component';
 
 const routes: Routes = [
   { path: 'signup/client', component: SignupclientComponent },
@@ -20,6 +22,8 @@ const routes: Routes = [
   { path: 'posted-jobs',component:PostedJobsComponent},
   { path: 'assigned-jobs', component: AssignedjobsComponent},
   { path: 'bidding', component: BiddingComponent},
+  { path: 'profile/freelancer', component:FreelancerProfileComponent },
+  {path:'freelancer/edit' ,component:FreelancerEditComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' }
 ];
 
