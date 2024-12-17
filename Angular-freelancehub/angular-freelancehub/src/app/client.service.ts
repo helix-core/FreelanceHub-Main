@@ -7,6 +7,8 @@ import { Job } from './models/job.model';
   providedIn: 'root'
 })
 export class ClientService {
+  private apiUrlprofile = '/api/profile/client';
+  private baseUrl = '/api/client';
 
   constructor(private http: HttpClient) {}
 
@@ -35,4 +37,16 @@ export class ClientService {
     const params = new HttpParams().set('userId', userId);
     return this.http.get<Job[]>('/api/posted-jobs',{params});
   }
+   getClientProfile(userId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrlprofile}?userId=${userId}`);
+  }
+   getClientDetails(clientId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/edit/${clientId}`);
+  }
+
+  updateClientDetails(updatedClient: any): Observable<any> {
+  return this.http.post(`${this.baseUrl}/edit`, updatedClient,{responseType:'text'});
+}
+
+
 }

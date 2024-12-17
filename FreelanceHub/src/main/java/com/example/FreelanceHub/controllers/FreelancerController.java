@@ -29,9 +29,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
-@Controller
+@RestController
+@RequestMapping("/api")
 public class FreelancerController {
-    
+
     @Autowired
     private HttpSession session;
 
@@ -46,28 +47,27 @@ public class FreelancerController {
 
     @Autowired
     private FreeJobRepository freeJobRepository;
-    
+
     @Autowired
     private JobRepository jobRepository;
-    
+
     @Autowired
     private NotificationService notificationService;
-    
-	@GetMapping("/apply")
-    public String showApplyJob(@RequestParam Integer id, Model model, HttpSession session) {
+
+    @GetMapping("/apply")
+    public ResponseEntity<?> getJobDetails(@RequestParam Integer id, @RequestParam("userId") String userId,
+            HttpSession session) {
         Optional<ClientJob> optionalJob = clientJobRepository.findById(id);
 
         if (optionalJob.isEmpty()) {
-            model.addAttribute("error", "Job not found.");
-            return "error";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Job not found");
         }
 
         ClientJob job = optionalJob.get();
-        String freelancerId = (String) session.getAttribute("userId");
+        String freelancerId = userId;
         Freelancer freelancer = freelancerRepository.findByFreeId(freelancerId).orElse(null);
         if (freelancer == null) {
-            model.addAttribute("error", "Freelancer not found.");
-            return "error";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Freelancer not found");
         }
 
         List<String> jobSkills = job.getSkillsAsList();
@@ -82,47 +82,47 @@ public class FreelancerController {
                 .count();
         int matchedPercentage = (int) ((matchedSkillsCount * 100.0) / jobSkills.size());
 
-        model.addAttribute("job", job);
-        model.addAttribute("salaryMin", job.getCostMin());
-        model.addAttribute("salaryMax", job.getCostMax());
-        model.addAttribute("durationMin", job.getDurMin());
-        model.addAttribute("durationMax", job.getDurMax());
-        model.addAttribute("experienceMin", job.getExpMin());
-        model.addAttribute("experienceMax", 50); 
-        model.addAttribute("matchedSkillsPercentage", matchedPercentage);
-        model.addAttribute("missingSkills", missingSkills);
+        Map<String, Object> response = new HashMap<>();
+        response.put("job", job);
+        response.put("salaryMin", job.getCostMin());
+        response.put("salaryMax", job.getCostMax());
+        response.put("durationMin", job.getDurMin());
+        response.put("durationMax", job.getDurMax());
+        response.put("experienceMin", job.getExpMin());
+        response.put("experienceMax", 50);
+        response.put("matchedSkillsPercentage", matchedPercentage);
+        response.put("missingSkills", missingSkills);
 
-        return "applyjob";
+        return ResponseEntity.ok(response);
     }
 
-
     @PostMapping("/apply")
-    public String handleJobSubmission(
-            @RequestParam("salary") long salary,
+    public ResponseEntity<Map<String, String>> handleJobSubmission(
+            @RequestParam("salary") int salary,
             @RequestParam("duration") int duration,
             @RequestParam("experience") int experience,
-            @RequestParam("previousWorks") MultipartFile[] previousWorks,
+            @RequestParam("previousWorks") String previousWorks,
             @RequestParam("jobId") Integer jobId,
+            @RequestParam("userId") String userId,
             Model model,
             HttpSession session,
             RedirectAttributes redirectAttributes) {
 
         Optional<ClientJob> optionalJob = clientJobRepository.findById(jobId);
         if (optionalJob.isEmpty()) {
-            model.addAttribute("error", "Job not found.");
-            return "error";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", "Job not found."));
         }
         ClientJob job = optionalJob.get();
 
-        String freelancerId = (String) session.getAttribute("userId");
+        String freelancerId = userId;
         if (freelancerId == null) {
-            model.addAttribute("error", "Freelancer session is invalid.");
-            return "error";
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("message", "Freelancer session is invalid."));
         }
+
         Freelancer freelancer = freelancerRepository.findByFreeId(freelancerId).orElse(null);
         if (freelancer == null) {
-            model.addAttribute("error", "Freelancer not found.");
-            return "error";
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Freelancer not found."));
         }
 
         // Match skills
@@ -135,101 +135,84 @@ public class FreelancerController {
 
         FreelancerJob freelancerJob = new FreelancerJob(salary, duration, experience, matchedPercentage, "ongoing");
         freelancerJob.setJobId(job);
-        freelancerJob.setFreeId(freelancer); 
+        freelancerJob.setFreeId(freelancer);
+        freelancerJob.setPreviousWorkLink(previousWorks);
         try {
             freeJobRepository.save(freelancerJob);
         } catch (Exception e) {
             model.addAttribute("error", "Failed to save job application: " + e.getMessage());
-            return "error";
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("message", "Failed to save job application: " + e.getMessage()));
         }
 
-        model.addAttribute("job", freelancerJob); // Pass the saved job
+        model.addAttribute("job", freelancerJob);
         model.addAttribute("clientName", job.getClientName());
         model.addAttribute("status", "pending");
         notificationService.addNotification(job.getClientId(), "One of your jobs got an application!");
-        
+
         redirectAttributes.addFlashAttribute("notificationType", "success");
         redirectAttributes.addFlashAttribute("notificationMessage", "Application Successful!");
-        return "redirect:/applied-jobs";
+
+        // Return JSON response with message
+        return ResponseEntity.ok(Map.of("message", "Application submitted successfully"));
     }
 
-
-
     @GetMapping("/applied-jobs")
-    public String getAppliedJobs(Model model) {
-        String freelancerId = (String) session.getAttribute("userId");
-        if (freelancerId == null) {
-            return "error";
+    public ResponseEntity<List<FreelancerJob>> getAppliedJobs(@RequestParam("userId") String freelancerId) {
+        if (freelancerId == null || freelancerId.isEmpty()) {
+            return ResponseEntity.status(401).build();
         }
 
         List<FreelancerJob> appliedJobs = jobService.getJobsByFreelancer(freelancerId);
-
-        if (appliedJobs == null || appliedJobs.isEmpty()) {
-            appliedJobs = new ArrayList<>();
-        }
-
-        model.addAttribute("appliedJobs", appliedJobs);
-        return "appliedjobs";
+        return ResponseEntity.ok(appliedJobs);
     }
 
     @GetMapping("/accepted-jobs")
-    public String getAcceptedJobs(Model model) {
-        String freelancerId = (String) session.getAttribute("userId");
-        if (freelancerId == null) {
-            return "error"; 
-        }
-
-        List<FreelancerJob> acceptedJobs = jobService.getAcceptedJobsByFreelancer(freelancerId);
-
+    public ResponseEntity<List<FreelancerJob>> getAcceptedJobs(@RequestParam String userId) {
+        List<FreelancerJob> acceptedJobs = jobService.getAcceptedJobsByFreelancer(userId);
         if (acceptedJobs == null || acceptedJobs.isEmpty()) {
-            acceptedJobs = new ArrayList<>(); 
-        }else {
-        	Collections.reverse(acceptedJobs);
+            acceptedJobs = new ArrayList<>();
+        } else {
+            Collections.reverse(acceptedJobs);
         }
-
-        model.addAttribute("acceptedJobs", acceptedJobs);
-        return "acceptedjobs"; 
+        return ResponseEntity.ok(acceptedJobs);
     }
 
     @PostMapping("/upload-project")
-    public String uploadProject(
-            @RequestParam("jobId") Integer jobId,
-            @RequestParam("githubLink") String githubLink,
-            RedirectAttributes redirectAttributes) {
+    public ResponseEntity<String> uploadProject(
+            @RequestParam("jobId") String jobIdString,
+            @RequestParam("githubLink") String githubLink) {
+        System.out.println("Received jobId: " + jobIdString);
         try {
-        	jobService.uploadProject(jobId,githubLink);
-        	Optional<Jobs> job= jobRepository.findByjobId(jobId);
-        	String clientId=job.get().getClientId().getClientId();
-        	notificationService.addNotification(clientId, "One of your jobs had an upload. Kindly verify the progress!");
-            redirectAttributes.addFlashAttribute("notificationType", "success");
-            redirectAttributes.addFlashAttribute("notificationMessage", "Upload Successful!");
-            return "redirect:/accepted-jobs"; 
+            Integer jobId = Integer.parseInt(jobIdString);
+            jobService.uploadProject(jobId, githubLink);
+            Optional<Jobs> job = jobRepository.findByjobId(jobId);
+            String clientId = job.get().getClientId().getClientId();
+            notificationService.addNotification(clientId,
+                    "One of your jobs had an upload. Kindly verify the progress!");
+            return ResponseEntity.ok("Upload Successful");
         } catch (Exception e) {
             e.printStackTrace();
-            return "error"; 
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading project");
         }
     }
-
-
-
 
     @GetMapping("/search")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> searchJobs(@RequestParam("query") String query, HttpSession session) {
-        String freelancerId = (String) session.getAttribute("userId");
-        if (freelancerId == null) {
+    public ResponseEntity<Map<String, Object>> searchJobs(@RequestParam("query") String query,
+            @RequestParam("userId") String userId, HttpSession session) {
+        if (userId == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
 
-        List<ClientJob> jobs = clientJobRepository.searchJobsWithStatus("pending", freelancerId,query);
-        String role = (String) session.getAttribute("role");
+        List<ClientJob> jobs = clientJobRepository.searchJobsWithStatus("pending", userId, query);
 
         Map<String, Object> response = new HashMap<>();
         response.put("jobs", jobs);
-        response.put("role", role);
 
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/explore")
     public String showExplorePage(Model model, HttpSession session) {
         String userId = (String) session.getAttribute("userId");// Fetch freelancer ID from session
@@ -248,48 +231,47 @@ public class FreelancerController {
 
         return "explore";
     }
-    
 
     @GetMapping("/profile/freelancer")
-    public String showFreelancerProfile(Model model,HttpSession session) {
+    public String showFreelancerProfile(Model model, HttpSession session) {
         String freeId = (String) session.getAttribute("userId"); // Ensure "FreeId" matches the login session key
 
         if (freeId == null) {
             return "redirect:/login"; // Redirect to login if FreeId is not found
         }
 
-        Optional<Freelancer> freelancer = freelancerRepository.findByFreeId(freeId); // Ensure findByFreeId exists and matches case
+        Optional<Freelancer> freelancer = freelancerRepository.findByFreeId(freeId); // Ensure findByFreeId exists and
+                                                                                     // matches case
 
         if (freelancer == null) {
             model.addAttribute("error", "Freelancer not found.");
             return "error"; // Display error page if freelancer doesn't exist
+        } else {
+            model.addAttribute("freelancer", freelancer.orElse(null));
         }
-        else {
-        	model.addAttribute("freelancer",freelancer.orElse(null));
-        }
-		/*
-		 * List<Jobs> ongoingJobs = jobRepository.findByFreeIdAndprogress(freeId,
-		 * "ongoing"); for(Jobs job: jobRepository.findByFreeIdAndprogress(freeId,
-		 * "Unverified")){ ongoingJobs.add(job); } List<Jobs> completedJobs =
-		 * jobRepository.findByFreeIdAndprogress(freeId, "completed");
-		 * 
-		 * Map<String, Map<String, Object>> jobDetails = new HashMap<>();
-		 * 
-		 * for (Jobs job : ongoingJobs) { String freesId = job.getFreeId().getFreeId();
-		 * FreelancerJob freeJob =
-		 * freeJobRepository.findByJobIdAndFreeId(job.getJobId(), freesId);
-		 * 
-		 * if (freeJob != null) { Map<String, Object> jobInfo = new HashMap<>();
-		 * jobInfo.put("duration", freeJob.getDuration()); jobInfo.put("salary",
-		 * freeJob.getSalary()); jobDetails.put(freesId, jobInfo); } }
-		 * 
-		 * model.addAttribute("ongoingJobs", ongoingJobs);
-		 * model.addAttribute("completedJobs", completedJobs);
-		 * model.addAttribute("jobDetails", jobDetails);
-		 */
+        /*
+         * List<Jobs> ongoingJobs = jobRepository.findByFreeIdAndprogress(freeId,
+         * "ongoing"); for(Jobs job: jobRepository.findByFreeIdAndprogress(freeId,
+         * "Unverified")){ ongoingJobs.add(job); } List<Jobs> completedJobs =
+         * jobRepository.findByFreeIdAndprogress(freeId, "completed");
+         * 
+         * Map<String, Map<String, Object>> jobDetails = new HashMap<>();
+         * 
+         * for (Jobs job : ongoingJobs) { String freesId = job.getFreeId().getFreeId();
+         * FreelancerJob freeJob =
+         * freeJobRepository.findByJobIdAndFreeId(job.getJobId(), freesId);
+         * 
+         * if (freeJob != null) { Map<String, Object> jobInfo = new HashMap<>();
+         * jobInfo.put("duration", freeJob.getDuration()); jobInfo.put("salary",
+         * freeJob.getSalary()); jobDetails.put(freesId, jobInfo); } }
+         * 
+         * model.addAttribute("ongoingJobs", ongoingJobs);
+         * model.addAttribute("completedJobs", completedJobs);
+         * model.addAttribute("jobDetails", jobDetails);
+         */
         List<FreelancerJob> ongoingJobs = freeJobRepository.findByFreeIdAndProgress(freeId, "ongoing");
-        for(FreelancerJob job: freeJobRepository.findByFreeIdAndProgress(freeId, "unverified")){
-        	ongoingJobs.add(job);
+        for (FreelancerJob job : freeJobRepository.findByFreeIdAndProgress(freeId, "unverified")) {
+            ongoingJobs.add(job);
         }
         List<FreelancerJob> completedJobs = freeJobRepository.findByFreeIdAndProgress(freeId, "completed");
 
@@ -297,8 +279,7 @@ public class FreelancerController {
         model.addAttribute("completedJobs", completedJobs);
         return "freelancerprofile";
     }
-    
-    
+
     @GetMapping("/freelancer/edit/{freelancerId}")
     public ResponseEntity<Freelancer> getFreelancerProfile1(@PathVariable("freelancerId") String freelancerId) {
         Optional<Freelancer> freelancer = freelancerRepository.findByFreeId(freelancerId);
@@ -315,6 +296,7 @@ public class FreelancerController {
 
     	Freelancer existingFreelancer = optionalFreelancer
     	        .orElseThrow(() -> new RuntimeException("Freelancer not found"));
+
 
         // Update only editable fields
         existingFreelancer.setFreeEmail(freelancer.getFreeEmail());
@@ -333,6 +315,5 @@ public class FreelancerController {
         response.put("message", "Profile updated successfully");
         return ResponseEntity.ok(response);
     }
-    
-    
+
 }
