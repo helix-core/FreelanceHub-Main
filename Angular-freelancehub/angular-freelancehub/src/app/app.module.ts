@@ -19,6 +19,8 @@ import { BiddingComponent } from './client-side/bidding/bidding.component';
 import { ApplyjobComponent } from './freelancer-side/applyjob/applyjob.component';
 import { AppliedjobsComponent } from './freelancer-side/appliedjobs/appliedjobs.component';
 import { AcceptedjobsComponent } from './freelancer-side/acceptedjobs/acceptedjobs.component';
+import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
+import { EditClientFormComponent } from './client-side/edit-client-form/edit-client-form.component';
 // import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
@@ -35,7 +37,9 @@ import { AcceptedjobsComponent } from './freelancer-side/acceptedjobs/acceptedjo
     BiddingComponent,
     ApplyjobComponent,
     AppliedjobsComponent,
-    AcceptedjobsComponent
+    AcceptedjobsComponent,
+    ClientprofileComponent,
+    EditClientFormComponent
   ],
   imports: [
     BrowserModule,
