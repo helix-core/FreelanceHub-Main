@@ -9,6 +9,12 @@ import { PostjobComponent } from './client-side/postjob/postjob.component';
 import { PostedJobsComponent } from './client-side/postedjobs/postedjobs.component';
 import { AssignedjobsComponent } from './client-side/assignedjobs/assignedjobs.component';
 import { BiddingComponent } from './client-side/bidding/bidding.component';
+import { ExploreComponent } from './common-pages/explore/explore.component';
+import { ApplyjobComponent } from './freelancer-side/applyjob/applyjob.component';
+import { AppliedjobsComponent } from './freelancer-side/appliedjobs/appliedjobs.component';
+import { AcceptedjobsComponent } from './freelancer-side/acceptedjobs/acceptedjobs.component';
+import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
+import { EditClientFormComponent } from './client-side/edit-client-form/edit-client-form.component';
 
 const routes: Routes = [
   { path: 'signup/client', component: SignupclientComponent },
@@ -20,7 +26,14 @@ const routes: Routes = [
   { path: 'posted-jobs',component:PostedJobsComponent},
   { path: 'assigned-jobs', component: AssignedjobsComponent},
   { path: 'bidding', component: BiddingComponent},
-  { path: '', redirectTo: '/login', pathMatch: 'full' }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+   { path: 'explore', component: ExploreComponent },
+  {path:'apply',component:ApplyjobComponent},
+  {path:'applied-jobs',component:AppliedjobsComponent},
+  {path:'accepted-jobs',component:AcceptedjobsComponent},
+  {path:'profile-client',component:ClientprofileComponent},
+  {path:'profile-client-edit',component:EditClientFormComponent}
+  
 ];
 
 @NgModule({
