@@ -12,7 +12,6 @@ export class FreelancerService {
   private apiUrlProf = '/api/profile/freelancer'; // Update with the correct endpoint
   private apiUrledit = '/api/freelancer';
 
-
   private apiUrl = '/api/signup/freelancer';
   private apiUrljob = '/api/applied-jobs';
   private acceptedJobsUrl = '/api/accepted-jobs';
@@ -22,7 +21,6 @@ export class FreelancerService {
   registerFreelancer(formData: any): Observable<any> {
     return this.http.post('/api/signup/freelancer', formData)
   }
-
   getFreelancerProfile(userId: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrlProf}?userId=${userId}`);
   }
@@ -33,7 +31,6 @@ export class FreelancerService {
   updateFreelancer(freelancer: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrledit}/update`, freelancer);
   }
-
 
   private isBrowser(): boolean {
     return typeof window !== 'undefined' && typeof localStorage !== 'undefined';

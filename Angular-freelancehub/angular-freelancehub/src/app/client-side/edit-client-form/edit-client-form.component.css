@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Mulish", serif;
+    font-family: "Mulish", sans-serif;
 }
 
 .body-container {
@@ -23,7 +23,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    position: fixed;
+    position: absolute;
     top: 0;
     width: 100%;
     height: 60px;
@@ -283,3 +283,7 @@ form button:hover {
     font-weight: bolder;
     margin-bottom: revert;
 }
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }

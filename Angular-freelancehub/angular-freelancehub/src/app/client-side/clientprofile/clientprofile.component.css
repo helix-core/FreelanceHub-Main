@@ -2,7 +2,13 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Mulish", serif;
+    font-family: "Mulish", sans-serif;
+}
+
+.whole-container{
+    background-color: #f8f9fa;
+    height: 100%;
+    font-family: 'Mulish',sans-serif;
 }
 
 body {
@@ -40,7 +46,7 @@ body {
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
 }
 
@@ -73,7 +79,7 @@ body {
     background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
     padding: 20px;
     border-radius: 8px;
-    margin-top: 23px;
+    margin-top: 30px;
 }
 
 .profile-pic {
@@ -156,3 +162,7 @@ body {
 .project-card p {
     margin-bottom: 5px;
 }
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }
