@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FreelancerService } from '../../freelancer.service';
+import { NotificationService } from '../../notification.service';
 
 
 
@@ -18,7 +19,8 @@ export class SignupfreelancerComponent {
   constructor(
     private fb: FormBuilder,
     private freelancerService: FreelancerService,
-    private router: Router
+    private router: Router,
+    private notificationService: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -54,8 +56,7 @@ export class SignupfreelancerComponent {
     if (this.signupForm.valid) {
       const formData = this.signupForm.value;
       this.freelancerService.registerFreelancer(formData).subscribe(response => {
-        console.log('Freelancer Registered Successfully', response);
-        this.router.navigate(['/login']);
+        this.notificationService.showNotification(response.message, 'success', '/login');
       });
     }
   }

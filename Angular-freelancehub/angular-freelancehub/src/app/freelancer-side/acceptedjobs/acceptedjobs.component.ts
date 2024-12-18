@@ -3,6 +3,7 @@ import { FreelancerService } from '../../freelancer.service';
 import { FreelancerJob } from '../../models/freelancer-job.model';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../notification.service';
 @Component({
   selector: 'app-acceptedjobs',
   standalone: false,
@@ -18,6 +19,7 @@ export class AcceptedjobsComponent implements OnInit{
 
   constructor(
     private freelancerservice: FreelancerService,
+    private notificationService: NotificationService,
     private http: HttpClient,
     private router: Router
   ) {}
@@ -68,7 +70,7 @@ export class AcceptedjobsComponent implements OnInit{
     }
 
     // Log for debugging
-    console.log('Toggling upload form for jobId: ' + jobId);
+    // console.log('Toggling upload form for jobId: ' + jobId);
   }
 
   uploadProject(jobId: number) {
@@ -78,16 +80,12 @@ export class AcceptedjobsComponent implements OnInit{
 
     this.http.post('/api/upload-project', formData,{responseType:'text'}).subscribe(
       (response) => {
-        // this.notificationType = 'success';
-        // this.notificationMessage = 'Upload Successful!';
-        alert(response);
         this.githubLink='';
         this.loadAcceptedJobs();
+        this.notificationService.showNotification(response, 'success');
       },
       (error) => {
-        // this.notificationType = 'error';
-        // this.notificationMessage = 'Upload Failed!';
-        console.error('Error uploading project', error);
+        this.notificationService.showNotification(error, 'error');
       }
     );
   }

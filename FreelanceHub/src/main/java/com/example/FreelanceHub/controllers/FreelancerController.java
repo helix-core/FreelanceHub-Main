@@ -140,11 +140,10 @@ public class FreelancerController {
         try {
             freeJobRepository.save(freelancerJob);
         } catch (Exception e) {
-            model.addAttribute("error", "Failed to save job application: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("message", "Failed to save job application: " + e.getMessage()));
         }
-
+        notificationService.addNotification(job.getClientId(), "One of your jobs got an application!");
         // Return JSON response with message
         return ResponseEntity.ok(Map.of("message", "Application submitted successfully"));
     }

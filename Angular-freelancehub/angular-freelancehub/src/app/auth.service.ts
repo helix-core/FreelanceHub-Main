@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   private apiUrl = '/api'; // Adjust to your backend URL
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService) {}
 
   login(email: string, password: string) {
     const loginData = { email, password };
@@ -21,14 +22,17 @@ export class AuthService {
             localStorage.setItem('userRole', response.role); // client, freelancer, etc.
             localStorage.setItem('userId', response.userId); // Set the user ID
           }
-          alert('Login Successful!');
-          this.router.navigate(['/landing']); // Redirect to a dashboard or landing page
+          this.notificationService.showNotification(response.message, 'success', '/landing');
+          // alert('Login Successful!');
+          // this.router.navigate(['/landing']); // Redirect to a dashboard or landing page
         } else {
-          alert(response.message);
+          // alert(response.message);
+          this.notificationService.showNotification(response.message, 'error');
         }
       },
       error: (error) => {
-        alert('An error occurred during login.');
+        this.notificationService.showNotification('An error occurred during login.', 'error');
+        // alert('An error occurred during login.');
       }
     });
   }
@@ -56,7 +60,7 @@ export class AuthService {
       localStorage.removeItem('userRole');
       localStorage.removeItem('userId');
     }
-    this.router.navigate(['/login']);
+    this.notificationService.showNotification('Successfully logged out', 'success', '/login');
   }
 
   getRole(): string | null {

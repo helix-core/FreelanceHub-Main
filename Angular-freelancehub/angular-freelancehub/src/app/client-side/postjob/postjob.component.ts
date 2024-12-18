@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ClientService } from '../../client.service';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-postjob',
@@ -22,7 +23,7 @@ export class PostjobComponent {
     jobStat: 'pending'
   };
 
-  constructor(private http: HttpClient, private router: Router, private clientService: ClientService) {}
+  constructor(private http: HttpClient, private router: Router, private clientService: ClientService, private notificationService :NotificationService) {}
 
   addSkill(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
@@ -44,12 +45,10 @@ export class PostjobComponent {
   submitJobForm(): void {
     this.clientService.postJob(this.clientJob).subscribe({
       next: (response) => {
-        alert('Job posted successfully!');
-        this.router.navigate(['/posted-jobs']);
+        this.notificationService.showNotification('Job Posted Successfully!', 'success', '/posted-jobs');
       },
       error: (error) => {
-        alert('Failed to post the job.');
-        console.error(error);
+        this.notificationService.showNotification(error, 'error');
       },
     });
   }

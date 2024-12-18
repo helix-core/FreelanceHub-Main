@@ -106,7 +106,7 @@ public ResponseEntity<Map<String, String>> registerClient(@Valid @RequestBody Cl
 
     boolean isRegistered = clientService.registerClient(client);
     if (isRegistered) {
-        response.put("message", "Sign Up Successful!");
+        response.put("message", "Client Registered Successfully!");
         return ResponseEntity.ok(response);
     } else {
         response.put("message", "Failed to register. Please try again.");
@@ -199,7 +199,7 @@ public ResponseEntity<Map<String, String>> registerClient(@Valid @RequestBody Cl
     
     @GetMapping("/getUnreadNotifications")
     @ResponseBody
-    public Map<String,Object> getUnreadNotifications(@SessionAttribute("userId") String userId) {
+    public Map<String,Object> getUnreadNotifications(@RequestParam("userId") String userId) {
     	// Keep only the most recent 10 notifications
     	notificationService.delNotification(userId);
         List<Notification >unreadNotifs= notificationService.getNotifications(userId);
@@ -219,7 +219,7 @@ public ResponseEntity<Map<String, String>> registerClient(@Valid @RequestBody Cl
     
     @PostMapping("/markNotificationsAsRead")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Returns no content if successful
-    public void markNotificationsAsRead(@SessionAttribute("userId") String userId) {
+    public void markNotificationsAsRead(@RequestParam("userId") String userId) {
         // Fetch unread notifications for the user
         List<Notification> unreadNotifications = notificationService.getNotifications(userId);
         // Mark each notification as read

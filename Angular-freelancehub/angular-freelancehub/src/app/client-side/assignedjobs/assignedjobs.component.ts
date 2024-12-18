@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-assignedjobs',
@@ -12,7 +13,7 @@ export class AssignedjobsComponent implements OnInit {
   ongoingJobs: any[] = [];
   completedJobs: any[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.fetchAssignedJobs();
@@ -49,11 +50,11 @@ export class AssignedjobsComponent implements OnInit {
 
     this.http.post('/api/verify-project', formData,{ responseType: 'text' }).subscribe(
       (response) => {
-        alert(response);
         this.fetchAssignedJobs(); // Refresh the job list
+        this.notificationService.showNotification(response, 'success');
       },
       (error) => {
-        console.error('Error verifying project:', error);
+        this.notificationService.showNotification(error, 'error');
       }
     );
   }

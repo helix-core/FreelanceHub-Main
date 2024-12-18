@@ -24,7 +24,8 @@ import { EditClientFormComponent } from './client-side/edit-client-form/edit-cli
 import { FreelancerEditComponent } from './freelancer-side/edit-freelancer/edit-freelancer.component';
 import { FreelancerProfileComponent } from './freelancer-side/freelancerprofile/freelancerprofile.component';
 import { ExploreComponent } from './common-pages/explore/explore.component';
-
+import { NotificationComponent } from './common-pages/notification/notification.component';
+import { NotificationService } from './notification.service';
 // import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
@@ -46,7 +47,8 @@ import { ExploreComponent } from './common-pages/explore/explore.component';
     EditClientFormComponent,
     FreelancerEditComponent,
     FreelancerProfileComponent,
-    ExploreComponent
+    ExploreComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,7 @@ import { ExploreComponent } from './common-pages/explore/explore.component';
     ),
     ClientService,
     RoleService,
-    
+    NotificationService
   ],
   bootstrap: [AppComponent]
 })

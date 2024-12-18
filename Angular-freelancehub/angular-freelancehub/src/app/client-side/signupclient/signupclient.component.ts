@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ClientService } from '../../client.service'; // Import your service
 import { Router } from '@angular/router';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-client-signup',
@@ -24,7 +25,7 @@ export class SignupclientComponent {
   notificationMessage: string = '';
   notificationType: string = '';
 
-  constructor(private clientService: ClientService, private router: Router) {}
+  constructor(private clientService: ClientService, private router: Router,private notificationService: NotificationService) {}
 
   // ngOnInit() {
   //   // You can call a service method here to load any initial data if needed
@@ -42,13 +43,10 @@ export class SignupclientComponent {
   onSubmit() {
     this.clientService.registerClient(this.clientDTO).subscribe(
       response => {
-        this.notificationMessage = 'Sign Up Successful!';
-        this.notificationType = 'success';
-        setTimeout(() => this.router.navigate(['/login'])); // Redirect to login page
+        this.notificationService.showNotification(response.message, 'success', '/login');// Redirect to login page
       },
       error => {
-        this.notificationMessage = 'Failed to register. Please try again.';
-        this.notificationType = 'error';
+        this.notificationService.showNotification(error, 'error');
       }
     );
   }

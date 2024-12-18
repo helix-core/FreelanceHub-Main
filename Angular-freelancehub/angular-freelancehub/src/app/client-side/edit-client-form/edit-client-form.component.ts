@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClientService } from '../../client.service';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-edit-client-form',
@@ -15,6 +16,7 @@ export class EditClientFormComponent implements OnInit {
    constructor(
     private fb: FormBuilder,
     private clientService: ClientService,
+    private notificationService : NotificationService,
     private router: Router
   ) {}
 
@@ -51,12 +53,10 @@ export class EditClientFormComponent implements OnInit {
       updatedClient.userId = userId; // Add userId to the request body
       this.clientService.updateClientDetails(updatedClient).subscribe(
         () => {
-          alert('Profile updated successfully!');
-          this.router.navigate(['/profile-client']); // Redirect to the profile page
+          this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile-client'); // Redirect to the profile page
         },
         (error) => {
-          console.error('Error updating profile:', error);
-          alert('Failed to update profile. Please try again.');
+          this.notificationService.showNotification(error, 'error');
         }
       );
     } else {
