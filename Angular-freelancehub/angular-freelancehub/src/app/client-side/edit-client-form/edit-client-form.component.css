@@ -13,7 +13,7 @@
     justify-content: center;
     min-height: 100vh;
     background-color: #f8f9fa;
-    padding-top: 80px;
+  
     /* To adjust for fixed navbar */
 }
 
@@ -23,7 +23,6 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    position: fixed;
     top: 0;
     width: 100%;
     height: 60px;
@@ -89,6 +88,7 @@
     background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 20px;
 }
 
 .form-container h1 {
@@ -104,7 +104,7 @@ form input,
 form textarea {
     width: 100%;
     padding: 12px 15px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     border-radius: 20px;
     border: none;
     outline: none;
@@ -133,6 +133,13 @@ form button:hover {
     background: #1e2440;
 }
 
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-left: 11px;
+    margin-bottom: 8px;
+    display: block;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
     .form-container {

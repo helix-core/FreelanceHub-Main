@@ -105,6 +105,14 @@
       font-size: 0.8rem;
       color: #555;
   }
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* Ensures the image covers the div area */
+    }
+
+ 
   .profile-info{
       margin-right: 700px;
     }

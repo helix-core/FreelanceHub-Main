@@ -1,144 +1,180 @@
 <div class="whole-container">
-    <div class="navbar">
-      <div class="navbar-left">
-        <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" alt="Logo" class="logo" />
-        <span class="navbar-title">Freelancehub</span>
-      </div>
+  <div class="navbar">
+    <div class="navbar-left">
+      <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" alt="Logo" class="logo" />
+      <span class="navbar-title">Freelancehub</span>
     </div>
-  
-    <div class="dashboard-header">
-      <h1>Company <span>Dashboard</span></h1>
-      <div class="icons">
-        <span class="l1">
-          <a routerLink="/posted-jobs" class="button">
-            <img src="/assets/images/account_circle.png" alt="">
-          </a>
-        </span>
-        <span class="l2">
-          <a routerLink="/postjob" class="button">
-            <img src="/assets/images/bookmark.png" alt="">
-          </a>
-        </span>
-        <span class="l3">
-          <a routerLink="/assigned-jobs" class="button">
-            <img src="/assets/images/Award.png" alt="">
-          </a>
-        </span>
-      </div>
-    </div>
+  </div>
 
-    <div class="container">
-      <h2>Post a New Job</h2>
-      
+  <div class="dashboard-header">
+    <h1>Company <span>Dashboard</span></h1>
+    <div class="icons">
+      <span class="l1">
+        <a routerLink="/posted-jobs" class="button">
+          <img src="/assets/images/account_circle.png" alt="" />
+        </a>
+      </span>
+      <span class="l2">
+        <a routerLink="/postjob" class="button">
+          <img src="/assets/images/bookmark.png" alt="" />
+        </a>
+      </span>
+      <span class="l3">
+        <a routerLink="/assigned-jobs" class="button">
+          <img src="/assets/images/Award.png" alt="" />
+        </a>
+      </span>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2>Post a New Job</h2>
+
     <div class="form-container">
-      <form (ngSubmit)="submitJobForm()" #jobForm="ngForm">
-        <input
-          class="input-text"
-          type="text"
-          id="job-title"
-          [(ngModel)]="clientJob.jobTitle"
-          name="JobTitle"
-          placeholder="Job Title"
-          required
-          #JobTitle="ngModel"
-        />
-        <div *ngIf="JobTitle.invalid && JobTitle.touched" class="error-message">
+      <form (ngSubmit)="submitJobForm()" [formGroup]="jobForm">
+        <input class="input-text" type="text" id="job-title" formControlName="jobTitle" placeholder="Job Title" />
+        <div *ngIf="jobForm.get('jobTitle')?.invalid && jobForm.get('jobTitle')?.touched" class="error-message">
           Job Title is required.
         </div>
-  
-        <input
-          class="input-text"
-          type="text"
-          id="job-description"
-          [(ngModel)]="clientJob.jobDesc"
-          name="jobDesc"
-          placeholder="Job Description"
-          required
-          #jobDesc="ngModel"
-        />
-        <div *ngIf="jobDesc.invalid && jobDesc.touched" class="error-message">
+
+        <input class="input-text" type="text" id="job-description" formControlName="jobDesc"
+          placeholder="Job Description" />
+        <div *ngIf="jobForm.get('jobDesc')?.hasError('required') && jobForm.get('jobDesc')?.touched;else minError" class="error-message">
           Job Description is required.
         </div>
-  
-        <div id="skills-container">
-          <input
-            type="text"
-            id="skills-input"
-            placeholder="Add a skill and press Enter"
-            (keydown)="addSkill($event)"
-          />
+        <ng-template #minError>
+        <div *ngIf="jobForm.get('jobDesc')?.errors?.['minlength'] && jobForm.get('jobDesc')?.touched" class="error-message">
+          Job Description must be at least 10 characters long.
+        </div>
+        </ng-template>
+
+        <!-- <div id="skills-container">
+          <input type="text" id="skills-input" placeholder="Add a skill and press Enter" (keydown)="addSkill($event)" />
+          <div
+            *ngIf="jobForm.get('skillReq')?.hasError('required') && jobForm.get('skillReq')?.touched"
+            class="error-message">
+            <span>At least one skill is required</span>
+          </div>
+
           <div id="skills-display">
             <span class="skill-tag" *ngFor="let skill of clientJob.skillReq">
               {{ skill }} <span (click)="removeSkill(skill)">&times;</span>
             </span>
           </div>
+        </div> -->
+
+        <div id="skills-container">
+          <input type="text" id="skills-input" placeholder="Add a skill and press Enter" (keydown)="addSkill($event)" />
+          <div *ngIf="
+              jobForm.get('skillReq')?.hasError('required') &&
+              (jobForm.get('skillReq')?.touched || jobForm.get('skillReq')?.dirty)
+            " class="error-message">
+            <span>At least one skill is required</span>
+          </div>
+          <div id="skills-display">
+            <span class="skill-tag" *ngFor="let skill of skills">
+              {{ skill }} <span (click)="removeSkill(skill)">&times;</span>
+            </span>
+          </div>
+          <input type="hidden" formControlName="skillReq" [value]="skills.join(',')" />
         </div>
-  
+
+        
+
         <div class="number-inputs">
           <div class="input-inc-dec">
             <label>Duration (Months)</label>
             <div class="number-range">
               <span>Min:</span>
-              <input
-                type="number"
-                [(ngModel)]="clientJob.durMin"
-                name="DurMin"
-                placeholder="0"
-                required
-              />
+              <input type="number" formControlName="durMin" placeholder="0" />
               <span>Max:</span>
-              <input
-                type="number"
-                [(ngModel)]="clientJob.durMax"
-                name="DurMax"
-                placeholder="0"
-                required
-              />
+              <input type="number" formControlName="durMax" placeholder="0" />
             </div>
-          </div>
-  
+              </div>
+              <div
+                *ngIf="((jobForm.get('durMin')?.errors?.['min'] && jobForm.get('durMin')?.touched) || (jobForm.get('durMax')?.errors?.['min'] && jobForm.get('durMax')?.touched));else firstError"
+                class="error-message">
+                Duration cannot be less than or equal to zero.
+              </div>
+              <ng-template #firstError>
+                <div *ngIf="jobForm.get('durMin')?.invalid && jobForm.get('durMin')?.touched;else thirdError"
+                  class="error-message">
+                  Min Duration is required.
+                </div>
+              </ng-template>
+              
+              <ng-template #thirdError>
+                <div *ngIf="jobForm.get('durMax')?.invalid && jobForm.get('durMax')?.touched;else fourthError" class="error-message">
+                  Max Duration is required.
+                </div>
+              </ng-template>
+              
+              <ng-template #fourthError>
+                <div
+                  *ngIf="jobForm.get('durMin')?.value >= jobForm.get('durMax')?.value && jobForm.get('durMax')?.touched && jobForm.get('durMin')?.touched"
+                  class="error-message">
+                  Max duration must be greater than Min duration.
+                </div>
+              </ng-template>
+       
+
           <div class="input-inc-dec">
             <label>Cost/Hr (in $)</label>
             <div class="number-range">
               <span>Min:</span>
-              <input
-                type="number"
-                [(ngModel)]="clientJob.costMin"
-                name="CostMin"
-                placeholder="0"
-                required
-              />
+              <input type="number" formControlName="costMin" placeholder="0" />
               <span>Max:</span>
-              <input
-                type="number"
-                [(ngModel)]="clientJob.costMax"
-                name="CostMax"
-                placeholder="0"
-                required
-              />
+              <input type="number" formControlName="costMax" placeholder="0" />
             </div>
-          </div>
-  
+            </div>
+          
+              <div *ngIf="((jobForm.get('costMin')?.errors?.['min'] && jobForm.get('costMin')?.touched) || (jobForm.get('costMax')?.errors?.['min'] && jobForm.get('costMax')?.touched));else newError"
+                class="error-message">
+                Salary cannot be less than or equal to zero.
+              </div>
+                <ng-template #newError>
+            <div *ngIf="jobForm.get('costMin')?.invalid && jobForm.get('costMin')?.touched;else secondError" class="error-message">
+              Min salary is required.
+            </div>
+            </ng-template>
+            
+            <ng-template #secondError>
+            <div *ngIf="jobForm.get('costMax')?.invalid && jobForm.get('costMax')?.touched;else thisError" class="error-message">
+              Max salary is required.
+            </div>
+            </ng-template>
+           
+            <ng-template #thisError>
+              <div
+                *ngIf="jobForm.get('costMin')?.value >= jobForm.get('costMax')?.value && jobForm.get('costMax')?.touched && jobForm.get('costMin')?.touched"
+                class="error-message">
+                Max Salary must be greater than Min salary.
+              </div>
+            </ng-template>
+          
+
           <div class="input-inc-dec">
             <label>Experience (Years)</label>
             <div class="number-range">
               <span>Min:</span>
-              <input
-                type="number"
-                [(ngModel)]="clientJob.expMin"
-                name="ExpMin"
-                placeholder="0"
-                required
-              />
+              <input type="number" formControlName="expMin" placeholder="0" />
             </div>
+            </div>
+            <div *ngIf="jobForm.get('expMin')?.hasError('required')  && jobForm.get('expMin')?.touched;else fifthError" class="error-message">
+              Experience is required.
+            </div>
+            <ng-template #fifthError>
+            <div *ngIf="jobForm.get('expMin')?.errors?.['min'] && jobForm.get('expMin')?.touched " class="error-message">
+              Experience cannot be less than or equal to zero.
+            </div>
+            </ng-template>
           </div>
-        </div>
-  
-        <input type="hidden" [(ngModel)]="clientJob.jobStat" name="jobStat" />
-  
-        <button type="submit" [disabled]="jobForm.invalid">Submit</button>
+        
+
+        <input type="hidden" formControlName="jobStat" />
+
+        <button type="submit" >Submit</button>
       </form>
     </div>
   </div>
 </div>
-  

@@ -16,8 +16,8 @@ export class ClientService {
     return this.http.get<any>('/api/signup/client');
   }
   
-  registerClient(clientDTO: any): Observable<any> {
-    return this.http.post<any>('/api/signup/client', clientDTO);
+  registerClient(formData: any): Observable<any> {
+    return this.http.post<any>('/api/signup/client', formData);
   }
 
   postJob(job: any) {

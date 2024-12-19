@@ -81,7 +81,7 @@ public class ClientController {
     // Handle form submission
     @PostMapping("/postjob")
     public ResponseEntity<Map<String, String>> createJob(
-            @RequestBody ClientJobDTO clientJobDTO,
+            @RequestBody ClientJob clientJob,
             @RequestParam("userId") String userId) {
         Map<String, String> response = new HashMap<>();
         try {
@@ -90,19 +90,7 @@ public class ClientController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
 
-            ClientJob clientJob = new ClientJob();
-            System.out.println(clientJobDTO.getSkillReq());
             clientJob.setClientId(userId);
-            clientJob.setJobTitle(clientJobDTO.getJobTitle());
-            clientJob.setJobDesc(clientJobDTO.getJobDesc());
-            clientJob.setSkillsFromList(clientJobDTO.getSkillReq());
-            clientJob.setDurMin(clientJobDTO.getDurMin());
-            clientJob.setDurMax(clientJobDTO.getDurMax());
-            clientJob.setCostMin(clientJobDTO.getCostMin());
-            clientJob.setCostMax(clientJobDTO.getCostMax());
-            clientJob.setExpMin(clientJobDTO.getExpMin());
-            clientJob.setJobStat(clientJobDTO.getJobStat());
-
             clientJobRepository.save(clientJob);
             response.put("message", "Job posted successfully");
             return ResponseEntity.ok(response);

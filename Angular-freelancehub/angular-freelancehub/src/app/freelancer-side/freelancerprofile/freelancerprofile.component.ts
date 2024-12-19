@@ -22,6 +22,9 @@ export class FreelancerProfileComponent implements OnInit {
         (data) => {
           console.log(data.freelancer);
           this.freelancer = data.freelancer;
+           if (this.freelancer && this.freelancer.profile_image) {
+          this.freelancer.profile_image = 'http://localhost:8080' + this.freelancer.profile_image;
+        }
           this.ongoingJobs = data.ongoingJobs;
           this.completedJobs = data.completedJobs;
         },
