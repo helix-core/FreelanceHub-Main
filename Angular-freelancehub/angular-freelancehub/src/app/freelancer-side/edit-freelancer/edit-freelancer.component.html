@@ -1,58 +1,60 @@
-
+<div class="title">
 <header class="header">
   <div class="navbar">
       <div class="navbar-left">
           <img src="assets/images/Twitch.png" class="logo" alt="Freelancehub Logo" />
-          <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub</a></span>
+          <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub<div class="tooltiptext">Home</div></a></span>
       </div>
   </div>
 </header>
+</div>
 
 <div class="body-container">
 <div class="form-container">
     <h1>Edit Freelancer Profile</h1>
     <form [formGroup]="freelancerForm" (ngSubmit)="updateFreelancer()">
       <div class="email">
-        <label>Email</label>
+        <p>Email</p>
         <input formControlName="freeEmail" placeholder="E-mail *" required />
       </div>
       <div class="name">
-        <label>Name</label>
+        <p>Name</p>
         <input formControlName="freeName" placeholder="Name *" required />
       </div>
       <div class="age">
-        <label>Age</label>
+        <p>Age</p>
         <input formControlName="freeAge" type="number" placeholder="Age *" required />
       </div>
       <div class="country">
-        <label>Country</label>
+        <p>Country</p>
         <input formControlName="country" placeholder="Country *" required />
       </div>
       <div class="fields">
-        <label>Field of work</label>
+        <p>Field of work</p>
         <input formControlName="fow" placeholder="Field of Work *" required />
       </div>
       <div class="experience">
-        <label>Experience</label>
+        <p>Experience</p>
         <select formControlName="experience" required>
           <option value="1">1-3 years</option>
           <option value="2">3-5 years</option>
           <option value="3">5+ years</option>
         </select>
       </div>
-      <div id="skills-container">
+      <div class="skills-container">
+        <p>Skills</p>
         <input formControlName="skills" id="skills-input" placeholder="Type a skill and press Enter" />
       </div>
       <div class="qual">
-        <label>Highest Qualification</label>
+        <p>Highest Qualification</p>
         <input formControlName="qualification" placeholder="Highest Qualification *" required />
       </div>
       <div class="password">
-        <label>Password</label>
+        <p>Password</p>
         <input formControlName="password" type="password" placeholder="Password *" required />
       </div>
       <div class="retype">
-        <label>Re-type password</label>
+        <p>Re-type password</p>
         <input type="password" formControlName="retypePassword" placeholder="Re-type password *" required />
       </div>
       <button type="submit">Update</button>

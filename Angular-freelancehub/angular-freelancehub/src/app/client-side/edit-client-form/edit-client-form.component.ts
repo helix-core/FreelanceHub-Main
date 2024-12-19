@@ -52,7 +52,7 @@ export class EditClientFormComponent implements OnInit {
       this.clientService.updateClientDetails(updatedClient).subscribe(
         () => {
           alert('Profile updated successfully!');
-          this.router.navigate(['/profile-client']); // Redirect to the profile page
+          this.router.navigate(['/profile/client']); // Redirect to the profile page
         },
         (error) => {
           console.error('Error updating profile:', error);

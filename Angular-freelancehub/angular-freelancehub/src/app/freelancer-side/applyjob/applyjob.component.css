@@ -25,7 +25,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    position: fixed;
+    position: absolute;
     top: 0;
     width: 100%;
     height: 60px;
@@ -68,8 +68,9 @@
     /* border-radius: 10px; */
     /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
     /* border-right: 2px solid #232B50; */
-    border-right: 1px solid #232B50;
+    /* border-right: 1px solid #232B50; */
     overflow: hidden;
+    /* margin-top: 50px; */
 }
 
 .left-section h2 {
@@ -101,12 +102,14 @@
     padding: 20px;
     background-color: #fff;
     /* border: 1px solid #ddd; */
-    border-radius: 10px;
+    /* border-radius: 10px; */
     /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
     /* overflow-y: auto; */
     /* max-height: 100vh; */
+    /* height: calc(100% - 70px);
+    border-left: 1px solid #232B50; */
+    /* margin-top: 20px; */
 }
-
 
 
 .right-section h3 {
@@ -376,3 +379,138 @@ a.home{
     text-decoration: none; 
     color: #232B50;
   }
+
+  .home:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltiptext {
+    position: absolute;
+    top: 110%;               /* Position the tooltip below the text */
+    left:10%;              /* Center the tooltip horizontally */
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.5em;
+    white-space: nowrap;
+    opacity: 0;              /* Initially hidden */
+    visibility: hidden;      /* Not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    z-index: 10;             /* Ensure tooltip appears above other elements */
+  }
+
+  form{
+    border-left: 1px solid #232B50;
+    padding-left: 30px;
+  }
+
+
+  /* General Responsive Adjustments */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+
+    .navbar-title {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .logo {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .container {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    .left-section,
+    .right-section {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .right-section {
+        margin-top: 20px;
+    }
+
+    .client-card {
+        padding: 10px;
+    }
+
+    .slider-values {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .slider-container .slider-value {
+        text-align: center;
+    }
+
+    #submitButton {
+        left: 0;
+        width: 100%;
+    }
+
+    .skills-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .circular-progress {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-title {
+        font-size: 20px;
+    }
+
+    .left-section h2,
+    .left-section h3 {
+        font-size: 18px;
+    }
+
+    .left-section p {
+        font-size: 14px;
+    }
+
+    .slider-values {
+        font-size: 12px;
+    }
+
+    .upload-container input[type="text"] {
+        font-size: 12px;
+    }
+
+    .upload-container button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    #submitButton {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .tooltiptext {
+        font-size: 0.6em;
+    }
+
+    .skills-missing-container h5 {
+        font-size: 14px;
+    }
+}

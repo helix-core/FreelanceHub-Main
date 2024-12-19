@@ -18,6 +18,13 @@
     /* To adjust for fixed navbar */
 }
 
+.title{
+    display: flex;
+    zoom: 90%;
+    flex-direction: column;
+    overflow: hidden;
+}
+
 /* body {
     display: flex;
     flex-direction: column;
@@ -167,7 +174,7 @@ form button:hover {
     margin: 0; /* Remove default margin to avoid extra spacing */
 	color: #232B50;
 	font-weight: bolder;
-	margin-bottom: revert;
+	/* margin-bottom: revert; */
 }
 .name{
     /*display: flex;*/
@@ -179,7 +186,7 @@ form button:hover {
     margin: 0; /* Remove default margin to avoid extra spacing */
 	color: #232B50;
 	font-weight: bolder;
-	margin-bottom: revert;
+	/* margin-bottom: revert; */
 }
 .age{
     /*display: flex;*/
@@ -191,7 +198,7 @@ form button:hover {
     margin: 0; /* Remove default margin to avoid extra spacing */
 	color: #232B50;
 	font-weight: bolder;
-	margin-bottom: revert;
+	/* margin-bottom: revert; */
 }
 .country{
     /*display: flex;*/
@@ -203,7 +210,7 @@ form button:hover {
     margin: 0; /* Remove default margin to avoid extra spacing */
 	color: #232B50;
 	font-weight: bolder;
-	margin-bottom: revert;
+	/* margin-bottom: revert; */
 }
 .fields{
     /*display: flex;*/
@@ -215,7 +222,7 @@ form button:hover {
     margin: 0; /* Remove default margin to avoid extra spacing */
 	color: #232B50;
 	font-weight: bolder;
-	margin-bottom: revert;
+	/* margin-bottom: revert; */
 }
 .experience{
     /*display: flex;*/
@@ -227,7 +234,7 @@ form button:hover {
     margin: 0; /* Remove default margin to avoid extra spacing */
 	color: #232B50;
 	font-weight: bolder;
-	margin-bottom: revert;
+	/* margin-bottom: revert; */
 }
 .qual{
     /*display: flex;*/
@@ -239,7 +246,7 @@ form button:hover {
     margin: 0; /* Remove default margin to avoid extra spacing */
 	color: #232B50;
 	font-weight: bolder;
-	margin-bottom: revert;
+	/* margin-bottom: revert; */
 }
 .password{
     /*display: flex;*/
@@ -251,7 +258,7 @@ form button:hover {
     margin: 0; /* Remove default margin to avoid extra spacing */
 	color: #232B50;
 	font-weight: bolder;
-	margin-bottom: revert;
+	/* margin-bottom: revert; */
 }
 .retype{
     /*display: flex;*/
@@ -263,9 +270,125 @@ form button:hover {
     margin: 0; /* Remove default margin to avoid extra spacing */
 	color: #232B50;
 	font-weight: bolder;
-	margin-bottom: revert;
+	/* margin-bottom: revert; */
 }
 a.home{
     text-decoration: none; 
     color: #232B50;
   }
+  .skills-container p {
+    margin: 0; /* Remove default margin to avoid extra spacing */
+	color: #232B50;
+	font-weight: bolder;
+	/* margin-bottom: revert; */
+}
+.skills-container{
+    /*display: flex;*/
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Space between the label and input */
+}
+
+.home:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltiptext {
+    position: absolute;
+    top: 110%;               /* Position the tooltip below the text */
+    left:10%;              /* Center the tooltip horizontally */
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.5em;
+    white-space: nowrap;
+    opacity: 0;              /* Initially hidden */
+    visibility: hidden;      /* Not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    z-index: 10;             /* Ensure tooltip appears above other elements */
+  }
+
+
+  /* Responsive Design for Tablets and Smaller Devices */
+@media (max-width: 1024px) {
+    .navbar-title {
+        font-size: 28px;
+    }
+
+    
+
+    form input,
+    form select,
+    form button {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+
+    .navbar-left {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navbar-title {
+        font-size: 22px;
+    }
+
+    .form-container {
+        padding: 15px;
+        transform: none;
+        box-shadow: none;
+        width: 100%;
+    }
+
+    .form-container h1 {
+        font-size: 1.5em;
+    }
+
+    form input,
+    form select,
+    form button {
+        font-size: 0.8em;
+    }
+
+    .email, .name, .age, .country, .fields, .experience, .qual, .password, .retype {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-title {
+        font-size: 18px;
+    }
+
+    .logo {
+        width: 25px;
+        height: 25px;
+    }
+
+    .form-container h1 {
+        font-size: 1.2em;
+    }
+
+    form input,
+    form select,
+    form button {
+        padding: 8px;
+        font-size: 0.7em;
+    }
+
+    .tooltiptext {
+        top: 130%;
+        font-size: 0.4em;
+    }
+}

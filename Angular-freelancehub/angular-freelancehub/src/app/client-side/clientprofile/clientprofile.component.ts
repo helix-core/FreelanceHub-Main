@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClientService } from '../../client.service';
 
+
 @Component({
   selector: 'app-clientprofile',
   standalone: false,

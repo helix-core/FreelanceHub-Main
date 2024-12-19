@@ -159,7 +159,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 /*.email input {
@@ -181,7 +181,7 @@ form button:hover {
     margin: 0;
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .companyname input {
@@ -201,7 +201,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .desc {
@@ -217,7 +217,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .repname {
@@ -233,7 +233,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .desig {
@@ -249,7 +249,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .password {
@@ -265,7 +265,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .retype {
@@ -281,9 +281,31 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 a.home{
     text-decoration: none; 
     color: #232B50;
+  }
+
+  .home:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltiptext {
+    position: absolute;
+    top: 110%;               /* Position the tooltip below the text */
+    left:10%;              /* Center the tooltip horizontally */
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.5em;
+    white-space: nowrap;
+    opacity: 0;              /* Initially hidden */
+    visibility: hidden;      /* Not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    z-index: 10;             /* Ensure tooltip appears above other elements */
   }

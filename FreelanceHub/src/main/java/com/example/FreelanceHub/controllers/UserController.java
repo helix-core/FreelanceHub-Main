@@ -86,7 +86,7 @@ public class UserController {
     }
 
     @PostMapping("/signup/client")
-public ResponseEntity<Map<String, String>> registerClient(@Valid @RequestBody ClientDTO clientDTO, BindingResult result) {
+    public ResponseEntity<Map<String, String>> registerClient(@Valid @RequestBody ClientDTO clientDTO, BindingResult result) {
     Map<String, String> response = new HashMap<>();
     
     if (result.hasErrors()) {
