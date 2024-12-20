@@ -33,11 +33,13 @@ import com.example.FreelanceHub.Dto.LoginRequest;
 import com.example.FreelanceHub.models.Client;
 import com.example.FreelanceHub.models.Freelancer;
 import com.example.FreelanceHub.models.Notification;
+import com.example.FreelanceHub.models.Rating;
 import com.example.FreelanceHub.repositories.NotificationRepository;
 import com.example.FreelanceHub.services.ClientService;
 import com.example.FreelanceHub.services.FreelancerService;
 // import com.example.FreelanceHub.services.JwtService;
 import com.example.FreelanceHub.services.NotificationService;
+import com.example.FreelanceHub.services.RatingService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -61,6 +63,9 @@ public class UserController {
 
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private RatingService ratingService;
 
     // @Autowired
     // private JwtService jwtService;
@@ -90,6 +95,7 @@ public class UserController {
     public ResponseEntity<Map<String, String>> registerClient(@Valid @RequestBody ClientDTO clientDTO,
             BindingResult result) {
         Map<String, String> response = new HashMap<>();
+
 
         if (result.hasErrors()) {
             response.put("message", "Validation errors occurred. Please correct the errors and try again.");
@@ -215,10 +221,11 @@ public class UserController {
 
     @GetMapping("/getUnreadNotifications")
     @ResponseBody
-    public Map<String, Object> getUnreadNotifications(@SessionAttribute("userId") String userId) {
-        // Keep only the most recent 10 notifications
-        notificationService.delNotification(userId);
-        List<Notification> unreadNotifs = notificationService.getNotifications(userId);
+
+    public Map<String,Object> getUnreadNotifications(@RequestParam("userId") String userId) {
+    	// Keep only the most recent 10 notifications
+    	notificationService.delNotification(userId);
+        List<Notification >unreadNotifs= notificationService.getNotifications(userId);
         for (Notification notif : unreadNotifs) {
             notificationRepository.save(notif);
         }
@@ -235,7 +242,7 @@ public class UserController {
 
     @PostMapping("/markNotificationsAsRead")
     @ResponseStatus(HttpStatus.NO_CONTENT) // Returns no content if successful
-    public void markNotificationsAsRead(@SessionAttribute("userId") String userId) {
+    public void markNotificationsAsRead(@RequestParam("userId") String userId) {
         // Fetch unread notifications for the user
         List<Notification> unreadNotifications = notificationService.getNotifications(userId);
         // Mark each notification as read
@@ -262,5 +269,20 @@ public class UserController {
 
         return "redirect:/"; // Default to landing page if role is unknown
     }
+
+    @PostMapping("/ratings")
+    public Rating addRating(@RequestParam String freelancerId,
+                            @RequestParam String clientId,
+                            @RequestParam int jobId,
+                            @RequestParam int rating) {
+        return ratingService.addRating(freelancerId, clientId, jobId, rating);
+    }
+
+    @GetMapping("/ratings")
+    public Integer getRatingCount(@RequestParam String freelancerId){
+        return ratingService.countFreelancerRatings(freelancerId);
+    }
+  
+    
 
 }

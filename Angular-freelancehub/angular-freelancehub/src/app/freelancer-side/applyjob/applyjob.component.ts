@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-applyjob',
@@ -26,6 +27,7 @@ jobForm: FormGroup;
     private fb: FormBuilder,
     private http: HttpClient,
     private route: ActivatedRoute,
+    private notificationService: NotificationService,
     private router: Router
   ) {
     this.jobForm = this.fb.group({
@@ -142,18 +144,14 @@ removeLink(index: number): void {
  this.http.post<{ message: string }>('/api/apply', params).subscribe(
   (response) => {
     // Handle successful submission
-    console.log('Application submitted successfully:', response.message);
-    alert(response.message);  // Show the success message
-    this.router.navigate(['/applied-jobs']);
+    this.notificationService.showNotification(response.message, 'success', '/applied-jobs');
   },
   (error) => {
     // Handle error
     if (error.error && error.error.message) {
-      console.error('Error submitting application:', error.error.message);
-      alert(`Error: ${error.error.message}`); // Show error message to the user
+      this.notificationService.showNotification(error.error.message, 'error');
     } else {
-      console.error('Unexpected error:', error);
-      alert('An unexpected error occurred. Please try again later.');
+      this.notificationService.showNotification(error, 'error',);
     }
   }
 );

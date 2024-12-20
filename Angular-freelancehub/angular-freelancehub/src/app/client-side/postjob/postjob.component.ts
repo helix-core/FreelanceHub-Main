@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { ClientService } from '../../client.service';
 import { FormGroup,FormBuilder,Validators, ValidatorFn, ValidationErrors, AbstractControl} from '@angular/forms';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-postjob',
@@ -25,7 +26,7 @@ export class PostjobComponent implements OnInit {
     jobStat: 'pending'
   };
 
-  constructor(private http: HttpClient, private router: Router, private clientService: ClientService,private fb:FormBuilder) {}
+  constructor(private http: HttpClient, private router: Router, private clientService: ClientService,private fb:FormBuilder,private notificationService :NotificationService) {}
 
   ngOnInit(): void {
     this.jobForm = this.fb.group({
@@ -42,7 +43,6 @@ export class PostjobComponent implements OnInit {
 
   }
 
- 
 
   addSkill(event: KeyboardEvent): void {
     const input = event.target as HTMLInputElement;
@@ -68,12 +68,10 @@ export class PostjobComponent implements OnInit {
      if (this.jobForm.valid) {
     this.clientService.postJob(this.jobForm.value).subscribe({
       next: (response) => {
-        alert('Job posted successfully!');
-        this.router.navigate(['/posted-jobs']);
+        this.notificationService.showNotification('Job Posted Successfully!', 'success', '/posted-jobs');
       },
       error: (error) => {
-        alert('Failed to post the job.');
-        console.error(error);
+        this.notificationService.showNotification(error, 'error');
       },
     });
   }

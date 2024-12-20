@@ -411,21 +411,120 @@
         color: #232B50;
     }
 
-        .dropdown {
-            display: none;
-            /* Other styles */
-        }
-    
-        .dropdown.visible {
-            display: block;
-            /* Other styles */
-        }
-                .dropdown-menu {
-                    display: none;
-                    /* Other styles */
-                }
-        
-                .dropdown-menu.visible {
-                    display: block;
-                    /* Other styles */
-                }
+    .dropdown {
+        display: none;
+    }
+
+    .dropdown.visible {
+        display: block;
+    }
+    .dropdown-menu {
+        display: none;
+    }
+
+    .dropdown-menu.visible {
+        display: block;
+    }
+    #messages-dropdown {
+        position: absolute;
+        top: 65px; /* Adjust to align below the Messages button */
+        right: 95px; /* Align to the right */
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        width: 200px; /* Adjust width as needed */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: none; /* Initially hidden */
+        z-index: 1000; /* Ensure it appears above other elements */
+        overflow: hidden; /* Prevent overflow of long messages */
+    }
+
+    /* Dropdown List */
+    #messages-dropdown ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        max-height: 180px; /* Optional: Limit height and make scrollable */
+        overflow-y: auto;
+    }
+
+    /* Dropdown Items */
+    #messages-dropdown ul li {
+        padding: 10px 15px;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #messages-dropdown ul li:last-child {
+        border-bottom: none; /* Remove border for the last item */
+    }
+
+    /* Hover Effect */
+    #messages-dropdown ul li:hover {
+        background-color: #f9f9f9;
+    }
+
+    /* Notification Text */
+    #messages-dropdown ul li p {
+        margin: 0;
+        font-size: 14px;
+        color: #333;
+        word-wrap: break-word;
+    }
+
+    /* Show Dropdown */
+    #messages-dropdown.visible {
+        display: block;
+    }
+
+    /* Add Scrollbar Styling (Optional) */
+    #messages-dropdown ul::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    #messages-dropdown ul::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 8px;
+    }
+
+    #messages-dropdown ul::-webkit-scrollbar-thumb:hover {
+        background-color: #aaa;
+    }
+
+    .notifications-link {
+        position: relative; /* Ensure the badge positions relative to this anchor */
+        display: inline-block; /* Keeps proper layout */
+        text-decoration: none;
+        padding: 10px 20px;
+        background: linear-gradient(270deg, rgba(21, 201, 180, 0.5), rgba(32, 232, 160, 0.5));
+        border-radius: 10px;
+        color: #232B50;
+        font-weight: bold;
+        text-align: center;
+        line-height: 1;
+    }
+
+    .notification-badge {
+        position: absolute;
+        /* top:0px;
+        right: -8px; */
+        bottom:27px;
+        right: -5px;
+        width: 17px;
+        height: 17px;
+        background-color: #232B50;
+        color: white;
+        border-radius: 50%;
+        text-align: center;
+        align-content:center;
+        font-size: 11px;
+        line-height: 17px;
+    }
+    .toast-top-center {
+        top: 20px !important; /* Move slightly below the top of the page */
+        left: 50% !important; /* Center horizontally */
+        transform: translateX(-50%) !important; /* Correct centering */
+        background-color: greenyellow;
+    }
+                  

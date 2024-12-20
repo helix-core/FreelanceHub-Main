@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ClientService } from '../../client.service'; // Import your service
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-client-signup',
@@ -52,7 +53,26 @@ export class SignupclientComponent {
     return password === confirmPassword ? null : { passwordMismatch: true };
   };
 
+  agree:boolean=false;
 
+  notificationMessage: string = '';
+  notificationType: string = '';
+
+  constructor(private clientService: ClientService, private router: Router,private notificationService: NotificationService) {}
+
+  // ngOnInit() {
+  //   // You can call a service method here to load any initial data if needed
+  //   this.clientService.getClientFormData().subscribe(
+  //     (data) => {
+  //       // Here you can populate the form with data if required
+  //       console.log(data);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching form data', error);
+  //     }
+  //   );
+  // }
+  
   onSubmit() {
     // if (signupForm.invalid || this.clientDTO.password !== this.clientDTO.confirmPassword || !this.agree) {
     //   this.notificationMessage = 'Please correct the errors before submitting.';
@@ -62,8 +82,7 @@ export class SignupclientComponent {
     const formData = { ...this.signupForm.value };
     this.clientService.registerClient(formData).subscribe(
       response => {
-        console.log('Client Registered Successfully', response);
-        this.router.navigate(['/login']);
+        this.notificationService.showNotification(response.message, 'success', '/login');// Redirect to login page
       },
       error => {
         if (error.status === 400 && error.error) {
@@ -74,6 +93,7 @@ export class SignupclientComponent {
             }
           });
         }
+        this.notificationService.showNotification(error, 'error');
       }
     );
   

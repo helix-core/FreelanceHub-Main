@@ -2,8 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Mulish", serif;
-    justify-content: center;
+    font-family: "Mulish", sans-serif;
 }
 
 .page-container {
@@ -24,7 +23,6 @@
     width: 100%;
     height: 60px;
     z-index: 1000;
-    background-color: white;
 }
 
 .navbar-left {

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FreelancerService } from '../../freelancer.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-edit-freelancer',
@@ -16,6 +18,7 @@ export class FreelancerEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private freelancerService: FreelancerService,
+    private notificationService: NotificationService,
     private fb: FormBuilder,
     private router: Router
   ) {}
@@ -105,11 +108,10 @@ export class FreelancerEditComponent implements OnInit {
       updatedFreelancer.freeId = userId;
       this.freelancerService.updateFreelancer(updatedFreelancer).subscribe(
         () => {
-          alert('Profile updated successfully!');
-          this.router.navigate(['/profile/freelancer']);
+          this.notificationService.showNotification("Profile edited successfully!", 'success', '/profile/freelancer');
         },
         error => {
-          console.error('Error updating profile', error);
+          this.notificationService.showNotification(error, 'error');
         }
       );
     }
