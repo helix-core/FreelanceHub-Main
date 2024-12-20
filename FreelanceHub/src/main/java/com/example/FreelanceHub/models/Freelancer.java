@@ -100,7 +100,21 @@ public class Freelancer {
 		Id = id;
 	}
 
+	
+	public Double getRating() {
+		return rating;
+	}
+	public void setRating(Double rating) {
+		this.rating = rating;
+	}
+	// public List<Rating> getRatings() {
+	// 	return ratings;
+	// }
+	// public void setRatings(List<Rating> ratings) {
+	// 	this.ratings = ratings;
+	// }
 	public Freelancer(){}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
@@ -118,7 +132,13 @@ public class Freelancer {
     
     @Column(columnDefinition = "TEXT")
     private String Skills;
-    
+
+	@Column(name = "rating")
+    private Double rating;
+
+    // @OneToMany(mappedBy = "freelancer", cascade = CascadeType.ALL, orphanRemoval = true)
+    // private List<Rating> ratings;
+
     public String password;
     
 }

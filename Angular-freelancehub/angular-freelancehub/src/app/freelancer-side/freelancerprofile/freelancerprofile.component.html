@@ -16,10 +16,21 @@
             <div class="profile-header">
                 <div class="profile-pic">Profile Pic</div>
                 <div class="profile-info">
-                    <h2>{{ freelancer.freeName }}</h2>
-                    <p>{{ freelancer.qualification }}</p>
+                    <h2>{{ freelancer?.freeName }}</h2>
+                    <p>{{ freelancer?.qualification }}</p>
                 </div>
-                <button class="edit-btn"><a routerLink="/freelancer/edit" class="edit-button">Edit Profile</a></button>
+                
+                <div class="rating-container">
+                    <div class="stars">
+                      <span *ngFor="let star of [1, 2, 3, 4, 5]" [class.filled]="star <= averageRating">&#9733;</span>
+                    </div>
+                    <p class="rating-info">Based on {{ totalRatings }} {{ totalRatings === 1 ? 'rating' : 'ratings' }}</p>
+                </div>
+
+                <button *ngIf="userRole === 'freelancer'" class="edit-btn">
+                    <a routerLink="/freelancer/edit" class="edit-button">Edit Profile</a>
+                </button>
+                
             </div>
         
             <div class="main-content">
@@ -28,18 +39,18 @@
                     <!-- Education -->
                     <div class="education">
                         <h3>Account Details</h3>
-                        <p><strong>Name: </strong>{{ freelancer.freeName }}</p>
-                        <p><strong>Email: </strong>{{ freelancer.freeEmail }}</p>
-                        <p><strong>Field of work: </strong>{{ freelancer.fow }}</p>
-                        <p><strong>Experience: </strong>{{ freelancer.experience }} Years</p>
-                        <p><strong>Highest Qualification: </strong>{{ freelancer.qualification }}</p>
+                        <p><strong>Name: </strong>{{ freelancer?.freeName }}</p>
+                        <p><strong>Email: </strong>{{ freelancer?.freeEmail }}</p>
+                        <p><strong>Field of work: </strong>{{ freelancer?.fow }}</p>
+                        <p><strong>Experience: </strong>{{ freelancer?.experience }} Years</p>
+                        <p><strong>Highest Qualification: </strong>{{ freelancer?.qualification }}</p>
                     </div>
         
                     <!-- Skills -->
                     <div class="skills">
                         <h3>Skills</h3>
                         <ul>
-                            <li *ngFor="let skill of freelancer.skillsAsList">{{ skill }}</li>
+                            <li *ngFor="let skill of freelancer?.skillsAsList">{{ skill }}</li>
                         </ul>
                     </div>
                 </div>

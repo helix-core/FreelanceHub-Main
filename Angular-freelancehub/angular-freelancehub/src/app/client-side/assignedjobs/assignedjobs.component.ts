@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NotificationService } from '../../notification.service';
+import { RatingService } from '../../rating.service';
 
 @Component({
   selector: 'app-assignedjobs',
@@ -13,7 +14,7 @@ export class AssignedjobsComponent implements OnInit {
   ongoingJobs: any[] = [];
   completedJobs: any[] = [];
 
-  constructor(private http: HttpClient,private notificationService: NotificationService) {}
+  constructor(private http: HttpClient,private notificationService: NotificationService, private ratingService:RatingService) {}
 
   ngOnInit(): void {
     this.fetchAssignedJobs();
@@ -38,24 +39,47 @@ export class AssignedjobsComponent implements OnInit {
   }
 
   // Verify a project
-  verifyProject(jobId: number): void {
+  verifyProject(job: any): void {
     const formData = new FormData();
-    console.log('Job ID:', jobId);
-    if (!jobId) {
+    console.log('Job ID:', job.id);
+    if (!job.id) {
       console.error('Job ID is undefined or null');
       return;
     }
 
-    formData.append('jobId', jobId.toString());
+    formData.append('jobId', job.id.toString());
 
     this.http.post('/api/verify-project', formData,{ responseType: 'text' }).subscribe(
       (response) => {
         this.fetchAssignedJobs(); // Refresh the job list
         this.notificationService.showNotification(response, 'success');
+        this.ratingService.openRatingPopup(job);
       },
       (error) => {
         this.notificationService.showNotification(error, 'error');
       }
     );
   }
+
+  get showRatingPopup(): boolean {
+    return this.ratingService.showRatingPopup;
+  }
+
+  get rating(): number {
+    return this.ratingService.rating;
+  }
+
+  rateFreelancer(star: number): void {
+    this.ratingService.rateFreelancer(star); // Use the service method
+  }
+
+  submitRating(): void {
+    this.ratingService.submitRating(); // Use the service method to submit the rating
+  }
+
+  closePopup(): void {
+    this.ratingService.closePopup(); // Use the service method to close the popup
+  }
+
+
 }

@@ -221,6 +221,24 @@ select#sortBy:focus {
     border-color: #319795; /* Highlight border on focus */
     box-shadow: 0 0 0 3px rgba(49, 151, 149, 0.3); /* Add focus ring effect */
 }
+
+.visit-profile-btn {
+    margin-left: 10px;
+    padding: 5px 10px;
+    background-color: #232B50;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .visit-profile-btn .visit-link {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .visit-profile-btn:hover {
+    background-color: #232B50;
+  }
+  
 .null-text{
 	text-align: center;
     color: #232B50;

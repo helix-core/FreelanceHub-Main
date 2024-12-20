@@ -32,11 +32,13 @@ import com.example.FreelanceHub.Dto.LoginRequest;
 import com.example.FreelanceHub.models.Client;
 import com.example.FreelanceHub.models.Freelancer;
 import com.example.FreelanceHub.models.Notification;
+import com.example.FreelanceHub.models.Rating;
 import com.example.FreelanceHub.repositories.NotificationRepository;
 import com.example.FreelanceHub.services.ClientService;
 import com.example.FreelanceHub.services.FreelancerService;
 // import com.example.FreelanceHub.services.JwtService;
 import com.example.FreelanceHub.services.NotificationService;
+import com.example.FreelanceHub.services.RatingService;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -60,6 +62,9 @@ public class UserController {
     
     @Autowired
     private HttpSession session;
+
+    @Autowired
+    private RatingService ratingService;
 
     // @Autowired
     // private JwtService jwtService;
@@ -247,6 +252,19 @@ public ResponseEntity<Map<String, String>> registerClient(@Valid @RequestBody Cl
         
 
         return "redirect:/"; // Default to landing page if role is unknown
+    }
+
+    @PostMapping("/ratings")
+    public Rating addRating(@RequestParam String freelancerId,
+                            @RequestParam String clientId,
+                            @RequestParam int jobId,
+                            @RequestParam int rating) {
+        return ratingService.addRating(freelancerId, clientId, jobId, rating);
+    }
+
+    @GetMapping("/ratings")
+    public Integer getRatingCount(@RequestParam String freelancerId){
+        return ratingService.countFreelancerRatings(freelancerId);
     }
   
     

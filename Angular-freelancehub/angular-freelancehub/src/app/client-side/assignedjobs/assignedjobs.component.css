@@ -252,3 +252,171 @@ h2 {
       left:780px;
       top:22px;
   }
+  /* .rating-popup {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Mulish", sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; 
+  }
+  
+  
+  .popup-content {
+    position:relative;
+    background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  text-align: center;
+  }
+  
+  .stars {
+    margin: 10px 0;
+  cursor: pointer; 
+  }
+  .stars span {
+    font-size: 30px;
+    margin: 0 5px;
+    color: #ccc; 
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .stars span.filled {
+    color: gold; 
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #333;
+  }
+   */
+   .rating-popup {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Mulish", sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top of other elements */
+  }
+  
+  .popup-content {
+    position: relative;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 400px; /* Made the box wider */
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Added a shadow for better focus */
+    animation: pop-in 0.3s ease-out;
+  }
+  
+  .stars {
+    margin: 15px 0;
+    display: flex; /* Align stars in a row */
+    justify-content: center; /* Center align stars */
+    gap: 10px; /* Add spacing between stars */
+  }
+  
+  .stars span {
+    font-size: 40px; /* Bigger star size */
+    margin: 0;
+    color: #ccc; /* Default uncolored state */
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s ease-in-out;
+  }
+  
+  .stars span.filled {
+    color: #f4c542; /* Bright gold for filled stars */
+    transform: scale(1.2); /* Slightly larger for filled stars */
+  }
+  
+  .stars span:hover {
+    color: #f4a941; /* Lighter gold on hover */
+    transform: scale(1.3); /* Slightly enlarge on hover */
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: #f76c6c; /* Red for a vibrant close button */
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    transition: background 0.2s, transform 0.2s;
+  }
+  
+  .close-btn:hover {
+    background: #ff4a4a; /* Darker red on hover */
+    transform: scale(1.1); /* Slightly enlarge */
+  }
+
+  .submit-btn {
+    background: #4caf50; /* Green button for positive action */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for a balanced size */
+    font-size: 16px; /* Text size */
+    font-weight: bold; /* Make the text bold */
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s; /* Smooth transitions */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    margin-top: 15px; /* Add spacing above the button */
+  }
+  
+  .submit-btn:hover {
+    background: #45a049; /* Slightly darker green on hover */
+    transform: translateY(-2px); /* Hover effect: subtle upward movement */
+  }
+  
+  .submit-btn:active {
+    background: #39843d; /* Even darker green when clicked */
+    transform: translateY(1px); /* Slight downward press effect */
+  }
+  
+  
+  @keyframes pop-in {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
