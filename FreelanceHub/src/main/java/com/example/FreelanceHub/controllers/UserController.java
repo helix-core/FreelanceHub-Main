@@ -96,7 +96,6 @@ public class UserController {
             BindingResult result) {
         Map<String, String> response = new HashMap<>();
 
-
         if (result.hasErrors()) {
             response.put("message", "Validation errors occurred. Please correct the errors and try again.");
             return ResponseEntity.badRequest().body(response);
@@ -222,10 +221,10 @@ public class UserController {
     @GetMapping("/getUnreadNotifications")
     @ResponseBody
 
-    public Map<String,Object> getUnreadNotifications(@RequestParam("userId") String userId) {
-    	// Keep only the most recent 10 notifications
-    	notificationService.delNotification(userId);
-        List<Notification >unreadNotifs= notificationService.getNotifications(userId);
+    public Map<String, Object> getUnreadNotifications(@RequestParam("userId") String userId) {
+        // Keep only the most recent 10 notifications
+        notificationService.delNotification(userId);
+        List<Notification> unreadNotifs = notificationService.getNotifications(userId);
         for (Notification notif : unreadNotifs) {
             notificationRepository.save(notif);
         }
@@ -272,17 +271,15 @@ public class UserController {
 
     @PostMapping("/ratings")
     public Rating addRating(@RequestParam String freelancerId,
-                            @RequestParam String clientId,
-                            @RequestParam int jobId,
-                            @RequestParam int rating) {
+            @RequestParam String clientId,
+            @RequestParam int jobId,
+            @RequestParam int rating) {
         return ratingService.addRating(freelancerId, clientId, jobId, rating);
     }
 
     @GetMapping("/ratings")
-    public Integer getRatingCount(@RequestParam String freelancerId){
+    public Integer getRatingCount(@RequestParam String freelancerId) {
         return ratingService.countFreelancerRatings(freelancerId);
     }
-  
-    
 
 }

@@ -14,7 +14,8 @@ export class SignupclientComponent {
 
     signupForm!: FormGroup;
 
-     constructor(private clientService: ClientService, private router: Router,private fb:FormBuilder) {}
+    
+  constructor(private clientService: ClientService, private router: Router,private notificationService: NotificationService,private fb:FormBuilder) {}
 
   ngOnInit(): void {
     this.signupForm = this.fb.group(
@@ -58,7 +59,6 @@ export class SignupclientComponent {
   notificationMessage: string = '';
   notificationType: string = '';
 
-  constructor(private clientService: ClientService, private router: Router,private notificationService: NotificationService) {}
 
   // ngOnInit() {
   //   // You can call a service method here to load any initial data if needed

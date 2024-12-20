@@ -34,22 +34,13 @@ public class FreelancerService {
     public boolean registerFreelancer(Freelancer freelancer) {
         try {
 
-            // Save Freelancer object to the database
             Freelancer savedFreelancer = freeRepository.save(freelancer);
-
-            // Generate a unique freeId (F<ID>)
             String uniqueFreeId = "F" + savedFreelancer.getId();
             savedFreelancer.setFreeId(uniqueFreeId);
-
-            // Save the updated freelancer with freeId
             freeRepository.save(savedFreelancer);
-
-            // Add role to the freelancer
             addRoleToFree(savedFreelancer.getFreeId(), "freelancer");
-
-            return true; // Return true if the process is successful
+            return true;
         } catch (Exception e) {
-            // Log the error (if necessary) and return false
             return false;
         }
     }
@@ -68,7 +59,7 @@ public class FreelancerService {
             Roles role = new Roles(roleName, freeId);
             rolesRepository.save(role);
         } catch (Exception e) {
-            // Log error if needed
+
             System.err.println("Error adding role: " + e.getMessage());
         }
     }

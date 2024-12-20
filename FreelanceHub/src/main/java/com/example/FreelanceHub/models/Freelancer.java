@@ -117,38 +117,39 @@ public class Freelancer {
 		Id = id;
 	}
 
-	
 	public Double getRating() {
 		return rating;
 	}
+
 	public void setRating(Double rating) {
 		this.rating = rating;
 	}
 
-	public Freelancer(){}
+	public Freelancer() {
+	}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int Id;
 
 	@Column(unique = true)
 	private String freeId;
 
-    public String freeEmail;
-    private String FreeName;
-    private int FreeAge;
-    private String Country;
-    private String FOW;
-    private int Experience;
-    private String Qualification;
-    
-    @Column(columnDefinition = "TEXT")
-    private String Skills;
+	public String freeEmail;
+	private String FreeName;
+	private int FreeAge;
+	private String Country;
+	private String FOW;
+	private int Experience;
+	private String Qualification;
+
+	@Column(columnDefinition = "TEXT")
+	private String Skills;
 
 	@Column(name = "rating")
-    private Double rating;
-  
-  private String profile_image;
+	private Double rating;
+
+	private String profile_image;
 
 	public String getProfile_image() {
 		return profile_image;
@@ -158,6 +159,6 @@ public class Freelancer {
 		this.profile_image = profile_image;
 	}
 
-    public String password;
-    
+	public String password;
+
 }

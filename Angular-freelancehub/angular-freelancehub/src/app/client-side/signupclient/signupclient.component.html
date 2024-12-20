@@ -8,8 +8,8 @@
 <div class="page-container">
   <div class="form-container">
     <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-      <h1 class="form-title">Sign up hire talent!</h1>
-      <!-- Email -->
+      <h1 class="form-title">Sign up to hire talents!</h1>
+      
       <input type="email" formControlName="compEmail" placeholder="E-mail *" />
       <div *ngIf="signupForm.get('compEmail')?.touched && signupForm.get('compEmail')?.invalid" class="error-message">
         <span *ngIf="signupForm.get('compEmail')?.errors?.['required']">Email is required.</span>
@@ -17,7 +17,7 @@
       </div>
 
 
-      <!-- Company Name -->
+     
       <input type="text" formControlName="companyName" placeholder="Company Name *" />
       <div *ngIf="signupForm.get('companyName')?.touched && signupForm.get('companyName')?.invalid"
         class="error-message">
@@ -27,27 +27,27 @@
         </span>
       </div>
 
-      <!-- Company Description -->
+      
       <textarea formControlName="companyDescription" placeholder="Company Description *"></textarea>
       <div *ngIf="signupForm.get('companyDescription')?.touched && signupForm.get('companyDescription')?.invalid"
         class="error-message">
         <span *ngIf="signupForm.get('companyDescription')?.errors?.['required']">Description is required.</span>
       </div>
 
-      <!-- Project Type -->
+      
       <input type="text" formControlName="typeOfProject" placeholder="Types of projects involved *" />
       <div *ngIf="signupForm.get('typeOfProject')?.touched && signupForm.get('typeOfProject')?.invalid"
         class="error-message">
         <span *ngIf="signupForm.get('typeOfProject')?.errors?.['required']">Type of project is required.</span>
       </div>
 
-      <!-- Representative Name -->
+      
       <input type="text" formControlName="repName" placeholder="Representative Name *" />
       <div *ngIf="signupForm.get('repName')?.touched && signupForm.get('repName')?.invalid" class="error-message">
         <span *ngIf="signupForm.get('repName')?.errors?.['required']">Representative name is required.</span>
       </div>
 
-      <!-- Representative Designation -->
+      
       <input type="text" formControlName="repDesignation" placeholder="Representative Designation *" />
       <div *ngIf="signupForm.get('repDesignation')?.touched && signupForm.get('repDesignation')?.invalid"
         class="error-message">
@@ -55,7 +55,7 @@
           required.</span>
       </div>
 
-      <!-- Password -->
+   
       <input type="password" formControlName="password" placeholder="Password *" />
       <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="error-message">
         <span *ngIf="signupForm.get('password')?.errors as errors">
@@ -71,7 +71,7 @@
         </span>
       </div>
 
-      <!-- Confirm Password -->
+   
       <input type="password" formControlName="confirmPassword" placeholder="Re-type Password *" />
       <div *ngIf="signupForm.get('confirmPassword')?.touched" class="error-message">
         <span *ngIf="signupForm.get('confirmPassword')?.errors?.['required']">
@@ -85,7 +85,7 @@
       
 
 
-      <!-- Agree Checkbox -->
+   
       <div class="checkbox-container">
         <input type="checkbox" formControlName="agree" />
         <label>I agree to the Privacy Policy of Freelancehub</label>
