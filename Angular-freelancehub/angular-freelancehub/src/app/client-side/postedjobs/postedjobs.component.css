@@ -6,7 +6,6 @@
     font-family: 'Mulish',sans-serif;
 }
 
-
 .whole-container {
     background-color: #f5f5f5;
     display: flex;
@@ -56,7 +55,7 @@
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
 }
 
@@ -218,4 +217,49 @@ h2 {
     margin-top: 0px;
     font-size: x-large;
 }
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }
 
+  .tooltip {
+    position: absolute;
+    bottom: 110%;          /* Position the tooltip above the image */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.7em;
+    white-space: nowrap;
+    opacity: 0;            /* Initially hidden */
+    visibility: hidden;    /* Ensures it's not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+  }
+  .button:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .home:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltiptext {
+    position: absolute;
+    top: 110%;               /* Position the tooltip below the text */
+    left:10%;              /* Center the tooltip horizontally */
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.5em;
+    white-space: nowrap;
+    opacity: 0;              /* Initially hidden */
+    visibility: hidden;      /* Not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    z-index: 10;             /* Ensure tooltip appears above other elements */
+  }

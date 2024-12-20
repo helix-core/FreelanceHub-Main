@@ -138,6 +138,7 @@ public class ClientController {
                         bidData.put("freelancerJobSalary", freelancerJob.getSalary());
                         bidData.put("freelancerJobExp", freelancerJob.getJobExp());
                         bidData.put("freelancerSkillMatch", freelancerJob.getSkillMatch());
+                        bidData.put("freelancerRating",freelancer.getRating() !=null ? freelancer.getRating(): 0);
                         return bidData;
                     }).collect(Collectors.toList());
 
@@ -161,6 +162,11 @@ public class ClientController {
                             enrichedBids.sort((bid1, bid2) -> Float.compare(
                                     (float) bid2.get("freelancerSkillMatch"),
                                     (float) bid1.get("freelancerSkillMatch")));
+                            break;
+                        case "rating":
+                            enrichedBids.sort((bid1, bid2) -> Double.compare(
+                                (double) bid2.get("freelancerRating"),
+                                (double) bid1.get("freelancerRating")));
                             break;
                         default:
                             enrichedBids.sort(Comparator.comparingInt(
@@ -211,13 +217,11 @@ public class ClientController {
 
         List<FreelancerJob> allBids = freelancerJobRepository.findByJobId(clientJob);
 
-        // notificationService.addNotification(userId, "Your bid was accepted! Check the
-        // dashboard.");
+        notificationService.addNotification(userId, "Your bid was accepted! Check the dashboard.");
 
         for (FreelancerJob bid : allBids) {
             if (!bid.getFreeId().getFreeId().equals(userId)) {
-                // notificationService.addNotification(bid.getFreeId().getFreeId(), "Your bid
-                // was rejected! Check the dashboard.");
+                notificationService.addNotification(bid.getFreeId().getFreeId(), "Your bid was rejected! Check the dashboard.");
                 bid.setStatus("rejected");
                 freelancerJobRepository.save(bid);
             }

@@ -6,9 +6,7 @@
     font-family: 'Mulish',sans-serif;
 }
 
-
 .whole-container {
-    background-color: #f5f5f5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -16,6 +14,7 @@
     zoom:90%;
     flex-direction: column;
     overflow: hidden;
+    font-family: 'Mulish',sans-serif;
 }
 
 .container {
@@ -27,6 +26,7 @@
 
 .header{
     margin-bottom: 20px;
+    
 }
 
 .navbar {
@@ -39,6 +39,7 @@
     width: 100%;
     height: 60px;
     z-index: 1000;
+    
 }
 
 .navbar-left {
@@ -56,7 +57,7 @@
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
 }
 
@@ -252,3 +253,326 @@ h2 {
       left:780px;
       top:22px;
   }
+/*swathi changes*/
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }
+
+  .tooltip {
+    position: absolute;
+    bottom: 110%;          /* Position the tooltip above the image */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.7em;
+    white-space: nowrap;
+    opacity: 0;            /* Initially hidden */
+    visibility: hidden;    /* Ensures it's not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+  }
+  .button:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+  .home:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltiptext {
+    position: absolute;
+    top: 110%;               /* Position the tooltip below the text */
+    left:10%;              /* Center the tooltip horizontally */
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.5em;
+    white-space: nowrap;
+    opacity: 0;              /* Initially hidden */
+    visibility: hidden;      /* Not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    z-index: 10;             /* Ensure tooltip appears above other elements */
+  }
+
+
+
+  /* Media Query for screens with a maximum width of 1024px (Tablets) */
+@media (max-width: 1024px) {
+  .navbar-title {
+    font-size: 28px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 30px;
+  }
+
+  .dashboard-header h1 span {
+    font-size: 28px;
+  }
+
+  /* .icons {
+    flex-direction: column;
+    align-items: center;
+  } */
+
+  .icons span {
+    margin: 10px 0;
+  }
+
+  .project-card-container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .project-card {
+    width: 90%; /* Make cards take up more space on tablets */
+  }
+
+  .verify-form {
+    display: block;
+    margin: 10px 0;
+  }
+
+  .btn-verify {
+    width: 100%; /* Make the button fill the available width on smaller screens */
+    text-align: center;
+  }
+}
+
+/* Media Query for screens with a maximum width of 768px (Mobile Phones) */
+@media (max-width: 768px) {
+  .navbar-title {
+    font-size: 24px;
+  }
+
+  .navbar-left .logo {
+    width: 25px;
+    height: 25px;
+  }
+
+  .navbar-title {
+    font-size: 22px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 26px;
+  }
+
+  /* .icons {
+    flex-direction: column;
+    margin-top: 10px;
+  } */
+
+  .icons span {
+    margin: 10px 0;
+  }
+
+  .project-card-container {
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .project-card {
+    width: 100%; /* Cards take up full width */
+    margin-bottom: 20px;
+  }
+
+  .status-button {
+    font-size: 14px;
+  }
+
+  .btn-view-link {
+    width: 100%; /* Make the project button fill the screen width */
+    text-align: center;
+  }
+
+  .btn-verify {
+    width: 100%; /* Make the verify button fill the screen width */
+  }
+
+  .navbar-title a {
+    font-size: 20px;
+  }
+
+  .tooltiptext, .tooltip {
+    font-size: 12px;
+  }
+
+  .project-body p {
+    font-size: 16px; /* Adjust font size for mobile */
+  }
+}
+
+/* Media Query for screens with a maximum width of 480px (Very small devices like phones in portrait mode) */
+@media (max-width: 480px) {
+  .navbar-title {
+    font-size: 18px;
+  }
+
+  .navbar-left .logo {
+    width: 20px;
+    height: 20px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 22px;
+  }
+
+  .project-card {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .project-header {
+    padding: 10px;
+  }
+
+  .status-button {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  .btn-view-link {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  .btn-verify {
+    font-size: 14px;
+    padding: 8px 15px;
+  }
+
+  .navbar-title a {
+    font-size: 16px;
+  }
+
+  .tooltiptext, .tooltip {
+    font-size: 10px;
+  }
+
+  .project-body p {
+    font-size: 14px;
+  }
+}
+/*rating*/ 
+   .rating-popup {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Mulish", sans-serif;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Ensure it's on top of other elements */
+  }
+  
+  .popup-content {
+    position: relative;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 400px; /* Made the box wider */
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Added a shadow for better focus */
+    animation: pop-in 0.3s ease-out;
+  }
+  
+  .stars {
+    margin: 15px 0;
+    display: flex; /* Align stars in a row */
+    justify-content: center; /* Center align stars */
+    gap: 10px; /* Add spacing between stars */
+  }
+  
+  .stars span {
+    font-size: 40px; /* Bigger star size */
+    margin: 0;
+    color: #ccc; /* Default uncolored state */
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s ease-in-out;
+  }
+  
+  .stars span.filled {
+    color: #f4c542; /* Bright gold for filled stars */
+    transform: scale(1.2); /* Slightly larger for filled stars */
+  }
+  
+  .stars span:hover {
+    color: #f4a941; /* Lighter gold on hover */
+    transform: scale(1.3); /* Slightly enlarge on hover */
+  }
+  
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: #f76c6c; /* Red for a vibrant close button */
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    transition: background 0.2s, transform 0.2s;
+  }
+  
+  .close-btn:hover {
+    background: #ff4a4a; /* Darker red on hover */
+    transform: scale(1.1); /* Slightly enlarge */
+  }
+
+  .submit-btn {
+    background: #4caf50; /* Green button for positive action */
+    color: #fff; /* White text */
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    padding: 10px 20px; /* Padding for a balanced size */
+    font-size: 16px; /* Text size */
+    font-weight: bold; /* Make the text bold */
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, transform 0.2s; /* Smooth transitions */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    margin-top: 15px; /* Add spacing above the button */
+  }
+  
+  .submit-btn:hover {
+    background: #45a049; /* Slightly darker green on hover */
+    transform: translateY(-2px); /* Hover effect: subtle upward movement */
+  }
+  
+  .submit-btn:active {
+    background: #39843d; /* Even darker green when clicked */
+    transform: translateY(1px); /* Slight downward press effect */
+  }
+  
+  
+  @keyframes pop-in {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  

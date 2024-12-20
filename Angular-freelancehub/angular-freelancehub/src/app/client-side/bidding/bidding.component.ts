@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-bidding',
@@ -14,7 +15,7 @@ export class BiddingComponent implements OnInit {
   // notificationMessage: string | null = null;
   sortBy: string = 'duration';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,private notificationService: NotificationService) {}
 
   ngOnInit(): void {
     this.fetchJobsWithBids();
@@ -39,11 +40,12 @@ export class BiddingComponent implements OnInit {
   acceptBid(jobId: number, userId: string): void {
     this.http.post('/api/acceptBid', { jobId, userId },{ responseType: 'text' }).subscribe(
       (response) => {
-        alert(response);
+        // alert(response);
         this.fetchJobsWithBids();
+        this.notificationService.showNotification(response, 'success');
       },
       (error) => {
-        alert(error);
+        this.notificationService.showNotification(error, 'error');
       }
     );
   }

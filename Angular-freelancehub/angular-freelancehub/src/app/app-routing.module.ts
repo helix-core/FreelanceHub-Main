@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'assigned-jobs', component: AssignedjobsComponent},
   { path: 'bidding', component: BiddingComponent},
   { path: 'profile/freelancer', component:FreelancerProfileComponent },
+  { path: 'freelancer/profile/:freeId', component: FreelancerProfileComponent },
   {path:'freelancer/edit' ,component:FreelancerEditComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
    { path: 'explore', component: ExploreComponent },
@@ -37,7 +38,6 @@ const routes: Routes = [
   {path:'accepted-jobs',component:AcceptedjobsComponent},
   {path:'profile/client',component:ClientprofileComponent},
   {path:'profile-client-edit',component:EditClientFormComponent}
-
   ];
 
 @NgModule({

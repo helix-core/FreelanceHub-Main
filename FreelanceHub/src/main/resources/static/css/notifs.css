@@ -49,7 +49,7 @@
 #messages-dropdown {
     position: absolute;
     top: 65px; /* Adjust to align below the Messages button */
-    right: 75px; /* Align to the right */
+    right: 85px; /* Align to the right */
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -65,7 +65,7 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    max-height: 150px; /* Optional: Limit height and make scrollable */
+    max-height: 180px; /* Optional: Limit height and make scrollable */
     overflow-y: auto;
 }
 
@@ -75,6 +75,7 @@
     border-bottom: 1px solid #f0f0f0;
     cursor: pointer;
     transition: background-color 0.3s;
+    font-size: 15px;
 }
 
 #messages-dropdown ul li:last-child {

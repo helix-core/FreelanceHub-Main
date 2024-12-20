@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: "Mulish", sans-serif;
+}
 body {
     
     justify-content: center;
@@ -46,7 +51,7 @@ body {
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
 }
 
@@ -148,4 +153,109 @@ input[type="radio"]:checked + .radio-btn circle {
 
 .login-link:hover {
     text-decoration: underline;
+}
+
+
+/* Adjust the navbar for smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        padding: 15px;
+        height: auto;
+    }
+
+    .navbar-left {
+        justify-content: center;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .navbar-title {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .logo {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+    }
+}
+
+/* Adjust the container padding and layout for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        top: 50px;
+    }
+
+    h2 {
+        font-size: 30px;
+    }
+
+    .freelancer-text {
+        font-size: 28px;
+    }
+
+    .freelancer-text-blue {
+        color: #15C9B4;
+    }
+}
+
+/* Adjust options layout for smaller screens */
+@media (max-width: 600px) {
+    .options {
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+    }
+
+    .option {
+        width: 100%;
+        margin: 10px 0;
+        padding: 20px 10px;
+    }
+
+    .option span {
+        font-size: 16px;
+    }
+}
+
+/* Adjust the Create Account button for smaller screens */
+@media (max-width: 600px) {
+    .create-account {
+        width: 100%;
+        padding: 12px;
+        font-size: 18px;
+        margin-top: 20px;
+    }
+
+    .login-text {
+        font-size: 14px;
+    }
+
+    .login-text a {
+        font-size: 16px;
+    }
+}
+
+/* Adjust radio button size and alignment on smaller screens */
+@media (max-width: 480px) {
+    .radio-btn {
+        width: 25px;
+        height: 25px;
+    }
+
+    .option span {
+        font-size: 14px;
+    }
+
+    .options {
+        margin: 20px 0;
+    }
+
+    .login-text {
+        font-size: 14px;
+        text-align: center;
+    }
 }

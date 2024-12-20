@@ -3,7 +3,7 @@
   <header class="navbar">
     <div class="navbar-left">
       <img src="assets/images/Twitch.png" alt="Logo" class="logo" />
-      <h1 class="navbar-title">Freelancehub</h1>
+      <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub<div class="tooltiptext">Home</div></a></span>
     </div>
   </header>
   
@@ -27,6 +27,7 @@
           <option value="salary">Salary</option>
           <option value="experience">Experience</option>
           <option value="skillMatch">Skill Match</option>
+          <option value="rating">Rating</option>
         </select>
       </form>
   
@@ -38,12 +39,17 @@
           </div>
         <div class="bid" *ngFor="let bid of jobWithBids.bids">
           <div class="bid-details">
-            <div class="bid-profile">{{ bid.freelancerName }}</div>
+            <div class="bid-profile">{{ bid.freelancerName }}
+              <button class="visit-profile-btn">
+                <a [routerLink]="['/freelancer/profile', bid.freelancerJob.freeId.freeId]" class="visit-link">Visit Profile</a>
+              </button>
+            </div>
             <div class="bid-stats">
-              <span class="stat">{{ bid.freelancerJob.duration }} Months</span>
-              <span class="stat">₹{{ bid.freelancerJob.salary }}</span>
-              <span class="stat">{{ bid.freelancerJob.jobExp }} Years</span>
-              <span class="stat">{{ bid.freelancerJob.skillMatch }}%</span>
+              <span class="stat">Duration: {{ bid.freelancerJob.duration }} Months</span>
+              <span class="stat">Wage: ₹{{ bid.freelancerJob.salary }}</span>
+              <span class="stat">Experience: {{ bid.freelancerJob.jobExp }} Years</span>
+              <span class="stat">Skills Match: {{ bid.freelancerJob.skillMatch }}%</span>
+              <span class="stat">Rating: {{ bid.freelancerRating  | number: '1.1-1' }}/5</span>
             </div>
             <button (click)="acceptBid(jobWithBids.job.jobId, bid.freelancerJob.freeId.freeId)" class="bid-action">
               Accept

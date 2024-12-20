@@ -117,6 +117,14 @@ public class Freelancer {
 		Id = id;
 	}
 
+	public Double getRating() {
+		return rating;
+	}
+
+	public void setRating(Double rating) {
+		this.rating = rating;
+	}
+
 	public Freelancer() {
 	}
 
@@ -138,7 +146,8 @@ public class Freelancer {
 	@Column(columnDefinition = "TEXT")
 	private String Skills;
 
-	public String password;
+	@Column(name = "rating")
+	private Double rating;
 
 	private String profile_image;
 
@@ -149,5 +158,7 @@ public class Freelancer {
 	public void setProfile_image(String profile_image) {
 		this.profile_image = profile_image;
 	}
+
+	public String password;
 
 }

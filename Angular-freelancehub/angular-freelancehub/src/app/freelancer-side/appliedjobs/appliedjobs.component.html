@@ -1,9 +1,11 @@
+<div class="body-container">
 <header class="navbar">
     <div class="navbar-left">
         <img src="assets/images/Twitch.png" alt="Logo" class="logo" />
-        <h1 class="navbar-title">Freelancehub</h1>
+        <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub<div class="tooltiptext">Home</div></a></span>
     </div>
 </header>
+</div>
 <div class="applied-jobs">
     <div class="dashboard-header">
         <h1>Freelancer <span>Dashboard</span></h1>
@@ -11,11 +13,13 @@
             <span class="l1">
                 <a routerLink="/applied-jobs" class="button">
                     <img src="assets/images/account_circle.png" alt="Profile" />
+                    <div class="tooltip">Applied Jobs</div>
                 </a>
             </span>
             <span class="l2">
                 <a routerLink="/accepted-jobs" class="button">
                     <img src="assets/images/bookmark.png" alt="Bookmarks" />
+                    <div class="tooltip">Accepted Jobs</div>
                 </a>
             </span>
         </div>

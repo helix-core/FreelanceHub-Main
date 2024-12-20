@@ -1,14 +1,3 @@
-// import { Component } from '@angular/core';
-
-// @Component({
-//   selector: 'app-role-selection',
-//   templateUrl: './role-selection.component.html',
-//   styleUrl: './role-selection.component.css'
-// })
-// export class RoleSelectionComponent {
-
-// }
-// src/app/role-selection/role-selection.component.ts
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 

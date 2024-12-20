@@ -1,8 +1,8 @@
 <div class="whole-container">
     <div class="navbar">
       <div class="navbar-left">
-        <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" alt="Logo" class="logo" />
-        <span class="navbar-title">Freelancehub</span>
+        <img src="assets/images/Twitch.png" alt="Logo" class="logo" />
+        <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub<div class="tooltiptext">Home</div></a></span>
       </div>
     </div>
   
@@ -12,16 +12,19 @@
         <span class="l1">
           <a routerLink="/posted-jobs" class="button">
             <img src="assets/images/account_circle.png" alt="" />
+            <div class="tooltip">Posted Jobs</div>
           </a>
         </span>
         <span class="l2">
           <a routerLink="/postjob" class="button">
             <img src="assets/images/bookmark.png" alt="" />
+            <div class="tooltip">Post Jobs</div>
           </a>
         </span>
         <span class="l3">
           <a routerLink="/assigned-jobs" class="button">
             <img src="assets/images/Award.png" alt="" />
+            <div class="tooltip">Assigned Jobs</div>
           </a>
         </span>
       </div>
@@ -30,6 +33,21 @@
     <div class="container">
         <h2>Assigned Projects</h2>
       
+        <!-- Rating Popup -->
+        <div *ngIf="showRatingPopup" class="rating-popup">
+          <div class="popup-content">
+            <span class="close-btn" (click)="closePopup()">X</span>
+            <h3>Rate Freelancer</h3>
+            <div class="stars">
+              <span *ngFor="let star of [1, 2, 3, 4, 5]" (click)="rateFreelancer(star)"[class.filled]="star<=rating">
+                &#9733;
+              </span>
+            </div>
+            <button class="submit-btn" (click)="submitRating()">Submit Rating</button>
+          </div>
+        </div>
+
+
         <!-- Ongoing Jobs -->
         <div *ngIf="ongoingJobs && ongoingJobs.length > 0" class="project-card-container">
           <div *ngFor="let job of ongoingJobs" class="project-card">
@@ -43,7 +61,7 @@
               <p>Wage/Day: ${{ job.salary }}</p>
               <div *ngIf="job.jobDetails?.githublink">
                 <a [href]="job.jobDetails.githublink" target="_blank" class="btn-view-link">View Project</a>
-                <form (ngSubmit)="verifyProject(job.jobDetails.id)" class="verify-form">
+                <form (ngSubmit)="verifyProject(job.jobDetails)" class="verify-form">
                   <button type="submit" class="btn-verify">Verify</button>
                 </form>
               </div>
