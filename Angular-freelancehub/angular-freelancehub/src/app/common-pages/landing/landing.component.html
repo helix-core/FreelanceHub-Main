@@ -14,7 +14,7 @@
                     <a routerLink="/applied-jobs">Applications</a>
                 </li>
                 <li>
-                    <a (click)="toggleDropdown()">Notifications<span class="notification-badge"
+                    <a routerLink="#" class="notifications-link" (click)="toggleDropdown()">Notifications<span class="notification-badge"
                             *ngIf="unreadCount > 0">{{ unreadCount }}</span></a>
                     <div id="messages-dropdown" class="dropdown" [ngClass]="{'visible': dropdownVisible}">
                         <ul>
@@ -34,7 +34,7 @@
             <!-- Profile dropdown -->
             <li *ngIf="userRole" class="profile-item">
                 <div class="profile-icon-container" (click)="toggleProfileDropdown()">
-                    <img src="assets/images/account_circle.png" alt="" class="profile-icon">
+                    <img src="assets/images/profile_png.png" alt="" class="profile-icon">
                 </div>
                 <div class="dropdown-menu" [ngClass]="{'visible': profileDropdownVisible}">
                     <a routerLink="{{ userRole === 'client' ? '/profile/client' : '/profile/freelancer' }}">Profile</a>

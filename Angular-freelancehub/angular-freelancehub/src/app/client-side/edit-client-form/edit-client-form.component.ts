@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClientService } from '../../client.service';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-edit-client-form',
@@ -15,6 +16,7 @@ export class EditClientFormComponent implements OnInit {
    constructor(
     private fb: FormBuilder,
     private clientService: ClientService,
+    private notificationService : NotificationService,
     private router: Router
   ) {}
 
@@ -32,15 +34,34 @@ export class EditClientFormComponent implements OnInit {
 
   initializeForm(): void {
     this.editClientForm = this.fb.group({
-      compEmail: ['', [Validators.required, Validators.email]],
+      compEmail: ['', [Validators.required, this.customEmailValidator()]],
       companyName: ['', Validators.required],
       typeOfProject: ['', Validators.required],
       companyDescription: ['', Validators.required],
       repName: ['', Validators.required],
       repDesignation: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+       password: ['',[Validators.required,Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/)]],
       confirmPassword: ['', Validators.required],
+    },{
+      validators: this.passwordMatchValidator
     });
+  }
+
+    customEmailValidator(): ValidatorFn {
+      return (control: AbstractControl): ValidationErrors | null => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu)$/;
+        const value = control.value;
+        return value && !emailRegex.test(value) ? { invalidEmail: true } : null;
+      };
+    }
+
+   passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+    if (password !== confirmPassword) {
+      return { passwordsMismatch: true };
+    }
+    return null;
   }
 
   updateClient(): void {
@@ -51,12 +72,11 @@ export class EditClientFormComponent implements OnInit {
       updatedClient.userId = userId; // Add userId to the request body
       this.clientService.updateClientDetails(updatedClient).subscribe(
         () => {
-          alert('Profile updated successfully!');
-          this.router.navigate(['/profile/client']); // Redirect to the profile page
+          this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile-client'); // Redirect to the profile page
+
         },
         (error) => {
-          console.error('Error updating profile:', error);
-          alert('Failed to update profile. Please try again.');
+          this.notificationService.showNotification(error, 'error');
         }
       );
     } else {

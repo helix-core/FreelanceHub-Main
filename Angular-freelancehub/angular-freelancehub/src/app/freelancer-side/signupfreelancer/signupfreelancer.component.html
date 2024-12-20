@@ -5,75 +5,165 @@
         <h1 class="navbar-title">Freelancehub</h1>
     </div>
 </header>
+
 <div class="page-container">
-<div class="form-container">
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="registration-form">
-        <input type="email" formControlName="freeEmail" placeholder="E-mail *" required>
-        <span
-            *ngIf="signupForm.get('freeEmail')?.hasError('required') && (signupForm.get('freeEmail')?.touched || signupForm.get('freeEmail')?.dirty)"
-            class="error-message">Email is required</span>
+    <div class="form-container">
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="registration-form">
+            <h1 class="form-title">Sign up to find work!</h1>
 
-        <input type="text" formControlName="freeName" placeholder="Name *" required>
-        <span
-            *ngIf="signupForm.get('freeName')?.hasError('required') && (signupForm.get('freeName')?.touched || signupForm.get('freeName')?.dirty)"
-            class="error-message">Name is required</span>
-
-        <input type="number" formControlName="freeAge" placeholder="Age *" required>
-        <span
-            *ngIf="signupForm.get('freeAge')?.hasError('required') && (signupForm.get('freeAge')?.touched || signupForm.get('freeAge')?.dirty)"
-            class="error-message">Age is required</span>
-
-        <input type="text" formControlName="country" placeholder="Country *" required>
-        <span
-            *ngIf="signupForm.get('country')?.hasError('required') && (signupForm.get('country')?.touched || signupForm.get('country')?.dirty)"
-            class="error-message">Country is required</span>
-
-        <input type="text" formControlName="fow" placeholder="Field of Work *" required>
-        <span
-            *ngIf="signupForm.get('fow')?.hasError('required') && (signupForm.get('fow')?.touched || signupForm.get('fow')?.dirty)"
-            class="error-message">Field of Work is required</span>
-
-        <select formControlName="experience" required>
-            <option value="" disabled selected hidden>Experience *</option>
-            <option value="1">1-3 years</option>
-            <option value="2">3-5 years</option>
-            <option value="3">5+ years</option>
-        </select>
-        <span
-            *ngIf="signupForm.get('experience')?.hasError('required') && (signupForm.get('experience')?.touched || signupForm.get('experience')?.dirty)"
-            class="error-message">Experience is required</span>
-
-        <div id="skills-container">
-            <input type="text" id="skills-input" (keydown)="onSkillInput($event)"
-                placeholder="Type a skill and press Enter">
-            <div id="skills-display">
-                <div *ngFor="let skill of skills" class="skill-tag">{{ skill }} <span
-                        (click)="removeSkill(skill)">x</span></div>
+            <div class="profile-upload-container">
+                <label for="profile-upload" class="profile-preview">
+                    <img [src]="imagePreview" alt="Profile Preview" *ngIf="imagePreview !== defaultImage" />
+                    <span *ngIf="imagePreview === defaultImage">Tap to upload profile image</span>
+                </label>
+                <input type="file" id="profile-upload" (change)="onImageUpload($event)" accept="image/*"
+                    formControlName="profileImage" />
+                <button *ngIf="imagePreview !== defaultImage" id="remove-btn" (click)="removeImage($event)">✖</button>
+                
             </div>
-            <input type="hidden" formControlName="skills" [value]="skills.join(',')">
-        </div>
 
-        <input type="text" formControlName="qualification" placeholder="Highest Qualification *" required>
-        <span
-            *ngIf="signupForm.get('qualification')?.hasError('required') && (signupForm.get('qualification')?.touched || signupForm.get('qualification')?.dirty)"
-            class="error-message">Qualification is required</span>
 
-        <input type="password" formControlName="password" placeholder="Password *" required>
-        <span
-            *ngIf="signupForm.get('password')?.hasError('required') && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty)"
-            class="error-message">Password is required</span>
 
+            <!-- Email Field -->
+            <input type="email" formControlName="freeEmail" placeholder="E-mail *" required>
+            <div *ngIf="signupForm.get('freeEmail')?.hasError('required') && (signupForm.get('freeEmail')?.touched || signupForm.get('freeEmail')?.dirty)"
+                class="error-message">
+                <span>Email is required</span>
+            </div>
+            <div *ngIf="signupForm.get('freeEmail')?.errors?.['invalidEmail']" class="error-message">
+                <span>Enter a valid email</span>
+            </div>
+           
+
+            <!-- Name Field -->
+            <input type="text" formControlName="freeName" placeholder="Name *" required>
+            <div *ngIf="signupForm.get('freeName')?.hasError('required') && (signupForm.get('freeName')?.touched || signupForm.get('freeName')?.dirty)"
+                class="error-message">
+                <span>Name is required</span>
+            </div>
+            <div *ngIf="signupForm.get('freeName')?.hasError('minlength') && (signupForm.get('freeName')?.touched || signupForm.get('freeName')?.dirty)"
+                class="error-message">
+                <span>Name must be between 2 and 50 characters</span>
+            </div>
+           
+
+            <!-- Age Field -->
+            <input type="number" formControlName="freeAge" placeholder="Age *" required>
+            <div *ngIf="signupForm.get('freeAge')?.hasError('required') && (signupForm.get('freeAge')?.touched || signupForm.get('freeAge')?.dirty)"
+                class="error-message">
+                <span>Age is required</span>
+            </div>
+            <div *ngIf="signupForm.get('freeAge')?.hasError('min') && (signupForm.get('freeAge')?.touched || signupForm.get('freeAge')?.dirty)"
+                class="error-message">
+                <span>Age must be at least 18</span>
+            </div>
+           
+
+            <!-- Country Field -->
+            <input type="text" formControlName="country" placeholder="Country *" required>
+            <div *ngIf="signupForm.get('country')?.hasError('required') && (signupForm.get('country')?.touched || signupForm.get('country')?.dirty)"
+                class="error-message">
+                <span>Country is required</span>
+            </div>
+           
+
+            <!-- Field of Work -->
+            <input type="text" formControlName="FOW" placeholder="Field of Work *" required>
+            <div *ngIf="signupForm.get('FOW')?.hasError('required') && (signupForm.get('FOW')?.touched || signupForm.get('FOW')?.dirty)"
+                class="error-message">
+                <span>Field of Work is required</span>
+            </div>
+          
+
+            <!-- Experience Field -->
+            <select formControlName="experience" required>
+                <option value="" disabled selected hidden>Experience *</option>
+                <option value="1">1-3 years</option>
+                <option value="2">3-5 years</option>
+                <option value="3">5+ years</option>
+            </select>
+            <div *ngIf="signupForm.get('experience')?.hasError('required') && (signupForm.get('experience')?.touched || signupForm.get('experience')?.dirty)"
+                class="error-message">
+                <span>Experience is required</span>
+            </div>
+          
+
+            <!-- Skills Field -->
+            <div id="skills-container">
+                <input type="text" id="skills-input" (keydown)="onSkillInput($event)" placeholder="Type a skill and press Enter">
+                <div *ngIf="signupForm.get('skills')?.hasError('required') && (signupForm.get('skills')?.touched || signupForm.get('skills')?.dirty)"
+                    class="error-message">
+                    <span>Atleast one skill is required</span>
+                </div>
+                <div id="skills-display">
+                    <div *ngFor="let skill of skills" class="skill-tag">{{ skill }}
+                        <span (click)="removeSkill(skill)">x</span>
+                    </div>
+                </div>
+                <input type="hidden" formControlName="skills" [value]="skills.join(',')">
+            </div>
+            
+            <!-- Error Message if No Skills Added -->
+          
+            
+           
+
+
+            <!-- Qualification Field -->
+            <input type="text" formControlName="qualification" placeholder="Highest Qualification *" required>
+            <div *ngIf="signupForm.get('qualification')?.hasError('required') && (signupForm.get('qualification')?.touched || signupForm.get('qualification')?.dirty)"
+                class="error-message">
+                <span>Qualification is required</span>
+            </div>
+          
+
+            <!-- Password Field -->
+            <input type="password" formControlName="password" placeholder="Password *" required>
+            <div *ngIf="signupForm.get('password')?.hasError('required') && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty)"
+                class="error-message">
+                <span>Password is required</span>
+            </div>
+            <div *ngIf="signupForm.get('password')?.hasError('minlength') && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty); else patternError"
+                class="error-message">
+                <span>Password must be at least 8 characters long</span>
+            </div>
+            <ng-template #patternError>
+                <div *ngIf="signupForm.get('password')?.hasError('pattern') && (signupForm.get('password')?.touched || signupForm.get('password')?.dirty)"
+                    class="error-message">
+                    <span>Password must contain at least one number, one uppercase letter, and one special
+                        character</span>
+                </div>
+            </ng-template>
+           
+            <!-- Re-type Password Field -->
         <input type="password" formControlName="rePassword" placeholder="Re-type password *" required>
-        <span
-            *ngIf="signupForm.get('rePassword')?.hasError('required') && (signupForm.get('rePassword')?.touched || signupForm.get('rePassword')?.dirty)"
-            class="error-message">Re-type password is required</span>
-
-        <div class="checkbox-container">
-            <input type="checkbox" required>
-            <label>I agree to the Privacy Policy of Freelancehub</label>
+        
+        <!-- Check for 'required' error first -->
+        <div *ngIf="signupForm.get('rePassword')?.hasError('required') && (signupForm.get('rePassword')?.touched || signupForm.get('rePassword')?.dirty); else passwordMismatch"
+            class="error-message">
+            <span>Re-type password is required</span>
         </div>
+        
+        <!-- 'else' part for 'passwordMismatch' error -->
+        <ng-template #passwordMismatch>
+            <div *ngIf="signupForm.errors?.['passwordMismatch'] && (signupForm.get('rePassword')?.dirty || signupForm.get('rePassword')?.touched)"
+                class="error-message">
+                <span>Passwords do not match</span>
+            </div>
+        </ng-template>
 
-        <button type="submit" [disabled]="signupForm.invalid">Submit</button>
-    </form>
-</div>
+            <!-- Checkbox for Terms -->
+            <div class="checkbox-container">
+                <input type="checkbox" formControlName="termsAndConditions" required>
+                <label>I agree to the Privacy Policy of Freelancehub</label>
+                </div>
+                <div *ngIf="signupForm.get('termsAndConditions')?.hasError('required') && (signupForm.get('termsAndConditions')?.touched || signupForm.get('termsAndConditions')?.dirty)"
+                    class="error-message">
+                    You must agree to the Privacy Policy
+                </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </div>

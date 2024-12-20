@@ -81,7 +81,7 @@ public class ClientController {
     // Handle form submission
     @PostMapping("/postjob")
     public ResponseEntity<Map<String, String>> createJob(
-            @RequestBody ClientJobDTO clientJobDTO,
+            @RequestBody ClientJob clientJob,
             @RequestParam("userId") String userId) {
         Map<String, String> response = new HashMap<>();
         try {
@@ -90,19 +90,7 @@ public class ClientController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
             }
 
-            ClientJob clientJob = new ClientJob();
-            System.out.println(clientJobDTO.getSkillReq());
             clientJob.setClientId(userId);
-            clientJob.setJobTitle(clientJobDTO.getJobTitle());
-            clientJob.setJobDesc(clientJobDTO.getJobDesc());
-            clientJob.setSkillsFromList(clientJobDTO.getSkillReq());
-            clientJob.setDurMin(clientJobDTO.getDurMin());
-            clientJob.setDurMax(clientJobDTO.getDurMax());
-            clientJob.setCostMin(clientJobDTO.getCostMin());
-            clientJob.setCostMax(clientJobDTO.getCostMax());
-            clientJob.setExpMin(clientJobDTO.getExpMin());
-            clientJob.setJobStat(clientJobDTO.getJobStat());
-
             clientJobRepository.save(clientJob);
             response.put("message", "Job posted successfully");
             return ResponseEntity.ok(response);
@@ -150,6 +138,7 @@ public class ClientController {
                         bidData.put("freelancerJobSalary", freelancerJob.getSalary());
                         bidData.put("freelancerJobExp", freelancerJob.getJobExp());
                         bidData.put("freelancerSkillMatch", freelancerJob.getSkillMatch());
+                        bidData.put("freelancerRating",freelancer.getRating() !=null ? freelancer.getRating(): 0);
                         return bidData;
                     }).collect(Collectors.toList());
 
@@ -173,6 +162,11 @@ public class ClientController {
                             enrichedBids.sort((bid1, bid2) -> Float.compare(
                                     (float) bid2.get("freelancerSkillMatch"),
                                     (float) bid1.get("freelancerSkillMatch")));
+                            break;
+                        case "rating":
+                            enrichedBids.sort((bid1, bid2) -> Double.compare(
+                                (double) bid2.get("freelancerRating"),
+                                (double) bid1.get("freelancerRating")));
                             break;
                         default:
                             enrichedBids.sort(Comparator.comparingInt(
@@ -223,13 +217,11 @@ public class ClientController {
 
         List<FreelancerJob> allBids = freelancerJobRepository.findByJobId(clientJob);
 
-        // notificationService.addNotification(userId, "Your bid was accepted! Check the
-        // dashboard.");
+        notificationService.addNotification(userId, "Your bid was accepted! Check the dashboard.");
 
         for (FreelancerJob bid : allBids) {
             if (!bid.getFreeId().getFreeId().equals(userId)) {
-                // notificationService.addNotification(bid.getFreeId().getFreeId(), "Your bid
-                // was rejected! Check the dashboard.");
+                notificationService.addNotification(bid.getFreeId().getFreeId(), "Your bid was rejected! Check the dashboard.");
                 bid.setStatus("rejected");
                 freelancerJobRepository.save(bid);
             }

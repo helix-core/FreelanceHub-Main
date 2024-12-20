@@ -8,59 +8,117 @@
     <div class="form-container">
         <h1>Edit Client Details</h1>
         <form [formGroup]="editClientForm" (ngSubmit)="updateClient()">
+            <!-- Email -->
             <div class="email">
                 <p>Email</p>
                 <span>
-                    <input type="email" formControlName="compEmail" placeholder="E-mail *" required />
+                    <input type="email" formControlName="compEmail" placeholder="E-mail *" />
                 </span>
+                <span *ngIf="editClientForm.get('compEmail')?.errors?.['required']" class="error-message">Email is required.</span>
+                <span *ngIf="editClientForm.get('compEmail')?.errors?.['invalidEmail']" class="error-message">Enter a valid email</span>
             </div>
+
+            <!-- Company Name -->
             <div class="companyname">
                 <p>Company Name</p>
                 <span>
-                    <input type="text" formControlName="companyName" placeholder="Company Name *" required />
+                    <input type="text" formControlName="companyName" placeholder="Company Name *" />
                 </span>
+                <small *ngIf="editClientForm.get('companyName')?.touched && editClientForm.get('companyName')?.invalid"
+                    class="error-message">
+                    Company name is required.
+                </small>
             </div>
+
+            <!-- Type of Project -->
             <div class="projects">
                 <p>Type of Project</p>
                 <span>
-                    <input type="text" formControlName="typeOfProject" placeholder="Types of projects involved *"
-                        required />
+                    <input type="text" formControlName="typeOfProject" placeholder="Types of projects involved *" />
                 </span>
+                <small
+                    *ngIf="editClientForm.get('typeOfProject')?.touched && editClientForm.get('typeOfProject')?.invalid"
+                    class="error-message">
+                    Project type is required.
+                </small>
             </div>
+
+            <!-- Company Description -->
             <div class="desc">
                 <p>Company Description</p>
                 <span>
-                    <textarea formControlName="companyDescription" placeholder="Company Description *"
-                        required></textarea>
+                    <textarea formControlName="companyDescription" placeholder="Company Description *"></textarea>
                 </span>
+                <small
+                    *ngIf="editClientForm.get('companyDescription')?.touched && editClientForm.get('companyDescription')?.invalid"
+                    class="error-message">
+                    Company description is required.
+                </small>
             </div>
+
+            <!-- Representative Name -->
             <div class="repname">
                 <p>Representative Name</p>
                 <span>
-                    <input type="text" formControlName="repName" placeholder="Representative Name *" required />
+                    <input type="text" formControlName="repName" placeholder="Representative Name *" />
                 </span>
+                <small *ngIf="editClientForm.get('repName')?.touched && editClientForm.get('repName')?.invalid"
+                    class="error-message">
+                    Representative name is required.
+                </small>
             </div>
+
+            <!-- Representative Designation -->
             <div class="desig">
                 <p>Representative Designation</p>
                 <span>
-                    <input type="text" formControlName="repDesignation" placeholder="Representative Designation *"
-                        required />
+                    <input type="text" formControlName="repDesignation" placeholder="Representative Designation *" />
                 </span>
+                <small
+                    *ngIf="editClientForm.get('repDesignation')?.touched && editClientForm.get('repDesignation')?.invalid"
+                    class="error-message">
+                    Representative designation is required.
+                </small>
             </div>
+
+            <!-- Password -->
             <div class="password">
                 <p>Password</p>
                 <span>
-                    <input type="password" formControlName="password" placeholder="Password *" required />
+                    <input type="password" formControlName="password" placeholder="Password *" />
                 </span>
+                <span *ngIf="editClientForm.get('password')?.touched && editClientForm.get('password')?.errors?.['required']" class="error-message">
+                    Password is required.
+                </span>
+                <span *ngIf="editClientForm.get('password')?.touched && editClientForm.get('password')?.errors?.['minlength'];else lastError" class="error-message">
+                    Password must be at least 8 characters long.
+                </span>
+                <ng-template #lastError>
+            <span *ngIf="editClientForm.get('password')?.errors?.['pattern']" class="error-message">
+                Password must contain an uppercase letter, a number, and a special character.
+            </span>
+            </ng-template>
             </div>
+
+            <!-- Confirm Password -->
             <div class="retype">
                 <p>Re-type Password</p>
                 <span>
-                    <input type="password" formControlName="confirmPassword" placeholder="Re-type Password *"
-                        required />
+                    <input type="password" formControlName="confirmPassword" placeholder="Re-type Password *" />
                 </span>
+                <span *ngIf="editClientForm.get('confirmPassword')?.errors?.['required'];else lastBefore" class="error-message">
+                    Confirm password is required.
+                </span>
+                <ng-template #lastBefore>
+                <span *ngIf="editClientForm.hasError('passwordsMismatch') && editClientForm.get('confirmPassword')?.touched"
+                    class="error-message">
+                    Passwords do not match.
+                </span>
+                </ng-template>
             </div>
-            <button type="submit">Update</button>
+
+            <!-- Submit Button -->
+            <button type="submit" [disabled]="editClientForm.invalid">Update</button>
         </form>
     </div>
 </div>

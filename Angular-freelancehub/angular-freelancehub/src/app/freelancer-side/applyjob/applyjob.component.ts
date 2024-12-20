@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-applyjob',
@@ -20,11 +21,13 @@ jobForm: FormGroup;
   uploadedLinks: string[] = [];
   newLink: string = '';
   circularProgressStyle: string = '';
+  linkError:string='';
 
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
     private route: ActivatedRoute,
+    private notificationService: NotificationService,
     private router: Router
   ) {
     this.jobForm = this.fb.group({
@@ -83,6 +86,17 @@ jobForm: FormGroup;
     console.log(`Slider ${controlName} updated to: ${value}`);
   }
 
+    validateLink(): void {
+        const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w-]*)*\/?$/; // Regex for basic URL validation
+        if (!this.newLink.trim()) {
+            this.linkError = 'Link is required.';
+        } else if (!urlPattern.test(this.newLink)) {
+            this.linkError = 'Enter a valid link (e.g., Drive, GitHub, project link).';
+        } else {
+            this.linkError = ''; // Clear error if validation passes
+        }
+    }
+
   updateCircularProgress(): void {
     const angle = this.matchedSkillsPercentage * 3.6;
     this.circularProgressStyle = `conic-gradient(
@@ -92,10 +106,11 @@ jobForm: FormGroup;
   }
 
 addLink(): void {
-  if (this.newLink.trim()) {
-    this.uploadedLinks.push(this.newLink.trim());
-    this.newLink = ''; 
-  }
+  this.validateLink(); // Validate before adding
+        if (!this.linkError && this.newLink.trim()) {
+            this.uploadedLinks.push(this.newLink.trim());
+            this.newLink = ''; // Clear input after adding
+        }
 }
 
 removeLink(index: number): void {
@@ -129,18 +144,14 @@ removeLink(index: number): void {
  this.http.post<{ message: string }>('/api/apply', params).subscribe(
   (response) => {
     // Handle successful submission
-    console.log('Application submitted successfully:', response.message);
-    alert(response.message);  // Show the success message
-    this.router.navigate(['/applied-jobs']);
+    this.notificationService.showNotification(response.message, 'success', '/applied-jobs');
   },
   (error) => {
     // Handle error
     if (error.error && error.error.message) {
-      console.error('Error submitting application:', error.error.message);
-      alert(`Error: ${error.error.message}`); // Show error message to the user
+      this.notificationService.showNotification(error.error.message, 'error');
     } else {
-      console.error('Unexpected error:', error);
-      alert('An unexpected error occurred. Please try again later.');
+      this.notificationService.showNotification(error, 'error',);
     }
   }
 );

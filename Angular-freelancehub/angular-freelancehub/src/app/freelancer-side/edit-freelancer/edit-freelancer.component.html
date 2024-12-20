@@ -1,3 +1,4 @@
+<div class="body-container">
 <div class="title">
 <header class="header">
   <div class="navbar">
@@ -9,29 +10,66 @@
 </header>
 </div>
 
-<div class="body-container">
 <div class="form-container">
     <h1>Edit Freelancer Profile</h1>
     <form [formGroup]="freelancerForm" (ngSubmit)="updateFreelancer()">
       <div class="email">
         <p>Email</p>
         <input formControlName="freeEmail" placeholder="E-mail *" required />
+        <div
+          *ngIf="freelancerForm.get('freeEmail')?.hasError('required') && (freelancerForm.get('freeEmail')?.touched || freelancerForm.get('freeEmail')?.dirty)"
+          class="error-message">
+          <span>Email is required</span>
+        </div>
+        <div *ngIf="freelancerForm.get('freeEmail')?.errors?.['invalidEmail']" class="error-message">
+          <span>Enter a valid email</span>
+        </div>
       </div>
       <div class="name">
         <p>Name</p>
         <input formControlName="freeName" placeholder="Name *" required />
+        <div
+          *ngIf="freelancerForm.get('freeName')?.hasError('required') && (freelancerForm.get('freeName')?.touched || freelancerForm.get('freeName')?.dirty)"
+          class="error-message">
+          <span>Name is required</span>
+        </div>
+        <div
+          *ngIf="freelancerForm.get('freeName')?.hasError('minlength') && (freelancerForm.get('freeName')?.touched || freelancerForm.get('freeName')?.dirty)"
+          class="error-message">
+          <span>Name must be between 2 and 50 characters</span>
+        </div>
       </div>
       <div class="age">
         <p>Age</p>
         <input formControlName="freeAge" type="number" placeholder="Age *" required />
+        <div
+          *ngIf="freelancerForm.get('freeAge')?.hasError('required') && (freelancerForm.get('freeAge')?.touched || freelancerForm.get('freeAge')?.dirty)"
+          class="error-message">
+          <span>Age is required</span>
+        </div>
+        <div
+          *ngIf="freelancerForm.get('freeAge')?.hasError('min') && (freelancerForm.get('freeAge')?.touched || freelancerForm.get('freeAge')?.dirty)"
+          class="error-message">
+          <span>Age must be at least 18</span>
+        </div>
       </div>
       <div class="country">
         <p>Country</p>
         <input formControlName="country" placeholder="Country *" required />
+        <div
+          *ngIf="freelancerForm.get('country')?.hasError('required') && (freelancerForm.get('country')?.touched || freelancerForm.get('country')?.dirty)"
+          class="error-message">
+          <span>Country is required</span>
+        </div>
       </div>
       <div class="fields">
         <p>Field of work</p>
         <input formControlName="fow" placeholder="Field of Work *" required />
+        <div
+          *ngIf="freelancerForm.get('fow')?.hasError('required') && (freelancerForm.get('fow')?.touched || freelancerForm.get('fow')?.dirty)"
+          class="error-message">
+          <span>Field of Work is required</span>
+        </div>
       </div>
       <div class="experience">
         <p>Experience</p>
@@ -40,24 +78,77 @@
           <option value="2">3-5 years</option>
           <option value="3">5+ years</option>
         </select>
+        <div
+          *ngIf="freelancerForm.get('experience')?.hasError('required') && (freelancerForm.get('experience')?.touched || freelancerForm.get('experience')?.dirty)"
+          class="error-message">
+          <span>Experience is required</span>
+        </div>
       </div>
-      <div class="skills-container">
-        <p>Skills</p>
-        <input formControlName="skills" id="skills-input" placeholder="Type a skill and press Enter" />
+      <div id="skills-container">
+        <input type="text" id="skills-input" (keydown)="onSkillInput($event)" placeholder="Type a skill and press Enter">
+        <div
+          *ngIf="freelancerForm.get('skills')?.hasError('required') && (freelancerForm.get('skills')?.touched || freelancerForm.get('skills')?.dirty)"
+          class="error-message">
+          <span>Atleast one skill is required</span>
+        </div>
+        <div id="skills-display">
+          <div *ngFor="let skill of skills" class="skill-tag">{{ skill }}
+            <span (click)="removeSkill(skill)">x</span>
+          </div>
+        </div>
+        <input type="hidden" formControlName="skills" [value]="skills.join(',')">
       </div>
       <div class="qual">
         <p>Highest Qualification</p>
         <input formControlName="qualification" placeholder="Highest Qualification *" required />
+        <div
+          *ngIf="freelancerForm.get('qualification')?.hasError('required') && (freelancerForm.get('qualification')?.touched || freelancerForm.get('qualification')?.dirty)"
+          class="error-message">
+          <span>Qualification is required</span>
+        </div>
       </div>
       <div class="password">
         <p>Password</p>
         <input formControlName="password" type="password" placeholder="Password *" required />
+        <div
+          *ngIf="freelancerForm.get('password')?.hasError('required') && (freelancerForm.get('password')?.touched || freelancerForm.get('password')?.dirty)"
+          class="error-message">
+          <span>Password is required</span>
+        </div>
+        <div
+          *ngIf="freelancerForm.get('password')?.hasError('minlength') && (freelancerForm.get('password')?.touched || freelancerForm.get('password')?.dirty); else patternError"
+          class="error-message">
+          <span>Password must be at least 8 characters long</span>
+        </div>
+        <ng-template #patternError>
+          <div
+            *ngIf="freelancerForm.get('password')?.hasError('pattern') && (freelancerForm.get('password')?.touched || freelancerForm.get('password')?.dirty)"
+            class="error-message">
+            <span>Password must contain at least one number, one uppercase letter, and one special
+              character</span>
+          </div>
+        </ng-template>
       </div>
       <div class="retype">
         <p>Re-type password</p>
         <input type="password" formControlName="retypePassword" placeholder="Re-type password *" required />
+        <div
+          *ngIf="freelancerForm.get('retypePassword')?.hasError('required') && (freelancerForm.get('retypePassword')?.touched || freelancerForm.get('retypePassword')?.dirty); else passwordMismatch"
+          class="error-message">
+          <span>Re-type password is required</span>
+        </div>
+        
+        <!-- 'else' part for 'passwordMismatch' error -->
+        <ng-template #passwordMismatch>
+          <div *ngIf="freelancerForm.hasError('passwordMismatch') && (freelancerForm.touched || freelancerForm.dirty)"
+            class="error-message">
+            <span>Passwords do not match</span>
+          </div>
+        </ng-template>
+
       </div>
       <button type="submit">Update</button>
     </form>
   </div>
   </div>
+

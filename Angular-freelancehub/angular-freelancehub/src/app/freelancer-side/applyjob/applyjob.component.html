@@ -62,10 +62,14 @@
                 <div class="upload-container">
                     <label for="previousWorks">Upload Previous Works:</label>
                     <input type="text" [(ngModel)]="newLink" placeholder="Enter link and click Add"
-                        name="previousWorkLink" [ngModelOptions]="{standalone: true}" />
+                        name="previousWorkLink" [ngModelOptions]="{standalone: true}"
+                        (blur)="validateLink()" />
+                        <div *ngIf="linkError" class="error-message">
+                            {{ linkError }}
+                        </div>
 
                     <button type="button" (click)="addLink()">Add Link</button>
-
+                   
                     <div *ngIf="uploadedLinks.length > 0" class="uploadedFilesList">
                         <ul>
                             <li *ngFor="let link of uploadedLinks; index as i">

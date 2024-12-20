@@ -1,0 +1,47 @@
+#notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  #notification.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  #notification.hidden {
+    opacity: 0;
+    visibility: hidden;
+  }
+  
+  /* Notification types */
+  #notification.success {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  #notification.error {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  #notification.info {
+    background-color: #2196f3;
+    color: white;
+  }
+  
+  #notification.warning {
+    background-color: #ff9800;
+    color: white;
+  }
+  

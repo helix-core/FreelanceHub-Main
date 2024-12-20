@@ -317,15 +317,14 @@ label {
 .skills-missing-container {
     text-align: left;
     font-size: 14px;
-    position: relative;
     bottom: 30px;
+    overflow-y: auto;
 }
 
 .skills-missing-container h5 {
     font-size: 16px;
     font-weight: bold;
     color: #232B50;
-    /* Red color to match "missing" theme */
     margin-bottom: 8px;
 }
 
@@ -334,6 +333,7 @@ label {
     margin: 0;
     padding-left: 20px;
     color: #333;
+    word-wrap: break-word;
 }
 
 .skills-missing-container ul li {
@@ -374,7 +374,6 @@ label {
 .total-list{
     margin-top: 10px;
 }
-
 a.home{
     text-decoration: none; 
     color: #232B50;
@@ -513,4 +512,9 @@ a.home{
     .skills-missing-container h5 {
         font-size: 14px;
     }
+}
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
 }

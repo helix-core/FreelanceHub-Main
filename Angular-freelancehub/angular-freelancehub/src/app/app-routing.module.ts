@@ -29,6 +29,7 @@ const routes: Routes = [
   { path: 'assigned-jobs', component: AssignedjobsComponent},
   { path: 'bidding', component: BiddingComponent},
   { path: 'profile/freelancer', component:FreelancerProfileComponent },
+  { path: 'freelancer/profile/:freeId', component: FreelancerProfileComponent },
   {path:'freelancer/edit' ,component:FreelancerEditComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
    { path: 'explore', component: ExploreComponent },

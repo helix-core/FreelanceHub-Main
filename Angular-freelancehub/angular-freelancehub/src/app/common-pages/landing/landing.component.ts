@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../auth.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-landing',
@@ -34,7 +34,12 @@ export class LandingComponent {
   }
 
   getNotifications() {
-    this.http.get<{ notifications: { message: string }[]; unreadCount: number }>('/getUnreadNotifications')
+    const userId=localStorage.getItem("userId");
+    if (!userId) {
+      throw new Error('User is not logged in. No userId found in localStorage.');
+    }
+    const params=new HttpParams().set('userId', userId);
+    this.http.get<{ notifications: { message: string }[]; unreadCount: number }>('/api/getUnreadNotifications',{params})
       .subscribe(
         (data) => {
           this.notifications = data.notifications || [];
@@ -47,7 +52,12 @@ export class LandingComponent {
   }
 
   markNotificationsAsRead() {
-    this.http.post('/markNotificationsAsRead', {}).subscribe(
+    const userId=localStorage.getItem("userId");
+    if (!userId) {
+      throw new Error('User is not logged in. No userId found in localStorage.');
+    }
+    const params=new HttpParams().set('userId', userId);
+    this.http.post('api/markNotificationsAsRead',null, {params}).subscribe(
       () => {
         this.unreadCount = 0;
       },
