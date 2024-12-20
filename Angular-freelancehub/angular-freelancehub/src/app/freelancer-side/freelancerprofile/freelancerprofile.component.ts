@@ -28,6 +28,9 @@ export class FreelancerProfileComponent implements OnInit {
       this.profileService.getFreelancerProfile(freelancerId).subscribe(
         (data) => {
           this.freelancer = data.freelancer;
+           if (this.freelancer && this.freelancer.profile_image) {
+          this.freelancer.profile_image = 'http://localhost:8080' + this.freelancer.profile_image;
+        }
           this.ongoingJobs = data.ongoingJobs;
           this.completedJobs = data.completedJobs;
           this.fetchRatings(this.freelancer);

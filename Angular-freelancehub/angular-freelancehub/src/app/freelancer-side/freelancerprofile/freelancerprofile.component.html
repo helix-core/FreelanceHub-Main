@@ -14,7 +14,10 @@
         <!-- Freelancer Profile Section -->
         <div class="profile-section">
             <div class="profile-header">
-                <div class="profile-pic">Profile Pic</div>
+                <div class="profile-pic">
+                    <img *ngIf="freelancer?.profile_image" [src]="freelancer.profile_image" alt="Profile Picture" class="profile-img" />
+                    <span *ngIf="!freelancer?.profile_image">No Profile Picture</span>
+                </div>
                 <div class="profile-info">
                     <h2>{{ freelancer?.freeName }}</h2>
                     <p>{{ freelancer?.qualification }}</p>

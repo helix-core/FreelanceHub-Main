@@ -21,6 +21,7 @@ jobForm: FormGroup;
   uploadedLinks: string[] = [];
   newLink: string = '';
   circularProgressStyle: string = '';
+  linkError:string='';
 
   constructor(
     private fb: FormBuilder,
@@ -85,6 +86,17 @@ jobForm: FormGroup;
     console.log(`Slider ${controlName} updated to: ${value}`);
   }
 
+    validateLink(): void {
+        const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w-]*)*\/?$/; // Regex for basic URL validation
+        if (!this.newLink.trim()) {
+            this.linkError = 'Link is required.';
+        } else if (!urlPattern.test(this.newLink)) {
+            this.linkError = 'Enter a valid link (e.g., Drive, GitHub, project link).';
+        } else {
+            this.linkError = ''; // Clear error if validation passes
+        }
+    }
+
   updateCircularProgress(): void {
     const angle = this.matchedSkillsPercentage * 3.6;
     this.circularProgressStyle = `conic-gradient(
@@ -94,10 +106,11 @@ jobForm: FormGroup;
   }
 
 addLink(): void {
-  if (this.newLink.trim()) {
-    this.uploadedLinks.push(this.newLink.trim());
-    this.newLink = ''; 
-  }
+  this.validateLink(); // Validate before adding
+        if (!this.linkError && this.newLink.trim()) {
+            this.uploadedLinks.push(this.newLink.trim());
+            this.newLink = ''; // Clear input after adding
+        }
 }
 
 removeLink(index: number): void {

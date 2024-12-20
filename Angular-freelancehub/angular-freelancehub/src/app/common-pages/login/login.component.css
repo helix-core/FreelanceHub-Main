@@ -156,7 +156,18 @@
     color: #21C9B4;
     text-decoration: none;
 }
-
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-left: 40px;
+    margin-bottom: 8px;
+    display: flex;
+    align-self: flex-start;
+    word-wrap: break-word;
+    /* Ensures long text wraps */
+    max-width: 90%;
+    /* Restrict to container width */
+}
 /* Responsive adjustments */
 @media (max-width: 768px) {
     .header {

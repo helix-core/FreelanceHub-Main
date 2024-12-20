@@ -8,19 +8,34 @@
 </header>
 
 <div class="body-container">
-<div class="container">
-    <div class="loginm">
-        <h1 class="login-title">Log <span class="highlight">In</span></h1>
-        <form (ngSubmit)="onLogin()">
-            <div class="login-container">
-                <input type="email" placeholder="E-Mail *" class="input-field" [(ngModel)]="email" name="email"
-                    required>
-                <input type="password" placeholder="Password *" class="input-field" [(ngModel)]="password"
-                    name="password" required>
-                <button class="continue-button" type="submit">Continue</button>
-            </div>
-        </form>
-        <p class="signup-text">Don’t have an account? <a routerLink="/signup/selection">Sign Up</a></p>
+    <div class="container">
+        <div class="loginm">
+            <h1 class="login-title">Log <span class="highlight">In</span></h1>
+            <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+                <div class="login-container">
+                    <!-- Email Field -->
+                    <input type="email" formControlName="email" placeholder="E-Mail *" class="input-field">
+                    <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                        class="error-message">
+                        <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required.</span>
+                        <span *ngIf="loginForm.get('email')?.errors?.['invalidEmail']">Enter a valid email.</span>
+                    </div>
+
+                    <!-- Password Field -->
+                    <input type="password" formControlName="password" placeholder="Password *" class="input-field">
+                    <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+                        class="error-message">
+                        <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required.</span>
+                        <!-- <span *ngIf="loginForm.get('password')?.errors?.['pattern']">
+                            Password must contain at least one letter, one number, and one special character.
+                        </span> -->
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button class="continue-button" type="submit" [disabled]="loginForm.invalid">Continue</button>
+                </div>
+            </form>
+            <p class="signup-text">Don’t have an account? <a routerLink="/signup/selection">Sign Up</a></p>
+        </div>
     </div>
-</div>
 </div>

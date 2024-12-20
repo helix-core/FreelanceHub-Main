@@ -242,7 +242,7 @@ public class FreelancerController {
             // Prepare the response
             Map<String, Object> response = new HashMap<>();
             response.put("freelancer", freelancer.get()); // Add freelancer data
-            response.put("ongoingJobs", ongoingJobs);   // Add ongoing jobs
+            response.put("ongoingJobs", ongoingJobs); // Add ongoing jobs
             response.put("completedJobs", completedJobs); // Add completed jobs
 
             return ResponseEntity.ok(response); // Return the response as JSON
@@ -259,17 +259,16 @@ public class FreelancerController {
         if (freelancer.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        
+
         return ResponseEntity.ok(freelancer.get());
     }
 
     @PostMapping("/freelancer/update")
     public ResponseEntity<Map<String, String>> updateFreelancer(@RequestBody Freelancer freelancer) {
-    	Optional<Freelancer> optionalFreelancer = freelancerRepository.findByFreeId(freelancer.getFreeId());
+        Optional<Freelancer> optionalFreelancer = freelancerRepository.findByFreeId(freelancer.getFreeId());
 
-    	Freelancer existingFreelancer = optionalFreelancer
-    	        .orElseThrow(() -> new RuntimeException("Freelancer not found"));
-
+        Freelancer existingFreelancer = optionalFreelancer
+                .orElseThrow(() -> new RuntimeException("Freelancer not found"));
 
         // Update only editable fields
         existingFreelancer.setFreeEmail(freelancer.getFreeEmail());
@@ -283,7 +282,7 @@ public class FreelancerController {
         existingFreelancer.setPassword(freelancer.getPassword());
 
         freelancerRepository.save(existingFreelancer);
-        
+
         Map<String, String> response = new HashMap<>();
         response.put("message", "Profile updated successfully");
         return ResponseEntity.ok(response);

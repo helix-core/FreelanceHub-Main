@@ -1,42 +1,102 @@
-
-  <div *ngIf="notificationMessage" class="notification" [ngClass]="notificationType">
-    {{ notificationMessage }}
+<header class="navbar">
+  <div class="navbar-left">
+    <img src="assets/images/Twitch.png" class="logo" alt="Freelancehub Logo">
+    <h1 class="navbar-title">Freelancehub</h1>
   </div>
-  
-  <header class="navbar">
-    <div class="navbar-left">
-      <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" class="logo" alt="Freelancehub Logo">
-      <h1 class="navbar-title">Freelancehub</h1>
-    </div>
-  </header>
-  <div class="page-container">
+</header>
+
+<div class="page-container">
   <div class="form-container">
-    <form (ngSubmit)="onSubmit()" #signupForm="ngForm">
-      <input type="email" [(ngModel)]="clientDTO.compEmail" name="compEmail" placeholder="E-mail *" required>
-      <div *ngIf="signupForm.submitted && !clientDTO.compEmail" class="error-message">E-mail is required.</div>
-  
-      <input type="text" [(ngModel)]="clientDTO.companyName" name="companyName" placeholder="Company Name *" required>
-      <div *ngIf="signupForm.submitted && !clientDTO.companyName" class="error-message">Company Name is required.</div>
-  
-      <input type="text" [(ngModel)]="clientDTO.typeOfProject" name="typeOfProject" placeholder="Types of projects involved *" required>
-  
-      <textarea [(ngModel)]="clientDTO.companyDescription" name="companyDescription" placeholder="Company Description *" required></textarea>
-      <div *ngIf="signupForm.submitted && !clientDTO.companyDescription" class="error-message">Description is required.</div>
-  
-      <input type="text" [(ngModel)]="clientDTO.repName" name="repName" placeholder="Representative Name *" required>
-      <input type="text" [(ngModel)]="clientDTO.repDesignation" name="repDesignation" placeholder="Representative Designation *" required>
-      <input type="password" [(ngModel)]="clientDTO.password" name="password" placeholder="Password *" required>
-  
-      <div *ngIf="signupForm.submitted && !clientDTO.password" class="error-message">Password is required.</div>
-  
-      <input type="password" placeholder="Re-type password *" required>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <h1 class="form-title">Sign up hire talent!</h1>
+      <!-- Email -->
+      <input type="email" formControlName="compEmail" placeholder="E-mail *" />
+      <div *ngIf="signupForm.get('compEmail')?.touched && signupForm.get('compEmail')?.invalid" class="error-message">
+        <span *ngIf="signupForm.get('compEmail')?.errors?.['required']">Email is required.</span>
+        <span *ngIf="signupForm.get('compEmail')?.errors?.['invalidEmail']">Enter a valid email</span>
+      </div>
+
+
+      <!-- Company Name -->
+      <input type="text" formControlName="companyName" placeholder="Company Name *" />
+      <div *ngIf="signupForm.get('companyName')?.touched && signupForm.get('companyName')?.invalid"
+        class="error-message">
+        <span *ngIf="signupForm.get('companyName')?.errors?.['required']">Company name is required.</span>
+        <span *ngIf="signupForm.get('companyName')?.errors?.['minlength']">
+          Company name must be at least 3 characters long.
+        </span>
+      </div>
+
+      <!-- Company Description -->
+      <textarea formControlName="companyDescription" placeholder="Company Description *"></textarea>
+      <div *ngIf="signupForm.get('companyDescription')?.touched && signupForm.get('companyDescription')?.invalid"
+        class="error-message">
+        <span *ngIf="signupForm.get('companyDescription')?.errors?.['required']">Description is required.</span>
+      </div>
+
+      <!-- Project Type -->
+      <input type="text" formControlName="typeOfProject" placeholder="Types of projects involved *" />
+      <div *ngIf="signupForm.get('typeOfProject')?.touched && signupForm.get('typeOfProject')?.invalid"
+        class="error-message">
+        <span *ngIf="signupForm.get('typeOfProject')?.errors?.['required']">Type of project is required.</span>
+      </div>
+
+      <!-- Representative Name -->
+      <input type="text" formControlName="repName" placeholder="Representative Name *" />
+      <div *ngIf="signupForm.get('repName')?.touched && signupForm.get('repName')?.invalid" class="error-message">
+        <span *ngIf="signupForm.get('repName')?.errors?.['required']">Representative name is required.</span>
+      </div>
+
+      <!-- Representative Designation -->
+      <input type="text" formControlName="repDesignation" placeholder="Representative Designation *" />
+      <div *ngIf="signupForm.get('repDesignation')?.touched && signupForm.get('repDesignation')?.invalid"
+        class="error-message">
+        <span *ngIf="signupForm.get('repDesignation')?.errors?.['required']">Representative designation is
+          required.</span>
+      </div>
+
+      <!-- Password -->
+      <input type="password" formControlName="password" placeholder="Password *" />
+      <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="error-message">
+        <span *ngIf="signupForm.get('password')?.errors as errors">
+          <span *ngIf="errors['required']">
+            Password is required.
+          </span>
+          <span *ngIf="!errors['required'] && errors['minlength']">
+            Password must be at least 8 characters long.
+          </span>
+          <span *ngIf="!errors['required'] && !errors['minlength'] && errors['pattern']">
+            Password must contain an uppercase letter, a number, and a special character.
+          </span>
+        </span>
+      </div>
+
+      <!-- Confirm Password -->
+      <input type="password" formControlName="confirmPassword" placeholder="Re-type Password *" />
+      <div *ngIf="signupForm.get('confirmPassword')?.touched" class="error-message">
+        <span *ngIf="signupForm.get('confirmPassword')?.errors?.['required']">
+          Confirm password is required.
+        </span>
+        <span *ngIf="!signupForm.get('confirmPassword')?.errors?.['required'] && signupForm.errors?.['passwordMismatch']">
+          Passwords do not match.
+        </span>
+      </div>
+
       
+
+
+      <!-- Agree Checkbox -->
       <div class="checkbox-container">
-        <input type="checkbox" [(ngModel)]="agree" name="agree" required>
+        <input type="checkbox" formControlName="agree" />
         <label>I agree to the Privacy Policy of Freelancehub</label>
       </div>
-      
-      <button type="submit" [disabled]="!signupForm.valid">Submit</button>
+      <div *ngIf="signupForm.get('agree')?.touched && signupForm.get('agree')?.invalid" class="error-message">
+        You must agree to the Privacy Policy.
+      </div>
+
+      <button type="submit" [disabled]="signupForm.invalid">
+        Submit
+      </button>
     </form>
   </div>
 </div>

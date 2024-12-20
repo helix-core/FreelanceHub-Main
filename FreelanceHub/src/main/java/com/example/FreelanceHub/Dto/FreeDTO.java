@@ -1,5 +1,10 @@
 package com.example.FreelanceHub.Dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,36 +13,68 @@ import jakarta.validation.constraints.Size;
 
 public class FreeDTO {
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email format")
-    private String freeEmail;
+	@NotBlank(message = "Email is required")
+	@Email(message = "Invalid email format")
+	private String freeEmail;
 
-    @NotBlank(message = "Name is required")
-    @Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
-    private String freeName;
+	@NotBlank(message = "Name is required")
+	@Size(min = 2, max = 50, message = "Name must be between 2 and 50 characters")
+	private String freeName;
 
-    @NotNull(message = "Age is required")
-    private Integer freeAge;
+	@NotNull(message = "Age is required")
+	private Integer freeAge;
 
-    @NotBlank(message = "Country is required")
-    private String Country;
+	@NotBlank(message = "Country is required")
+	private String Country;
 
-    @NotBlank(message = "Field of Work is required")
-    private String FOW;
+	@NotBlank(message = "Field of Work is required")
+	private String FOW;
 
-    @NotNull(message = "Experience is required")
-    private Integer Experience;
+	@NotNull(message = "Experience is required")
+	private Integer Experience;
 
-    @NotBlank(message = "Qualification is required")
-    private String Qualification;
+	@NotBlank(message = "Qualification is required")
+	private String Qualification;
 
-    @NotBlank(message = "Skills are required")
-    private String Skills;
+	@NotBlank(message = "Skills are required")
+	private String Skills;
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 8, message = "Password must be at least 8 characters long")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}", message = "Password must contain at least one letter and one number")
-    private String password;
+	@NotBlank(message = "Password is required")
+	@Size(min = 6, message = "Password must be at least 8 characters long")
+	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{6,}$", message = "Password must contain at least one uppercase letter, one number, and one special character")
+	private String password;
+
+	@NotNull(message = "Retyped password is required")
+	private String rePassword;
+
+	@AssertTrue(message = "You must agree to the terms and conditions")
+	private Boolean termsAndConditions;
+
+	@PrePersist
+	@PreUpdate
+	public void validatePasswordMatch() {
+		if (!password.equals(rePassword)) {
+			throw new IllegalArgumentException("Passwords do not match");
+		}
+	}
+
+	private MultipartFile profileImage;
+
+	public String getRePassword() {
+		return rePassword;
+	}
+
+	public void setRePassword(String rePassword) {
+		this.rePassword = rePassword;
+	}
+
+	public Boolean getTermsAndConditions() {
+		return termsAndConditions;
+	}
+
+	public void setTermsAndConditions(Boolean termsAndConditions) {
+		this.termsAndConditions = termsAndConditions;
+	}
 
 	public String getFreeEmail() {
 		return freeEmail;
@@ -111,6 +148,14 @@ public class FreeDTO {
 		this.password = password;
 	}
 
-    // Getters and Setters
-    
+	public MultipartFile getProfileImage() {
+		return profileImage;
+	}
+
+	public void setProfileImage(MultipartFile profileImage) {
+		this.profileImage = profileImage;
+	}
+
+	// Getters and Setters
+
 }

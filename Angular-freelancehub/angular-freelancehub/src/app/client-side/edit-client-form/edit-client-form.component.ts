@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ClientService } from '../../client.service';
 import { NotificationService } from '../../notification.service';
@@ -34,15 +34,34 @@ export class EditClientFormComponent implements OnInit {
 
   initializeForm(): void {
     this.editClientForm = this.fb.group({
-      compEmail: ['', [Validators.required, Validators.email]],
+      compEmail: ['', [Validators.required, this.customEmailValidator()]],
       companyName: ['', Validators.required],
       typeOfProject: ['', Validators.required],
       companyDescription: ['', Validators.required],
       repName: ['', Validators.required],
       repDesignation: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+       password: ['',[Validators.required,Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/)]],
       confirmPassword: ['', Validators.required],
+    },{
+      validators: this.passwordMatchValidator
     });
+  }
+
+    customEmailValidator(): ValidatorFn {
+      return (control: AbstractControl): ValidationErrors | null => {
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu)$/;
+        const value = control.value;
+        return value && !emailRegex.test(value) ? { invalidEmail: true } : null;
+      };
+    }
+
+   passwordMatchValidator(form: FormGroup): { [key: string]: boolean } | null {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+    if (password !== confirmPassword) {
+      return { passwordsMismatch: true };
+    }
+    return null;
   }
 
   updateClient(): void {
@@ -54,6 +73,7 @@ export class EditClientFormComponent implements OnInit {
       this.clientService.updateClientDetails(updatedClient).subscribe(
         () => {
           this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile-client'); // Redirect to the profile page
+
         },
         (error) => {
           this.notificationService.showNotification(error, 'error');

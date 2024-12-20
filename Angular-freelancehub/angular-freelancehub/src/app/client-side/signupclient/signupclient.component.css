@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #f5f5f5;
+  
 }
 
 .navbar {
@@ -41,6 +41,15 @@
     font-size: 34px;
     font-weight: 800;
     font-family: 'Mulish', sans-serif;
+}
+
+.form-title {
+    color: #232B50;
+    font-family: 'Mulish', sans-serif;
+    justify-self: center;
+    align-self: center;
+    margin-bottom: 15px;
+
 }
 
 .form-container {
