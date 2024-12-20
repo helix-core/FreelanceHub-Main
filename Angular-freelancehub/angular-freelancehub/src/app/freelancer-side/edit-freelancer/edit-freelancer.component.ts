@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FreelancerService } from '../../freelancer.service';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NotificationService } from '../../notification.service';
 
 @Component({
