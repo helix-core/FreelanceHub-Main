@@ -3,7 +3,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Mulish", serif;
+    font-family: "Mulish", sans-serif;
 }
 
 .body-container {
@@ -23,6 +23,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
+    position: absolute;
     top: 0;
     width: 100%;
     height: 60px;
@@ -47,37 +48,6 @@
     font-weight: 700;
     font-family: 'Mulish', sans-serif;
 }
-
-/* .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    height: 60px;
-    z-index: 1000;
-}
-
-.navbar-left {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    width: 30px;
-    height: 30px;
-    margin-right: 15px;
-
-}
-
-.navbar-title {
-    color: #232B50;
-    font-size: 34px;
-    font-weight: 700;
-    font-family: 'Mulish', sans-serif;
-}*/
 
 /* Form Container */
 .form-container {
@@ -166,7 +136,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 /*.email input {
@@ -188,7 +158,7 @@ form button:hover {
     margin: 0;
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .companyname input {
@@ -208,7 +178,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .desc {
@@ -224,7 +194,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .repname {
@@ -240,7 +210,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .desig {
@@ -256,7 +226,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .password {
@@ -272,7 +242,7 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
 
 .retype {
@@ -288,5 +258,31 @@ form button:hover {
     /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    margin-bottom: revert;
+    /* margin-bottom: revert; */
 }
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }
+
+  .home:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltiptext {
+    position: absolute;
+    top: 110%;               /* Position the tooltip below the text */
+    left:10%;              /* Center the tooltip horizontally */
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.5em;
+    white-space: nowrap;
+    opacity: 0;              /* Initially hidden */
+    visibility: hidden;      /* Not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    z-index: 10;             /* Ensure tooltip appears above other elements */
+  }

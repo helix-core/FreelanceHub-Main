@@ -16,6 +16,12 @@
     padding: 10px;
     /* Adds some padding to avoid content touching screen edges */
 }
+/* .title{
+    display: flex;
+    zoom: 90%;
+    flex-direction: column;
+    overflow: hidden;
+} */
 
 .navbar {
     display: flex;
@@ -45,23 +51,20 @@
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 900;
+    font-weight: 700;
+    margin-top: 30px;
 
 }
 
 .container {
     width: 100%;
     max-width: 960px;
-    /* Maximum width for large screens */
     height: auto;
     position: relative;
     padding: 20px;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
-        transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
-        transition: transform 0.3s ease, box-shadow 0.3s ease; */
 }
 
-.header {
+/* .header {
     display: flex;
     align-items: center;
     font-family: "Mulish", serif;
@@ -70,13 +73,13 @@
     font-size: 36px;
     position: relative;
     margin-bottom: 20px;
-}
+} */
 
-.header img {
+/* .header img {
     width: 40px;
     height: 40px;
     margin-right: 8px;
-}
+} */
 
 .loginm {
     display: flex;

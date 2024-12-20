@@ -7,17 +7,13 @@
 
 .applied-jobs {
     font-family: 'Mulish', sans-serif;
-    /* background-color: #f5f5f5; */
     display: flex;
     justify-content: center;
-    /* Horizontally center the container */
     align-items: center;
-    /* Vertically center the container */
     min-height: 80vh;
     zoom: 90%;
     flex-direction: column;
     overflow: hidden;
-    /* Prevent the body from scrolling */
 }
 
 .navbar {
@@ -50,8 +46,18 @@
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
+}
+
+.body-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* min-height: 80vh; */
+    zoom: 90%;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .dashboard-header {
@@ -202,3 +208,196 @@ h2 {
     top: 5px;
     border-radius: 20px;
 }
+a.home{
+    text-decoration: none; 
+    color: #232B50;
+  }
+
+  .tooltip {
+    position: absolute;
+    bottom: 110%;          /* Position the tooltip above the image */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.7em;
+    white-space: nowrap;
+    opacity: 0;            /* Initially hidden */
+    visibility: hidden;    /* Ensures it's not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+  }
+  .button:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .home:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .tooltiptext {
+    position: absolute;
+    top: 110%;               /* Position the tooltip below the text */
+    left:10%;              /* Center the tooltip horizontally */
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.5em;
+    white-space: nowrap;
+    opacity: 0;              /* Initially hidden */
+    visibility: hidden;      /* Not interactable when hidden */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    z-index: 10;             /* Ensure tooltip appears above other elements */
+  }
+
+
+
+  /* Responsive Design for Smaller Screens */
+
+/* General adjustments for screens smaller than 1200px */
+@media (max-width: 1200px) {
+    .job-card {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .dashboard-header {
+        width: 90%;
+    }
+}
+
+/* Tablet devices (between 768px and 1024px) */
+@media (max-width: 1024px) {
+    .navbar-title {
+        font-size: 28px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 32px;
+    }
+
+    .job-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .job-card h3 {
+        font-size: 24px;
+    }
+
+    .job-card p {
+        font-size: 16px;
+    }
+
+    .icons {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+/* Mobile devices (up to 768px) */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .navbar-left {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .logo {
+        width: 25px;
+        height: 25px;
+    }
+
+    .navbar-title {
+        font-size: 24px;
+    }
+
+    .dashboard-header {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 26px;
+    }
+
+    .icons span {
+        padding: 5px;
+    }
+
+    .job-card {
+        width: 100%;
+        padding: 10px;
+        flex-direction: column;
+        text-align: left;
+    }
+
+    .job-card h3 {
+        font-size: 20px;
+    }
+
+    .job-card p {
+        font-size: 14px;
+    }
+
+    .job-status {
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .job-status span {
+        font-size: 14px;
+        padding: 5px 8px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .scrollable {
+        max-height: 400px;
+    }
+}
+
+/* Extra small devices (up to 480px) */
+@media (max-width: 480px) {
+    .navbar-title {
+        font-size: 20px;
+    }
+
+    .job-card {
+        padding: 8px;
+    }
+
+    .job-card h3 {
+        font-size: 18px;
+    }
+
+    .job-card p {
+        font-size: 12px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 20px;
+    }
+
+    .job-status span {
+        font-size: 12px;
+    }
+}
+
+

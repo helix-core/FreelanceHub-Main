@@ -1,16 +1,16 @@
 <!-- <div id="notification" 
          [ngClass]="{ 'visible': notificationType != null, [notificationType]: notificationType }"
          [innerText]="notificationMessage"></div> -->
-
+<div class="title">
          <header class="navbar">
             <div class="navbar-left">
-                <img src="/images/Twitch.png" class="logo" alt="Freelancehub Logo">
-                <h1 class="navbar-title">Freelancehub</h1>
+                <img src="assets/images/Twitch.png" class="logo" alt="Freelancehub Logo">
+                <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub<div class="tooltiptext">Home</div></a></span>
             </div>
         </header>
         
         <br><br>
-        
+        <div class="body-container"></div>
         <!-- Freelancer Profile Section -->
         <div class="profile-section">
             <div class="profile-header">
@@ -82,5 +82,6 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         

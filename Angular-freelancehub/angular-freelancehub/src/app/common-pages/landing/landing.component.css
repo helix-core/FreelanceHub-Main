@@ -7,7 +7,8 @@
         font-family: 'Mulish', sans-serif;
     }
 
-    body {
+
+    .whole-container{
         background-color: #f8f9fa;
         height: 100%;
     }

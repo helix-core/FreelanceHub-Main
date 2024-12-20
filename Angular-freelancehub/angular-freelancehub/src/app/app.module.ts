@@ -16,17 +16,15 @@ import { PostjobComponent } from './client-side/postjob/postjob.component';
 import { PostedJobsComponent } from './client-side/postedjobs/postedjobs.component';
 import { AssignedjobsComponent } from './client-side/assignedjobs/assignedjobs.component';
 import { BiddingComponent } from './client-side/bidding/bidding.component';
+import { FreelancerEditComponent } from './freelancer-side/edit-freelancer/edit-freelancer.component';
+import { FreelancerProfileComponent } from './freelancer-side/freelancerprofile/freelancerprofile.component';
 import { ApplyjobComponent } from './freelancer-side/applyjob/applyjob.component';
 import { AppliedjobsComponent } from './freelancer-side/appliedjobs/appliedjobs.component';
 import { AcceptedjobsComponent } from './freelancer-side/acceptedjobs/acceptedjobs.component';
-import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
-import { EditClientFormComponent } from './client-side/edit-client-form/edit-client-form.component';
-import { FreelancerEditComponent } from './freelancer-side/edit-freelancer/edit-freelancer.component';
-import { FreelancerProfileComponent } from './freelancer-side/freelancerprofile/freelancerprofile.component';
 import { ExploreComponent } from './common-pages/explore/explore.component';
+import { EditClientFormComponent } from './client-side/edit-client-form/edit-client-form.component';
 import { NotificationComponent } from './common-pages/notification/notification.component';
 import { NotificationService } from './notification.service';
-// import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -40,9 +38,12 @@ import { NotificationService } from './notification.service';
     PostedJobsComponent,
     AssignedjobsComponent,
     BiddingComponent,
+    FreelancerEditComponent,
+    FreelancerProfileComponent,
     ApplyjobComponent,
     AppliedjobsComponent,
     AcceptedjobsComponent,
+    ExploreComponent,
     ClientprofileComponent,
     EditClientFormComponent,
     FreelancerEditComponent,

@@ -1,29 +1,38 @@
 <div class="whole-container">
-  <div class="navbar">
-    <div class="navbar-left">
-      <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" alt="Logo" class="logo" />
-      <span class="navbar-title">Freelancehub</span>
+    <div class="navbar">
+      <div class="navbar-left">
+        <img src="assets/images/WhatsApp Image 2024-11-13 at 14.21.26_529a38e9.jpg" alt="Logo" class="logo" />
+        <span class="navbar-title">
+          <a routerLink="/landing" class="home">
+            Freelancehub
+            <div class="tooltiptext">Home</div>
+          </a>
+        </span>
+      </div>
     </div>
-  </div>
-
-  <div class="dashboard-header">
-    <h1>Company <span>Dashboard</span></h1>
-    <div class="icons">
-      <span class="l1">
-        <a routerLink="/posted-jobs" class="button">
-          <img src="/assets/images/account_circle.png" alt="" />
-        </a>
-      </span>
-      <span class="l2">
-        <a routerLink="/postjob" class="button">
-          <img src="/assets/images/bookmark.png" alt="" />
-        </a>
-      </span>
-      <span class="l3">
-        <a routerLink="/assigned-jobs" class="button">
-          <img src="/assets/images/Award.png" alt="" />
-        </a>
-      </span>
+  
+    <div class="dashboard-header">
+      <h1>Company <span>Dashboard</span></h1>
+      <div class="icons">
+        <span class="l1">
+          <a routerLink="/posted-jobs" class="button">
+            <img src="/assets/images/account_circle.png" alt="">
+            <div class="tooltip">Posted Jobs</div>
+          </a>
+        </span>
+        <span class="l2">
+          <a routerLink="/postjob" class="button">
+            <img src="/assets/images/bookmark.png" alt="">
+            <div class="tooltip">Post Jobs</div>
+          </a>
+        </span>
+        <span class="l3">
+          <a routerLink="/assigned-jobs" class="button">
+            <img src="/assets/images/Award.png" alt="">
+            <div class="tooltip">Assigned Jobs</div>
+          </a>
+        </span>
+      </div>
     </div>
   </div>
 

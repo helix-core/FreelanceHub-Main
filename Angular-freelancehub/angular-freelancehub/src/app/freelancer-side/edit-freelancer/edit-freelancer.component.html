@@ -1,15 +1,20 @@
 <div class="body-container">
-  <header class="navbar">
-    <div class="navbar-left">
-      <img src="assets/images/Twitch.png" class="logo" alt="Freelancehub Logo">
-      <h1 class="navbar-title">Freelancehub</h1>
-    </div>
-  </header>
+<div class="title">
+<header class="header">
+  <div class="navbar">
+      <div class="navbar-left">
+          <img src="assets/images/Twitch.png" class="logo" alt="Freelancehub Logo" />
+          <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub<div class="tooltiptext">Home</div></a></span>
+      </div>
+  </div>
+</header>
+</div>
+
 <div class="form-container">
     <h1>Edit Freelancer Profile</h1>
     <form [formGroup]="freelancerForm" (ngSubmit)="updateFreelancer()">
       <div class="email">
-        <label>Email</label>
+        <p>Email</p>
         <input formControlName="freeEmail" placeholder="E-mail *" required />
         <div
           *ngIf="freelancerForm.get('freeEmail')?.hasError('required') && (freelancerForm.get('freeEmail')?.touched || freelancerForm.get('freeEmail')?.dirty)"
@@ -21,7 +26,7 @@
         </div>
       </div>
       <div class="name">
-        <label>Name</label>
+        <p>Name</p>
         <input formControlName="freeName" placeholder="Name *" required />
         <div
           *ngIf="freelancerForm.get('freeName')?.hasError('required') && (freelancerForm.get('freeName')?.touched || freelancerForm.get('freeName')?.dirty)"
@@ -35,7 +40,7 @@
         </div>
       </div>
       <div class="age">
-        <label>Age</label>
+        <p>Age</p>
         <input formControlName="freeAge" type="number" placeholder="Age *" required />
         <div
           *ngIf="freelancerForm.get('freeAge')?.hasError('required') && (freelancerForm.get('freeAge')?.touched || freelancerForm.get('freeAge')?.dirty)"
@@ -49,7 +54,7 @@
         </div>
       </div>
       <div class="country">
-        <label>Country</label>
+        <p>Country</p>
         <input formControlName="country" placeholder="Country *" required />
         <div
           *ngIf="freelancerForm.get('country')?.hasError('required') && (freelancerForm.get('country')?.touched || freelancerForm.get('country')?.dirty)"
@@ -58,7 +63,7 @@
         </div>
       </div>
       <div class="fields">
-        <label>Field of work</label>
+        <p>Field of work</p>
         <input formControlName="fow" placeholder="Field of Work *" required />
         <div
           *ngIf="freelancerForm.get('fow')?.hasError('required') && (freelancerForm.get('fow')?.touched || freelancerForm.get('fow')?.dirty)"
@@ -67,7 +72,7 @@
         </div>
       </div>
       <div class="experience">
-        <label>Experience</label>
+        <p>Experience</p>
         <select formControlName="experience" required>
           <option value="1">1-3 years</option>
           <option value="2">3-5 years</option>
@@ -94,7 +99,7 @@
         <input type="hidden" formControlName="skills" [value]="skills.join(',')">
       </div>
       <div class="qual">
-        <label>Highest Qualification</label>
+        <p>Highest Qualification</p>
         <input formControlName="qualification" placeholder="Highest Qualification *" required />
         <div
           *ngIf="freelancerForm.get('qualification')?.hasError('required') && (freelancerForm.get('qualification')?.touched || freelancerForm.get('qualification')?.dirty)"
@@ -103,7 +108,7 @@
         </div>
       </div>
       <div class="password">
-        <label>Password</label>
+        <p>Password</p>
         <input formControlName="password" type="password" placeholder="Password *" required />
         <div
           *ngIf="freelancerForm.get('password')?.hasError('required') && (freelancerForm.get('password')?.touched || freelancerForm.get('password')?.dirty)"
@@ -125,7 +130,7 @@
         </ng-template>
       </div>
       <div class="retype">
-        <label>Re-type password</label>
+        <p>Re-type password</p>
         <input type="password" formControlName="retypePassword" placeholder="Re-type password *" required />
         <div
           *ngIf="freelancerForm.get('retypePassword')?.hasError('required') && (freelancerForm.get('retypePassword')?.touched || freelancerForm.get('retypePassword')?.dirty); else passwordMismatch"
@@ -146,4 +151,4 @@
     </form>
   </div>
   </div>
-  
+

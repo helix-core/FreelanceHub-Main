@@ -38,7 +38,6 @@ const routes: Routes = [
   {path:'accepted-jobs',component:AcceptedjobsComponent},
   {path:'profile/client',component:ClientprofileComponent},
   {path:'profile-client-edit',component:EditClientFormComponent}
-
   ];
 
 @NgModule({

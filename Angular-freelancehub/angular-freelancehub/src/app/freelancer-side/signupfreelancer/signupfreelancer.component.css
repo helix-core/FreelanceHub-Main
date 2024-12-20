@@ -40,7 +40,7 @@
 .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
 }
 
@@ -196,6 +196,92 @@
     color: #6c6c6c; /* Keep the placeholder color for invalid (default) state */
   }
 
+
+  /* Responsive adjustments for tablets and smaller screens */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .navbar-title {
+        font-size: 28px;
+        margin-top: 5px;
+    }
+
+    .logo {
+        width: 25px;
+        height: 25px;
+    }
+
+    .form-container {
+        width: 90%;
+        padding: 15px;
+        transform: none;
+    }
+
+    .registration-form input,
+    .registration-form textarea,
+    .registration-form select,
+    .registration-form button {
+        font-size: 0.85em;
+    }
+
+    .checkbox-container label {
+        font-size: 12px;
+    }
+
+    .checkbox-container input {
+        width: 25px;
+    }
+}
+
+/* Responsive adjustments for mobile devices */
+@media (max-width: 480px) {
+    .navbar-title {
+        font-size: 24px;
+    }
+
+    .form-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .registration-form input,
+    .registration-form textarea,
+    .registration-form select,
+    .registration-form button {
+        font-size: 0.8em;
+        padding: 8px;
+    }
+
+    .title {
+        font-size: 1.2em;
+    }
+
+    .checkbox-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .checkbox-container label {
+        font-size: 11px;
+    }
+
+    .checkbox-container input {
+        width: 20px;
+    }
+
+    #skills-display {
+        gap: 5px;
+    }
+
+    .skill-tag {
+        font-size: 0.8em;
+        padding: 4px 8px;
+    }
+}
   .profile-upload-container {
       display: flex;
       flex-direction: column;

@@ -5,12 +5,24 @@
     box-sizing: border-box;
     font-family: "Mulish", sans-serif;
   }
+
+  .body-container{
+    background-color: #f8f9fa;
+    height: 100%;
+    font-family: 'Mulish',sans-serif;
+  }
   
   body {
     background-color: #f8f9fa;
     height: 100%;
   
   }
+  .title{
+    display: flex;
+    zoom: 90%;
+    flex-direction: column;
+    overflow: hidden;
+}
   
   .navbar {
     display: flex;
@@ -39,7 +51,7 @@
   .navbar-title {
     color: #232B50;
     font-size: 34px;
-    font-weight: 800;
+    font-weight: 700;
     font-family: 'Mulish', sans-serif;
   }
   
@@ -61,24 +73,6 @@
       align-items: center;
       font-size: 1.2rem;
   }
-  
-  /* .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  } */
-  
-  /*.edit-button {
-    background-color: #fff;
-    color: #00bfa6;
-    border: none;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  .edit-button:hover {
-    background-color: #e6fff7;
-  }*/
   
   /* Profile Section */
   .profile-section {
@@ -234,35 +228,129 @@
             color: white;
             font-weight: 700;
         }
-    /* .rating-container {
-      margin-top: 10px;
-      text-align: left;
-    }
-    
-    .stars {
-      display: flex;
-      align-items: center;
-      margin-bottom: 5px;
-    }
-    
-    .stars span {
-      font-size: 20px;
-      color: #ccc;
-      margin-right: 3px;
-      transition: color 0.3s ease-in-out;
-    }
-    
-    .stars span.filled {
-      color: gold;
-    }
-    
-    .rating-info {
-      font-size: 14px;
-      color: #555;
-      margin-top: 5px;
-    }
-     */
+    a.home{
+          text-decoration: none; 
+          color: #232B50;
+        }
 
+        .home:hover .tooltiptext {
+          opacity: 1;
+          visibility: visible;
+        }
+      
+        .tooltiptext {
+          position: absolute;
+          top: 110%;               /* Position the tooltip below the text */
+          left:10%;              /* Center the tooltip horizontally */
+          transform: translateX(-50%);
+          background-color: rgba(0, 0, 0, 0.8);
+          color: #fff;
+          padding: 5px 10px;
+          border-radius: 5px;
+          font-size: 0.5em;
+          white-space: nowrap;
+          opacity: 0;              /* Initially hidden */
+          visibility: hidden;      /* Not interactable when hidden */
+          transition: opacity 0.3s ease; /* Smooth fade-in effect */
+          z-index: 10;             /* Ensure tooltip appears above other elements */
+        }
+
+
+  /* Responsive Styling */
+
+/* For tablets and smaller screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .navbar-title {
+    font-size: 28px;
+    text-align: center;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .profile-pic {
+    width: 60px;
+    height: 60px;
+  }
+
+  .profile-info {
+    margin-right: 0;
+    margin-top: 10px;
+  }
+
+  .edit-btn {
+    width: 100%;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .main-content {
+    flex-direction: column;
+  }
+
+  .left-section,
+  .right-section {
+    width: 100%;
+    padding: 10px;
+  }
+}
+
+/* For mobile screens (max-width: 480px) */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 5px;
+  }
+
+  .logo {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+  }
+
+  .navbar-title {
+    font-size: 24px;
+  }
+
+  .profile-header {
+    padding: 10px;
+  }
+
+  .profile-pic {
+    width: 50px;
+    height: 50px;
+  }
+
+  .profile-info h2 {
+    font-size: 18px;
+  }
+
+  .edit-btn {
+    padding: 8px;
+  }
+
+  .main-content {
+    gap: 10px;
+  }
+
+  .project {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+
+  .tooltiptext {
+    font-size: 0.4em;
+  }
+}
+ 
      .rating-container {
       text-align: left;
       padding: 10px;
