@@ -103,12 +103,14 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      border-radius: 50%;
       /* Ensures the image covers the div area */
     }
 
  
   .profile-info{
-      margin-right: 700px;
+      margin-right: 1000px;
+      margin-bottom: 10px;
     }
   
   .profile-info h2 {

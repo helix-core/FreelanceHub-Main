@@ -25,6 +25,7 @@ import { ExploreComponent } from './common-pages/explore/explore.component';
 import { EditClientFormComponent } from './client-side/edit-client-form/edit-client-form.component';
 import { NotificationComponent } from './common-pages/notification/notification.component';
 import { NotificationService } from './notification.service';
+import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
 
 @NgModule({
   declarations: [

@@ -3,7 +3,7 @@
     <nav id="navbar" class="navbar">
         <div class="logo">FreelanceHub</div>
         <ul class="nav-links">
-            <li><a routerLink="/how-it-works" fragment="how-it-works">How It Works</a></li>
+            <li><a [routerLink]="[]" fragment="how-it-works">How It Works</a></li>
 
             <!-- Role-specific dynamic links -->
             <ng-container *ngIf="userRole">
