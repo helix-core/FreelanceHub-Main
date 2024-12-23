@@ -1,4 +1,4 @@
-<div class="body-container">
+
 <div class="title">
 <header class="header">
   <div class="navbar">
@@ -10,9 +10,18 @@
 </header>
 </div>
 
+<div class="body-container">
 <div class="form-container">
     <h1>Edit Freelancer Profile</h1>
     <form [formGroup]="freelancerForm" (ngSubmit)="updateFreelancer()">
+      <div class="profile-upload-container">
+        <label for="profile-upload" class="profile-preview">
+          <img [src]="imagePreview" alt="Profile Preview" *ngIf="imagePreview" />
+          <span *ngIf="!imagePreview">Tap to upload profile image</span>
+        </label>
+        <input type="file" id="profile-upload" (change)="onImageUpload($event)" accept="image/*" />
+        <button *ngIf="imagePreview !== defaultImage" id="remove-btn" (click)="removeImage($event)">✖</button>
+      </div>
       <div class="email">
         <p>Email</p>
         <input formControlName="freeEmail" placeholder="E-mail *" required />
@@ -64,9 +73,9 @@
       </div>
       <div class="fields">
         <p>Field of work</p>
-        <input formControlName="fow" placeholder="Field of Work *" required />
+        <input formControlName="FOW" placeholder="Field of Work *" required />
         <div
-          *ngIf="freelancerForm.get('fow')?.hasError('required') && (freelancerForm.get('fow')?.touched || freelancerForm.get('fow')?.dirty)"
+          *ngIf="freelancerForm.get('FOW')?.hasError('required') && (freelancerForm.get('FOW')?.touched || freelancerForm.get('FOW')?.dirty)"
           class="error-message">
           <span>Field of Work is required</span>
         </div>
@@ -145,6 +154,20 @@
             <span>Passwords do not match</span>
           </div>
         </ng-template>
+      </div>
+
+      <div class="upload-container">
+        <label for="previousWorks">Upload Your Resume:</label>
+      
+        <input type="file" id="resume-upload" name="resume" (change)="onResumeUpload($event)" accept=".pdf,.doc,.docx"
+          placeholder="Upload your resume" />
+      <div *ngIf="resumePreview" class="file-preview">
+        <a *ngIf="typeof resumePreview === 'string'" [href]="resumePreview" target="_blank">
+          View Current Resume
+        </a>
+        <span *ngIf="resumePreview">{{ resumePreview?.name }}</span>
+        <button type="button" class="remove-btn" (click)="removeResume()">X</button>
+      </div>
 
       </div>
       <button type="submit">Update</button>

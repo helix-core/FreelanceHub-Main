@@ -188,3 +188,19 @@ a.home{
     transition: opacity 0.3s ease; /* Smooth fade-in effect */
     z-index: 10;             /* Ensure tooltip appears above other elements */
   }
+
+  .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #232B50;
+      /* You can change this to any color */
+      color: white;
+      font-size: 2em;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-right: 20px;
+  }

@@ -16,6 +16,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,9 +82,7 @@ public class FreelancerService {
         }
 
         // Define the path where the profile images will be saved
-        String fileName = UUID.randomUUID().toString() + "-" + profileImage.getOriginalFilename(); // Add a unique ID to
-                                                                                                   // avoid name
-                                                                                                   // conflicts
+        String fileName = UUID.randomUUID().toString() + "-" + profileImage.getOriginalFilename();
         Path targetLocation = Paths.get("src/main/resources/static/images/profile_images/" + fileName);
 
         try {
@@ -96,6 +95,25 @@ public class FreelancerService {
 
         // Return the relative URL to the image
         return "/images/profile_images/" + fileName;
+    }
+
+    public String saveFile(MultipartFile file) {
+        if (file != null && !file.isEmpty()) {
+            // Save file to the local storage
+            String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+            Path targetLocation = Paths.get("src/main/resources/static/uploads/" + fileName);
+
+            try {
+                // Save the file to the target location
+                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+                // Return the relative path to the image
+                return "/uploads/" + fileName;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null; // Handle exception if file saving fails
+            }
+        }
+        return null; // Return null if both file and link are empty
     }
 
 }

@@ -8,7 +8,9 @@
 
 <div class="profile-section">
   <div class="profile-header">
-    <div class="profile-pic">Profile Pic</div>
+    <div class="profile-pic">
+      {{ client?.companyName?.charAt(0).toUpperCase() }}
+    </div>
     <div class="company-details">
       <h2>{{ client?.companyName }}</h2>
       <p>{{ client?.companyDescription }}</p>

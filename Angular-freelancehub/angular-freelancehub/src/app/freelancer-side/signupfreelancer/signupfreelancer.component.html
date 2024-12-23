@@ -152,6 +152,21 @@
             </div>
         </ng-template>
 
+        <div class="upload-container">
+        <label for="previousWorks">Upload Your Resume:</label>
+        
+        <input type="file" id="resume-upload" name="resume" (change)="onResumeUpload($event)" accept=".pdf,.doc,.docx" placeholder="Upload your resume" />
+    
+        <div *ngIf="resumePreview" class="file-preview">
+            <span>{{ resumePreview.name }}</span>
+            <button type="button" class="remove-btn" (click)="removeResume()">X</button>
+        </div>
+        </div>
+         
+    
+      
+
+
             <!-- Checkbox for Terms -->
             <div class="checkbox-container">
                 <input type="checkbox" formControlName="termsAndConditions" required>

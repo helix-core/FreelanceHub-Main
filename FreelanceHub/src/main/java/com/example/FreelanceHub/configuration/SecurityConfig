@@ -27,7 +27,7 @@
 //         .csrf().disable()
 //          // Disable CSRF for stateless JWT
 //         .authorizeRequests()
-//             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll() 
+//             .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 //             .antMatchers("/signup/**", "/login/**").permitAll() // Public endpoints
 //             .anyRequest().authenticated() // Secure all other endpoints
 //         .and()

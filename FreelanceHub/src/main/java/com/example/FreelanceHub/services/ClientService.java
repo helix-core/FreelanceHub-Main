@@ -5,6 +5,7 @@ import com.example.FreelanceHub.models.Roles;
 import com.example.FreelanceHub.repositories.ClientRepository;
 import com.example.FreelanceHub.repositories.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +20,7 @@ public class ClientService {
     public boolean registerClient(Client client) {
         try {
             Client savedclient = clientRepository.save(client);
-            String unique = "C"+savedclient.getId();
+            String unique = "C" + savedclient.getId();
             savedclient.setClientId(unique);
             clientRepository.save(savedclient);
             addRoleToClient(client.getClientId(), "client");
@@ -39,7 +40,7 @@ public class ClientService {
 
     public void addRoleToClient(String clientId, String roleName) {
         try {
-            Roles role = new Roles(roleName,clientId);
+            Roles role = new Roles(roleName, clientId);
             rolesRepository.save(role);
         } catch (Exception e) {
             // Log error if needed
@@ -52,9 +53,9 @@ public class ClientService {
         Roles role = rolesRepository.findByRoleId(clientId);
         return role != null ? role.getRole() : null; // Return role or null if not found
     }
-    
+
     public Client findByClientId(String clientId) {
         return clientRepository.findByClientId(clientId);
     }
-    
+
 }

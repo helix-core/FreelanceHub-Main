@@ -9,21 +9,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.beans.factory.annotation.Value;
-
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,7 +33,6 @@ import com.example.FreelanceHub.models.Rating;
 import com.example.FreelanceHub.repositories.NotificationRepository;
 import com.example.FreelanceHub.services.ClientService;
 import com.example.FreelanceHub.services.FreelancerService;
-// import com.example.FreelanceHub.services.JwtService;
 import com.example.FreelanceHub.services.NotificationService;
 import com.example.FreelanceHub.services.RatingService;
 
@@ -107,6 +102,8 @@ public class UserController {
         client.setTypeOfProject(clientDTO.getTypeOfProject());
         client.setRepName(clientDTO.getRepName());
         client.setRepDesignation(clientDTO.getRepDesignation());
+//        String hashedPassword = BCrypt.hashpw(clientDTO.getPassword(), BCrypt.gensalt());
+//        client.setPassword(hashedPassword);
         client.setPassword(clientDTO.getPassword());
 
         boolean isRegistered = clientService.registerClient(client);
@@ -126,7 +123,8 @@ public class UserController {
     }
 
     @PostMapping("/signup/freelancer")
-    public ResponseEntity<?> registerFreelancer(@RequestParam("profileImage") MultipartFile profileImage,
+    public ResponseEntity<?> registerFreelancer(@RequestParam("resume") MultipartFile resume,
+            @RequestParam("profileImage") MultipartFile profileImage,
             @Valid FreeDTO freelancerDTO,
             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -135,6 +133,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
         }
         String imageUrl = freeService.saveProfileImage(profileImage);
+        String pdfUrl = freeService.saveFile(resume);
         Freelancer freelancer = new Freelancer();
         freelancer.setFreeEmail(freelancerDTO.getFreeEmail());
         freelancer.setFreeName(freelancerDTO.getFreeName());
@@ -146,6 +145,7 @@ public class UserController {
         freelancer.setQualification(freelancerDTO.getQualification());
         freelancer.setPassword(freelancerDTO.getPassword());
         freelancer.setProfile_image(imageUrl);
+        freelancer.setResume(pdfUrl);
         boolean success = freeService.registerFreelancer(freelancer);
         if (success) {
             Map<String, String> response = new HashMap<>();

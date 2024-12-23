@@ -159,6 +159,16 @@ public class Freelancer {
 		this.profile_image = profile_image;
 	}
 
+	private String resume;
+
 	public String password;
+
+	public String getResume() {
+		return resume;
+	}
+
+	public void setResume(String resume) {
+		this.resume = resume;
+	}
 
 }
