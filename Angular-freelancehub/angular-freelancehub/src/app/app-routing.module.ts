@@ -17,6 +17,7 @@ import { AppliedjobsComponent } from './freelancer-side/appliedjobs/appliedjobs.
 import { AcceptedjobsComponent } from './freelancer-side/acceptedjobs/acceptedjobs.component';
 import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
 import { EditClientFormComponent } from './client-side/edit-client-form/edit-client-form.component';
+import { WalletComponent } from './common-pages/wallet/wallet.component';
 
 const routes: Routes = [
   { path: 'signup/client', component: SignupclientComponent },
@@ -37,7 +38,8 @@ const routes: Routes = [
   {path:'applied-jobs',component:AppliedjobsComponent},
   {path:'accepted-jobs',component:AcceptedjobsComponent},
   {path:'profile/client',component:ClientprofileComponent},
-  {path:'profile-client-edit',component:EditClientFormComponent}
+  {path:'profile-client-edit',component:EditClientFormComponent},
+  { path: 'payment',component: WalletComponent}
   ];
 
 @NgModule({

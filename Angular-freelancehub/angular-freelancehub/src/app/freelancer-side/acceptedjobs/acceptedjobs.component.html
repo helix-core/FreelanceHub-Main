@@ -32,8 +32,14 @@
                     </p>
                 </div>
 
+                <div class="statuses">
+                <div *ngIf="job.jobDetails.payment_stat!=='pending'" class="pay-status">
+                    <span>{{ job.jobDetails.payment_stat }}</span>
+                </div>
+
                 <div class="job-status">
                     <span>{{ job.jobDetails.progress }}</span>
+                </div>
                 </div>
 
                 <!-- Form section with stopPropagation -->

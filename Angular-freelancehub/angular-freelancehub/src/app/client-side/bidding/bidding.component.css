@@ -22,7 +22,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    position: fixed;
+    position: relative;
     top: 0;
     width: 100%;
     height: 60px;
@@ -132,7 +132,6 @@
 }
 
 .bid:hover {
-    transform: translateY(-5px);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -171,9 +170,9 @@
     background-clip: text;
     border: none;
     cursor: pointer;
-    position: absolute; /* Position the button consistently */
-    right: 20px; /* Distance from the right edge of the bid */
-    top: 50%; /* Vertically center the button */
+    position: absolute;
+    right: 20px; 
+    top: 50%; 
     transform: translateY(-50%);
     background: #232B50;
     border-radius: 25px;
@@ -272,3 +271,67 @@ a.home{
     transition: opacity 0.3s ease; /* Smooth fade-in effect */
     z-index: 10;             /* Ensure tooltip appears above other elements */
   }
+
+  /*payment*/
+  .payment-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out; /* Optional for smooth appearance */
+    /* pointer-events: none; */
+  }
+  
+  .modal-content {
+    text-align: center;
+  }
+  
+  .confirm-btn, .cancel-btn {
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .payment-modal.show {
+    pointer-events: auto; /* Enable events when modal is visible */
+  }
+  
+  .password-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  .password-modal .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .password-input {
+    width: 80%;
+    padding: 10px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  
+  
+  

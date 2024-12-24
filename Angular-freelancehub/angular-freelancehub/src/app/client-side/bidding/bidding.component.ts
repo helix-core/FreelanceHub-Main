@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NotificationService } from '../../notification.service';
+import { WalletService } from '../../wallet.service';
 
 @Component({
   selector: 'app-bidding',
@@ -11,11 +12,15 @@ import { NotificationService } from '../../notification.service';
 })
 export class BiddingComponent implements OnInit {
   jobsWithBids: any[] = [];
-  // notificationType: string | null = null;
-  // notificationMessage: string | null = null;
   sortBy: string = 'duration';
+  showPaymentModal: boolean = false;
+  selectedJobId: number | null = null;
+  selectedFreelancerId: string | null = null;
+  selectedBidAmount: number | null = null;
+  showPasswordModal:boolean=false;
+  password:string='';
 
-  constructor(private http: HttpClient,private notificationService: NotificationService) {}
+  constructor(private http: HttpClient,private notificationService: NotificationService,private walletService: WalletService) {}
 
   ngOnInit(): void {
     this.fetchJobsWithBids();
@@ -32,21 +37,84 @@ export class BiddingComponent implements OnInit {
       }
     );
   }
+  openPasswordModal(): void {
+    this.showPasswordModal = true; // Open the password modal
+    this.showPaymentModal=false;
+  }
 
   sortBids(): void {
     this.fetchJobsWithBids();
   }
 
-  acceptBid(jobId: number, userId: string): void {
-    this.http.post('/api/acceptBid', { jobId, userId },{ responseType: 'text' }).subscribe(
-      (response) => {
-        // alert(response);
-        this.fetchJobsWithBids();
-        this.notificationService.showNotification(response, 'success');
-      },
+  // 
+  acceptBid(jobId: number, userId: string, salary: number): void {
+    // Calculate 30% of the salary
+    const paymentAmount = salary * 0.3;
+    this.selectedJobId = jobId;
+    this.selectedFreelancerId = userId;
+    this.selectedBidAmount =  Math.round(paymentAmount * 100) / 100;
+
+    // Show the payment confirmation modal
+    this.showPaymentModal = true;
+  }
+
+  confirmPayment(): void {
+    const clientId = localStorage.getItem('userId'); // Client's user ID
+    if (!this.selectedJobId || !this.selectedFreelancerId || !this.selectedBidAmount) return;
+
+    this.walletService.getWalletBalance(clientId!).subscribe(
+      (balance: number) => {
+          this.http
+          .post('/api/verify-password', { clientId, password: this.password }, { responseType: 'text' })
+          .subscribe(
+            (response: any) => {
+        if (balance < this.selectedBidAmount!) {
+          this.notificationService.showNotification('Insufficient balance. Please add funds.', 'error');
+          this.closePaymentModal();
+        } else {
+          this.walletService
+            .makePayment(clientId!, this.selectedFreelancerId!, this.selectedBidAmount!)
+            .subscribe(
+              (response: any) => {
+                this.notificationService.showNotification(response, 'success');
+                this.http
+                  .post('/api/acceptBid', { jobId: this.selectedJobId, userId: this.selectedFreelancerId }, { responseType: 'text' })
+                  .subscribe(
+                    (acceptResponse) => {
+                      this.notificationService.showNotification(acceptResponse, 'success');
+                      this.fetchJobsWithBids(); 
+                      this.closePaymentModal();
+                    },
+                    (error) => {
+                      this.notificationService.showNotification('Error accepting bid.', 'error');
+                      this.closePaymentModal();
+                    }
+                  );
+              },
+              (error) => {
+                this.notificationService.showNotification('Error processing payment.', 'error');
+                this.closePaymentModal();
+              }
+            );  
+        }
+      },(error) => {
+        this.notificationService.showNotification('Incorrect password.', 'error');
+      });
+    },
       (error) => {
-        this.notificationService.showNotification(error, 'error');
+        this.notificationService.showNotification('Error fetching wallet balance.', 'error');
+        this.closePaymentModal();
       }
     );
+  }
+
+  closePaymentModal(): void {
+    this.showPaymentModal = false;
+    this.selectedJobId = null;
+    this.selectedFreelancerId = null;
+    this.selectedBidAmount = null;
+    if(this.showPasswordModal){
+      this.showPasswordModal=false;
+    }
   }
 }

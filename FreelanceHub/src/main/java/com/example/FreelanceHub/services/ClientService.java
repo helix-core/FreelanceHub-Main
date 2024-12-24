@@ -4,6 +4,9 @@ import com.example.FreelanceHub.models.Client;
 import com.example.FreelanceHub.models.Roles;
 import com.example.FreelanceHub.repositories.ClientRepository;
 import com.example.FreelanceHub.repositories.RolesRepository;
+
+import java.math.BigDecimal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,7 @@ public class ClientService {
             Client savedclient = clientRepository.save(client);
             String unique = "C"+savedclient.getId();
             savedclient.setClientId(unique);
+            savedclient.setWalletBalance(BigDecimal.valueOf(500));
             clientRepository.save(savedclient);
             addRoleToClient(client.getClientId(), "client");
             return true;

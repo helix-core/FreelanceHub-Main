@@ -137,7 +137,7 @@ h2 {
 }
 
 .job-details {
-    width: 80px;
+    width: 200px;
 }
 
 /* Ensure that the job cards take up the available space in the scrollable container */
@@ -191,24 +191,41 @@ h2 {
     margin-bottom: 5px;
 }
 
+.statuses {
+    display: flex; 
+    align-items: center; 
+    justify-content: flex-end; 
+    gap: 10px; 
+    margin-top: 20px; 
+}
 
 .job-status {
+    display: flex;
+    margin-top: 80px;
+}
+ 
+.pay-status span ,.job-status span{
+    padding: 5px 10px;
+    background-color: #232B50;
+    color: white;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+    top: 5px;
+    border-radius: 20px;
+}
+.job-status span{
+    width:100px;
+}
+.pay-status span{
+    width:80px;
+}
+
+.pay-status {
     display: flex;
     justify-content: flex-end;
     margin-top: 80px;
 }
-
-.job-status span {
-    padding: 5px 10px;
-    background-color: #232B50;
-    color: white;
-    border-radius: 5px;
-    font-weight: bold;
-    position: relative;
-    top: 5px;
-    border-radius: 20px;
-}
-
 
 .upload-form {
     display: none;
@@ -264,7 +281,7 @@ h2 {
 .job-status span {
     font-weight: bold;
     padding: 5px 10px;
-    border-radius: 5px;
+    border-radius: 20px;
     color: white;
 }
 

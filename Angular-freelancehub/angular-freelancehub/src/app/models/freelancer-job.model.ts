@@ -13,6 +13,7 @@ export interface FreelancerJob {
     status: string;
     jobDetails: {
       progress: string;
+      payment_stat: string;
     };
   }
   

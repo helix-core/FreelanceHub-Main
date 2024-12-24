@@ -1,0 +1,96 @@
+<div class="wallet-container">
+    <h2>Wallet</h2>
+  
+    <div *ngIf="userRole === 'client'">
+      <h3>Client Dashboard</h3>
+      <div>
+        <p>Wallet Balance: {{ clientWalletBalance | currency }}</p>
+        <button (click)="openAddCreditsModal()">Add Credits</button>
+      </div>
+  
+      <!-- Modal for adding credits -->
+      <div *ngIf="showAddCreditsModal" class="modal">
+        <div class="modal-content">
+          <h4>Add Credits</h4>
+          <input type="number" [(ngModel)]="creditsToAdd" placeholder="Enter amount" />
+          <button (click)="addCredits()">Add</button>
+          <button (click)="closeAddCreditsModal()">Cancel</button>
+        </div>
+      </div>
+  
+      <!-- Pie chart for client credits -->
+      <div *ngIf="showPieChart">
+        <!-- Add pie chart logic here (you can use a library like chart.js) -->
+      </div>
+  
+      <!-- Transaction History -->
+      <div>
+        <h4>Transaction History</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transaction of clientTransactions">
+              <td>{{ transaction.transactionId }}</td>
+              <td>{{ transaction.amount | currency }}</td>
+              <td>{{ transaction.type }}</td>
+              <td>{{ transaction.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  
+    <div *ngIf="userRole === 'freelancer'">
+      <h3>Freelancer Dashboard</h3>
+      <div>
+        <p>Wallet Balance: {{ freelancerWalletBalance | currency }}</p>
+        <button (click)="openWithdrawModal()">Request Withdrawal</button>
+      </div>
+  
+      <!-- Modal for withdrawal request -->
+      <div *ngIf="showWithdrawModal" class="modal">
+        <div class="modal-content">
+          <h4>Request Withdrawal</h4>
+          <input type="number" [(ngModel)]="withdrawAmount" placeholder="Enter amount" />
+          <button (click)="requestWithdrawal()">Request</button>
+          <button (click)="closeWithdrawModal()">Cancel</button>
+        </div>
+      </div>
+  
+      <!-- Pie chart for freelancer earnings -->
+      <div *ngIf="showPieChart">
+        <!-- Add pie chart logic here -->
+      </div>
+  
+      <!-- Transaction History -->
+      <div>
+        <h4>Transaction History</h4>
+        <table>
+          <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Amount</th>
+              <th>Type</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let transaction of freelancerTransactions">
+              <td>{{ transaction.transactionId }}</td>
+              <td>{{ transaction.amount | currency }}</td>
+              <td>{{ transaction.type }}</td>
+              <td>{{ transaction.status }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

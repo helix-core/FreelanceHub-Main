@@ -26,6 +26,8 @@ import { EditClientFormComponent } from './client-side/edit-client-form/edit-cli
 import { NotificationComponent } from './common-pages/notification/notification.component';
 import { NotificationService } from './notification.service';
 import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
+import { WalletComponent } from './common-pages/wallet/wallet.component';
+import { WalletService } from './wallet.service';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { ClientprofileComponent } from './client-side/clientprofile/clientprofil
     FreelancerEditComponent,
     FreelancerProfileComponent,
     ExploreComponent,
-    NotificationComponent
+    NotificationComponent,
+    WalletComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +68,8 @@ import { ClientprofileComponent } from './client-side/clientprofile/clientprofil
     ),
     ClientService,
     RoleService,
-    NotificationService
+    NotificationService,
+    WalletService
   ],
   bootstrap: [AppComponent]
 })

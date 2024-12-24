@@ -1,6 +1,8 @@
 
 package com.example.FreelanceHub.models;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -12,7 +14,7 @@ public class Client {
 	private int Id;
 
 	@Column(unique = true)
-	private String clientId; // Custom identifier like "C1", "C2"
+	private String clientId; 
     
 	public String compEmail;
     private String companyName;
@@ -21,6 +23,7 @@ public class Client {
     private String repName;
     private String repDesignation;
     public String password;
+	private BigDecimal walletBalance=BigDecimal.ZERO;
 	
     public String getClientId() {
 		return clientId;
@@ -79,6 +82,12 @@ public class Client {
 		Id = id;
 	}
 
+	public BigDecimal getWalletBalance() {
+		return walletBalance;
+	}
+	public void setWalletBalance(BigDecimal walletBalance) {
+		this.walletBalance = walletBalance;
+	}
 	public Client(String compEmail, String companyName, String companyDescription, String typeOfProject, String repName,
 				  String repDesignation, String password) {
 		super();

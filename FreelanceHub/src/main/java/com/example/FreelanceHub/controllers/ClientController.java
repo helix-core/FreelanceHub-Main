@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -191,6 +192,7 @@ public class ClientController {
     public ResponseEntity<String> acceptBid(@RequestBody Map<String, Object> payload) {
         int jobId = (int) payload.get("jobId");
         String userId = (String) payload.get("userId");
+        System.out.println("Fetched: "+jobId+" "+userId);
 
         ClientJob clientJob = clientJobRepository.findById(jobId);
         FreelancerJob acceptedBid = freelancerJobRepository.findByJobIdAndFreeId(clientJob, userId);
@@ -234,26 +236,104 @@ public class ClientController {
     public ResponseEntity<Map<String, List<FreelancerJob>>> getAssignedProjects(@RequestParam("userId") String userId) {
         String clientId = userId;
 
-        List<FreelancerJob> ongoingJobs = freelancerJobRepository.findByClientIdAndProgress(clientId, "ongoing");
-        ongoingJobs.addAll(freelancerJobRepository.findByClientIdAndProgress(clientId, "unverified"));
+        List<FreelancerJob> ongoingJobs = freelancerJobRepository.findByClientIdAndProgress(clientId, "unverified");
+        ongoingJobs.addAll(freelancerJobRepository.findByClientIdAndProgress(clientId, "ongoing"));
 
         List<FreelancerJob> completedJobs = freelancerJobRepository.findByClientIdAndProgress(clientId, "completed");
+        
+     // Separate unpaid and paid jobs
+        List<FreelancerJob> unpaidJobs = new ArrayList<>();
+        List<FreelancerJob> paidJobs = new ArrayList<>();
 
+        for (FreelancerJob job : completedJobs) {
+            String paymentStatus = job.getJobDetails() != null ? job.getJobDetails().getPayment_stat() : "Unpaid";
+            if ("Unpaid".equalsIgnoreCase(paymentStatus)) {
+                unpaidJobs.add(job);
+            } else if ("Paid".equalsIgnoreCase(paymentStatus)) {
+                paidJobs.add(job);
+            }
+        }
+
+        // Combine unpaid jobs first, followed by paid jobs
+        unpaidJobs.addAll(paidJobs);
+
+        // Update completedJobs with sorted jobs
+        completedJobs = unpaidJobs;
+        
         Map<String, List<FreelancerJob>> response = new HashMap<>();
         response.put("ongoingJobs", ongoingJobs);
         response.put("completedJobs", completedJobs);
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/verify-project")
-    public ResponseEntity<String> verifyProject(@RequestParam("jobId") Integer jobId) {
+//    @PostMapping("/verify-project")
+//    public ResponseEntity<String> verifyProject(@RequestParam("jobId") Integer jobId) {
+//        Jobs job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("Job not found"));
+//        String freeId = job.getFreeId().getFreeId();
+//        job.setProgress("completed");
+//        notificationService.addNotification(freeId, "One of your projects was verified. Job marked as complete!");
+//        jobRepository.save(job);
+//        return ResponseEntity.ok("Project verified successfully!");
+//    }
+    
+//    @PostMapping("/update-job-status")
+//    public ResponseEntity<String> updateJobStatus(@RequestBody Map<String, Object> requestData) {
+//        Integer jobId = (Integer) requestData.get("jobId");
+//        String status = (String) requestData.get("status");
+//        String paymentStatus = (String) requestData.get("paymentStatus");
+//        Jobs job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("Job not found"));
+//        job.setPayment_stat(paymentStatus);       
+//        jobRepository.saveAndFlush(job);
+//        if (job.getPayment_stat().equals(paymentStatus)) {
+//            notificationService.addNotification(job.getFreeId().getFreeId(), "Your project has been completed and payment status is " + paymentStatus);
+//        }
+//
+//        return ResponseEntity.ok("Job status updated successfully!");
+//    }
+    
+//    @PostMapping("/update-job-status")
+//    public ResponseEntity<String> updateJobStatus(@RequestBody Map<String, Object> requestData) {
+//        Integer jobId = (Integer) requestData.get("jobId");
+//        String status = (String) requestData.get("status");
+//        String paymentStatus = (String) requestData.get("paymentStatus");
+//        Jobs job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("Job not found"));
+//        
+//        System.out.println(job.getPayment_stat());
+//        if(status.equals("completed")) {
+//        job.setPayment_stat(paymentStatus);
+//        }
+//        System.out.println(job.getPayment_stat());
+//        notificationService.addNotification(job.getFreeId().getFreeId(), "One of your projects has been marked complete and payment status is " + paymentStatus);
+//        jobRepository.save(job);
+//
+//        return ResponseEntity.ok("Job status updated successfully!");
+//    }
+    
+    @PostMapping("/update-job")
+    public ResponseEntity<String> updateJob(@RequestBody Map<String, Object> requestData) {
+        Integer jobId = (Integer) requestData.get("jobId");
+        String progress = (String) requestData.get("progress");
+        String paymentStatus = (String) requestData.get("paymentStatus");
+
         Jobs job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("Job not found"));
-        String freeId = job.getFreeId().getFreeId();
-        job.setProgress("completed");
-        notificationService.addNotification(freeId, "One of your projects was verified. Job marked as complete!");
+
+        if (progress != null) {
+            job.setProgress(progress);
+        }
+        if (paymentStatus != null) {
+            job.setPayment_stat(paymentStatus);
+        }
+
         jobRepository.save(job);
-        return ResponseEntity.ok("Project verified successfully!");
+
+        notificationService.addNotification(
+            job.getFreeId().getFreeId(),
+            "Job status updated to " + progress + " with payment status " + paymentStatus
+        );
+
+        return ResponseEntity.ok("Job updated successfully!");
     }
+
 
     @GetMapping("/profile/client")
     public ResponseEntity<Map<String, Object>> getClientProfile(@RequestParam String userId) {
@@ -311,6 +391,21 @@ public class ClientController {
 
         clientRepository.save(existingClient);
         return ResponseEntity.ok("Client updated successfully");
+    }
+    
+    @PostMapping("/verify-password")
+    public ResponseEntity<String> verifyPassword(@RequestBody Map<String, String> payload) {
+        String clientId = payload.get("clientId");
+        String password = payload.get("password");
+
+        // Fetch client details
+        Client client = clientRepository.findByClientId(clientId);
+        String mail=client.getCompEmail();
+        if (clientService.validateClient(mail, password)) {
+            return ResponseEntity.ok("Password verified");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect password");
+        }
     }
 
 }

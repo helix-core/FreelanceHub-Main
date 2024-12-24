@@ -51,10 +51,37 @@
               <span class="stat">Skills Match: {{ bid.freelancerJob.skillMatch }}%</span>
               <span class="stat">Rating: {{ bid.freelancerRating  | number: '1.1-1' }}/5</span>
             </div>
-            <button (click)="acceptBid(jobWithBids.job.jobId, bid.freelancerJob.freeId.freeId)" class="bid-action">
+            <button (click)="acceptBid(jobWithBids.job.jobId, bid.freelancerJob.freeId.freeId,bid.freelancerJob.salary)" class="bid-action">
               Accept
             </button>
           </div>
+          <!-- Payment Confirmation Modal -->
+          <div *ngIf="showPaymentModal && selectedJobId === jobWithBids.job.jobId && selectedFreelancerId === bid.freelancerJob.freeId.freeId" class="payment-modal">
+            <div class="modal-content">
+              <h2>Payment Confirmation</h2>
+              <p>
+                You need to pay <strong>₹{{ selectedBidAmount }}</strong> (30% of the freelancer's total salary) to accept this bid.
+              </p>
+              <button (click)="openPasswordModal()" class="confirm-btn">Confirm Payment</button>
+              <button (click)="closePaymentModal()" class="cancel-btn">Cancel</button>
+            </div>
+          </div>
+
+          <!-- Password Confirmation Modal -->
+        <div *ngIf="showPasswordModal && selectedJobId" class="password-modal">
+          <div class="modal-content">
+            <h2>Password Confirmation</h2>
+            <p>Please enter your password to confirm the payment.</p>
+            <input
+              type="password"
+              [(ngModel)]="password"
+              placeholder="Enter your password"
+              class="password-input"
+            />
+            <button (click)="confirmPayment()" class="confirm-btn">Confirm</button>
+            <button (click)="closePaymentModal()" class="cancel-btn">Cancel</button>
+          </div>
+        </div>
         </div>
       </div>
     </div>

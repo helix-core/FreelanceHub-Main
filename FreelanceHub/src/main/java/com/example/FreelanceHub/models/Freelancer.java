@@ -1,5 +1,6 @@
 package com.example.FreelanceHub.models;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -142,6 +143,7 @@ public class Freelancer {
 	private String FOW;
 	private int Experience;
 	private String Qualification;
+	private BigDecimal walletBalance=BigDecimal.ZERO;
 
 	@Column(columnDefinition = "TEXT")
 	private String Skills;
@@ -157,6 +159,14 @@ public class Freelancer {
 
 	public void setProfile_image(String profile_image) {
 		this.profile_image = profile_image;
+	}
+
+	public BigDecimal getWalletBalance() {
+		return walletBalance;
+	}
+
+	public void setWalletBalance(BigDecimal walletBalance) {
+		this.walletBalance = walletBalance;
 	}
 
 	public String password;
