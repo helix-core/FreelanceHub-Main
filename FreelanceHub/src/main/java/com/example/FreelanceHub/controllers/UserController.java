@@ -9,17 +9,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-//import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -41,7 +34,6 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
-// @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
     @Autowired
@@ -62,8 +54,6 @@ public class UserController {
     @Autowired
     private RatingService ratingService;
 
-    // @Autowired
-    // private JwtService jwtService;
 
     @GetMapping("")
     public String showLandingpage(Model model) {
@@ -102,9 +92,8 @@ public class UserController {
         client.setTypeOfProject(clientDTO.getTypeOfProject());
         client.setRepName(clientDTO.getRepName());
         client.setRepDesignation(clientDTO.getRepDesignation());
-//        String hashedPassword = BCrypt.hashpw(clientDTO.getPassword(), BCrypt.gensalt());
-//        client.setPassword(hashedPassword);
-        client.setPassword(clientDTO.getPassword());
+        String hashedPassword = BCrypt.hashpw(clientDTO.getPassword(), BCrypt.gensalt());
+        client.setPassword(hashedPassword);
 
         boolean isRegistered = clientService.registerClient(client);
         if (isRegistered) {
@@ -143,7 +132,8 @@ public class UserController {
         freelancer.setExperience(freelancerDTO.getExperience());
         freelancer.setSkills(freelancerDTO.getSkills());
         freelancer.setQualification(freelancerDTO.getQualification());
-        freelancer.setPassword(freelancerDTO.getPassword());
+        String hashedPassword = BCrypt.hashpw(freelancerDTO.getPassword(), BCrypt.gensalt());
+        freelancer.setPassword(hashedPassword);
         freelancer.setProfile_image(imageUrl);
         freelancer.setResume(pdfUrl);
         boolean success = freeService.registerFreelancer(freelancer);
@@ -174,12 +164,10 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
 
         // Check in Client table
-        if (clientService.validateClient(email, password)) {
-            Client client = clientService.clientRepository.findBycompEmail(email);
+        Client client = clientService.clientRepository.findBycompEmail(email);
+        if (client != null && BCrypt.checkpw(password, client.getPassword())) {
             String role = clientService.getUserRole(client.getClientId());
-            System.out.println(client.getCompEmail() + " " + client.getPassword());
 
-            // Add success status and message to response
             response.put("status", "success");
             response.put("message", "Client login successful!");
             response.put("role", role);
@@ -188,16 +176,14 @@ public class UserController {
         }
 
         // Check in Freelancer table
-        if (freeService.validateFreelancer(email, password)) {
-            Freelancer free = freeService.freeRepository.findByfreeEmail(email);
-            String role = freeService.getUserRole(free.getFreeId());
-            System.out.println(free.getFreeEmail() + " " + free.getPassword());
+        Freelancer freelancer = freeService.freeRepository.findByfreeEmail(email);
+        if (freelancer != null && BCrypt.checkpw(password, freelancer.getPassword())) {
+            String role = freeService.getUserRole(freelancer.getFreeId());
 
-            // Add success status and message to response
             response.put("status", "success");
             response.put("message", "Freelancer login successful!");
             response.put("role", role);
-            response.put("userId", free.getFreeId());
+            response.put("userId", freelancer.getFreeId());
             return ResponseEntity.ok(response);
         }
 

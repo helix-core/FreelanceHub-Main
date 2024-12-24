@@ -5,8 +5,10 @@ import com.example.FreelanceHub.models.Roles;
 import com.example.FreelanceHub.repositories.ClientRepository;
 import com.example.FreelanceHub.repositories.RolesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ClientService {
@@ -32,10 +34,7 @@ public class ClientService {
 
     public boolean validateClient(String compEmail, String password) {
         Client client = clientRepository.findBycompEmail(compEmail);
-        if(client != null && client.getPassword().equals(password)) {
-            return true;
-        }
-        return false;
+        return client != null && BCrypt.checkpw(password, client.getPassword());
     }
 
     public void addRoleToClient(String clientId, String roleName) {
@@ -52,6 +51,21 @@ public class ClientService {
         // Fetch the role based on the clientId
         Roles role = rolesRepository.findByRoleId(clientId);
         return role != null ? role.getRole() : null; // Return role or null if not found
+    }
+
+    public void hashExistingPasswords() {
+        List<Client> clients = clientRepository.findAll(); // Fetch all clients
+
+        for (Client client : clients) {
+            String password = client.getPassword();
+
+            // Check if the password is not already hashed
+            if (!password.startsWith("$2a$")) { // BCrypt hash prefix
+                String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+                client.setPassword(hashedPassword);
+                clientRepository.save(client); // Update the client with the hashed password
+            }
+        }
     }
 
     public Client findByClientId(String clientId) {
