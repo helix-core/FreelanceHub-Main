@@ -116,6 +116,11 @@ form button:hover {
     background: #1e2440;
 }
 
+a.update{
+    text-decoration: none;
+    color: white;
+}
+
 /* Skills Container */
 #skills-container {
     margin-bottom: 20px;
@@ -401,3 +406,5 @@ a.home{
         font-size: 0.4em;
     }
 }
+
+/*770*/

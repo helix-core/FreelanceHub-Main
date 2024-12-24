@@ -72,7 +72,7 @@ export class EditClientFormComponent implements OnInit {
       updatedClient.userId = userId; // Add userId to the request body
       this.clientService.updateClientDetails(updatedClient).subscribe(
         () => {
-          this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile-client'); // Redirect to the profile page
+          this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile-client-edit'); // Redirect to the profile page
 
         },
         (error) => {

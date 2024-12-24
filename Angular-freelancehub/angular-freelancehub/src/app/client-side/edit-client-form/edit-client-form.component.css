@@ -286,3 +286,152 @@ a.home{
     transition: opacity 0.3s ease; /* Smooth fade-in effect */
     z-index: 10;             /* Ensure tooltip appears above other elements */
   }
+
+  /* Adjustments for smaller tablets and large mobile devices */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .navbar-left {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .logo {
+        width: 25px;
+        height: 25px;
+    }
+
+    .navbar-title {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .form-container {
+        width: 90%;
+        padding: 15px;
+        margin-top: 80px; /* Adjust to account for navbar height */
+    }
+
+    form input,
+    form textarea {
+        padding: 10px;
+        font-size: 0.8em;
+    }
+
+    form button {
+        padding: 10px;
+        font-size: 0.9em;
+    }
+
+    .error-message {
+        font-size: 0.7em;
+    }
+}
+
+/* Extra small devices (e.g., phones) */
+@media (max-width: 400px) {
+    .navbar-title {
+        font-size: 18px;
+    }
+
+    .form-container {
+        width: 95%;
+    }
+
+    form input,
+    form textarea {
+        padding: 8px;
+        font-size: 0.7em;
+    }
+
+    form button {
+        padding: 8px;
+        font-size: 0.8em;
+    }
+}
+@media (max-width: 768px) {
+    .navbar {
+        padding: 15px;
+    }
+
+    .navbar-title {
+        font-size: 24px;
+    }
+
+    .form-container {
+        width: 100%;
+        padding: 20px;
+        margin-top: 70px; /* To ensure proper spacing below the navbar */
+    }
+
+    form input,
+    form textarea {
+        padding: 12px;
+        font-size: 1em;
+    }
+
+    form button {
+        padding: 12px;
+        font-size: 1em;
+    }
+}
+
+/* Small Desktops and Laptops (max-width: 1024px) */
+@media (max-width: 1024px) {
+    .navbar-title {
+        font-size: 28px;
+    }
+
+    .form-container {
+        width: 80%;
+    }
+}
+
+/* Responsive Design for max-width: 808px */
+@media (max-width: 808px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .navbar-left {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .logo {
+        width: 28px;
+        height: 28px;
+    }
+
+    .navbar-title {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .form-container {
+        width: 95%;
+        padding: 20px;
+        margin-top: 80px; /* To ensure proper spacing below the navbar */
+    }
+
+    form input,
+    form textarea {
+        padding: 10px;
+        font-size: 0.95em;
+    }
+
+    form button {
+        padding: 10px;
+        font-size: 1em;
+    }
+
+    .error-message {
+        font-size: 0.85em;
+    }
+}

@@ -188,3 +188,94 @@ a.home{
     transition: opacity 0.3s ease; /* Smooth fade-in effect */
     z-index: 10;             /* Ensure tooltip appears above other elements */
   }
+
+  /* General responsiveness for smaller screens */
+@media (max-width: 1024px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .company-details {
+        margin-right: 0;
+    }
+
+    .content {
+        flex-direction: column;
+    }
+
+    .account-details,
+    .projects {
+        width: 100%;
+    }
+}
+
+/* For tablets and medium screens */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+    }
+
+    .navbar-left {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .navbar-title {
+        font-size: 28px;
+    }
+
+    .profile-header {
+        padding: 15px;
+    }
+
+    .profile-pic {
+        width: 70px;
+        height: 70px;
+    }
+
+    .edit-btn {
+        align-self: stretch;
+        text-align: center;
+    }
+
+    .company-details h2 {
+        font-size: 1.5rem;
+    }
+}
+
+/* For mobile screens */
+@media (max-width: 480px) {
+    .navbar-title {
+        font-size: 24px;
+    }
+
+    .profile-header {
+        padding: 10px;
+    }
+
+    .profile-pic {
+        width: 60px;
+        height: 60px;
+    }
+
+    .company-details h2 {
+        font-size: 1.2rem;
+    }
+
+    .edit-btn {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .project-card {
+        padding: 8px;
+    }
+
+    .tooltiptext {
+        font-size: 0.6em;
+    }
+}

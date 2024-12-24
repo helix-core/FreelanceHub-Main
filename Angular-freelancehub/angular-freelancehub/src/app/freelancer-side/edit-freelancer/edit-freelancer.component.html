@@ -1,4 +1,4 @@
-<div class="body-container">
+<!-- <div class="body-container"> -->
 <div class="title">
 <header class="header">
   <div class="navbar">
@@ -9,7 +9,7 @@
   </div>
 </header>
 </div>
-
+<div class="body-container">
 <div class="form-container">
     <h1>Edit Freelancer Profile</h1>
     <form [formGroup]="freelancerForm" (ngSubmit)="updateFreelancer()">
@@ -147,7 +147,7 @@
         </ng-template>
 
       </div>
-      <button type="submit">Update</button>
+      <button type="submit"><a routerLink="/profile/freelancer" class="update">Update</a></button>
     </form>
   </div>
   </div>
