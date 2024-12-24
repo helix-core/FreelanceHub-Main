@@ -9,7 +9,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: 130vh;
     
 }
 
@@ -196,6 +196,77 @@
     color: #6c6c6c; /* Keep the placeholder color for invalid (default) state */
   }
 
+  .upload-container {
+      margin-bottom: 10px;
+      padding: 20px;
+      background: linear-gradient(270deg, rgba(21, 201, 180, 0.50) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.50) 100%);
+      border: 1px dashed #232B50;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 14px;
+      color: #232B50;
+  }
+
+  .upload-container label {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: bold;
+  }
+
+  .upload-container input[type="file"] {
+      display: inline-block;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #232B50;
+      border-radius: 5px;
+      margin-top: 10px;
+      font-size: 14px;
+      cursor: pointer;
+  }
+
+  .upload-container .file-preview {
+      display: flex;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 14px;
+  }
+
+  .upload-container .file-preview span {
+      margin-right: 10px;
+      color: #232B50;
+      line-break: anywhere;
+  }
+
+  .upload-container .file-preview .remove-btn{
+      background: none;
+      border: none;
+      color: #232B50;
+      cursor: pointer;
+      font-weight: bold;
+      width: max-content;
+  }
+
+  .upload-container .error-message {
+      margin-top: 10px;
+      color: red;
+      font-size: 12px;
+  }
+
+  .upload-container .submit-btn {
+      background-color: #232b50;
+      color: white;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background-color 0.3s ease;
+  }
+
+  .upload-container .submit-btn:disabled {
+      background-color: #b0b0b0;
+      cursor: not-allowed;
+  }
 
   /* Responsive adjustments for tablets and smaller screens */
 @media (max-width: 768px) {

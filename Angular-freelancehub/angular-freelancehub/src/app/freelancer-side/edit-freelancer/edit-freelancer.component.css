@@ -74,7 +74,6 @@
     border-radius: 10px;
     background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
-    transform: perspective(1000px) rotateX(2deg) rotateY(2deg);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     margin-top: 20px;
 }
@@ -323,6 +322,142 @@ a.home{
     transition: opacity 0.3s ease; /* Smooth fade-in effect */
     z-index: 10;             /* Ensure tooltip appears above other elements */
   }
+   .profile-upload-container {
+       display: flex;
+       flex-direction: column;
+       align-items: center;
+       margin: 20px;
+   }
+
+   .profile-preview {
+       position: relative;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       width: 100px;
+       height: 100px;
+       border: 2px dashed #ccc;
+       border-radius: 50%;
+       overflow: hidden;
+       cursor: pointer;
+       transition: border-color 0.3s ease;
+       text-align: center;
+       font-family: Arial, sans-serif;
+       font-size: 10px;
+       color: #888;
+   }
+
+   .profile-preview:hover {
+       border-color: #232B50;
+   }
+
+   .profile-preview img {
+       width: 100%;
+       height: 100%;
+       object-fit: cover;
+   }
+
+   .profile-preview span {
+       padding: 10px;
+       color: #555;
+   }
+
+   #profile-upload {
+       display: none;
+   }
+
+   #remove-btn {
+       position: absolute;
+       /* top: 90px; */
+       right: 715px;
+       border: none;
+       border-radius: 50%;
+       color: white;
+       width: 20px;
+       height: 20px;
+       display: flex;
+       justify-content: center;
+       align-items: center;
+       cursor: pointer;
+       font-size: 10px;
+       z-index: 10;
+   }
+
+   .remove-btn:hover {
+       background: #ff1a1a;
+   }
+
+        .upload-container {
+            margin-bottom: 10px;
+            padding: 20px;
+            background: linear-gradient(270deg, rgba(21, 201, 180, 0.50) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.50) 100%);
+            border: 1px dashed #232B50;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            color: #232B50;
+        }
+    
+        .upload-container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    
+        .upload-container input[type="file"] {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #232B50;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+    
+        .upload-container .file-preview {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+    
+        .upload-container .file-preview span {
+            margin-right: 10px;
+            color: #232B50;
+            line-break: anywhere;
+        }
+    
+        .upload-container .file-preview .remove-btn {
+            background: none;
+            border: none;
+            color: #232B50;
+            cursor: pointer;
+            font-weight: bold;
+            width: max-content;
+        }
+    
+        .upload-container .error-message {
+            margin-top: 10px;
+            color: red;
+            font-size: 12px;
+        }
+    
+        .upload-container .submit-btn {
+            background-color: #232b50;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+    
+        .upload-container .submit-btn:disabled {
+            background-color: #b0b0b0;
+            cursor: not-allowed;
+        }
 
 
   /* Responsive Design for Tablets and Smaller Devices */

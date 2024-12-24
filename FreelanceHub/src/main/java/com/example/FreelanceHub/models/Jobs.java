@@ -28,6 +28,9 @@ public String progress;
 
 private String githublink;
 
+@Column(name = "payment_stat", nullable = false)
+private String payment_stat="pending";
+
 public ClientJob getJobId() {
 	return jobId;
 }
@@ -70,6 +73,14 @@ public String getGithublink() {
 
 public void setGithublink(String githublink) {
 	this.githublink = githublink;
+}
+
+public String getPayment_stat() {
+	return payment_stat;
+}
+
+public void setPayment_stat(String payment_stat) {
+	this.payment_stat = payment_stat;
 }
 
 public int getId() {

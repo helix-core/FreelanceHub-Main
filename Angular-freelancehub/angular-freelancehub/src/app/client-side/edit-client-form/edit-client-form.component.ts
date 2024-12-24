@@ -49,7 +49,7 @@ export class EditClientFormComponent implements OnInit {
 
     customEmailValidator(): ValidatorFn {
       return (control: AbstractControl): ValidationErrors | null => {
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu)$/;
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu|net)$/;
         const value = control.value;
         return value && !emailRegex.test(value) ? { invalidEmail: true } : null;
       };
@@ -72,7 +72,8 @@ export class EditClientFormComponent implements OnInit {
       updatedClient.userId = userId; // Add userId to the request body
       this.clientService.updateClientDetails(updatedClient).subscribe(
         () => {
-          this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile-client-edit'); // Redirect to the profile page
+
+          this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile/client'); // Redirect to the profile page
 
         },
         (error) => {

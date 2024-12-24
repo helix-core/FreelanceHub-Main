@@ -14,10 +14,12 @@ import { NotificationService } from '../../notification.service';
   standalone:false
 })
 export class SignupfreelancerComponent {
+
   signupForm!: FormGroup;
   skills: string[] = [];
   imagePreview: string | ArrayBuffer | null = 'assets/default-profile.png'; // Path to your default image
   defaultImage = 'assets/default-profile.png';
+  resumePreview: File | null = null;
 
 
   constructor(
@@ -41,9 +43,31 @@ export class SignupfreelancerComponent {
       rePassword: ['', [Validators.required, Validators.minLength(8)]],
       termsAndConditions: [false, Validators.requiredTrue],
       profileImage: [null, Validators.required],
+       resume: [null, Validators.required],  // Added for file resume
     },{
       validators: [this.passwordMatchValidator]
     });
+  }
+
+   onResumeUpload(event: Event): void {
+  const input = event.target as HTMLInputElement;
+  if (input.files && input.files.length > 0) {
+    const file = input.files[0];
+    // Check if file is PDF or DOC/DOCX
+    if (file.type !== 'application/pdf' && !file.name.endsWith('.docx') && !file.name.endsWith('.doc')) {
+      alert("Please upload a PDF or DOC file.");
+      return;
+    }
+    this.resumePreview = file; // Save the file object instead of a URL
+    this.signupForm.get('resume')?.setValue(file);
+  }
+}
+
+    removeResume(): void {
+    this.resumePreview = null;
+    const fileInput = document.getElementById('resume-upload') as HTMLInputElement;
+    if (fileInput) fileInput.value = '';  // Reset the file input
+    this.signupForm.get('resume')?.reset();
   }
 
    onImageUpload(event: Event): void {
@@ -111,12 +135,15 @@ export class SignupfreelancerComponent {
 
   onSubmit(){
    this.signupForm.markAllAsTouched();
+   console.log(this.signupForm.valid); 
+   console.log('Profile Image:', this.signupForm.get('profileImage')?.value);
+   console.log('Resume:', this.signupForm.get('resume')?.value);
   if (this.signupForm.valid) {
      const formData = new FormData();  // Using FormData for file upload
 
     // Append the form fields to formData
     Object.keys(this.signupForm.value).forEach(key => {
-      if (key !== 'profileImage') {
+      if (key !== 'profileImage' && key !=='resume') {
         formData.append(key, this.signupForm.value[key]);
       }
     });
@@ -126,6 +153,11 @@ export class SignupfreelancerComponent {
     if (profileImageInput && profileImageInput.files && profileImageInput.files.length > 0) {
       formData.append('profileImage', profileImageInput.files[0]);
     }
+
+      const resumeInput = document.getElementById('resume-upload') as HTMLInputElement;
+      if (resumeInput && resumeInput.files && resumeInput.files.length>0) {
+        formData.append('resume', resumeInput.files[0]);
+      }
 
     this.freelancerService.registerFreelancer(formData).subscribe(
       response => {

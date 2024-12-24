@@ -189,6 +189,7 @@ a.home{
     z-index: 10;             /* Ensure tooltip appears above other elements */
   }
 
+
   /* General responsiveness for smaller screens */
 @media (max-width: 1024px) {
     .profile-header {
@@ -279,3 +280,19 @@ a.home{
         font-size: 0.6em;
     }
 }
+/*profile pic*/
+  .profile-pic {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #232B50;
+      /* You can change this to any color */
+      color: white;
+      font-size: 2em;
+      font-weight: bold;
+      text-transform: uppercase;
+      margin-right: 20px;
+  }

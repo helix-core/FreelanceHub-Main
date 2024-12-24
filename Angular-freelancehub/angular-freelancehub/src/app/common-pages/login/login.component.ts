@@ -25,7 +25,7 @@ export class LoginComponent {
 
   customEmailValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu)$/;
+     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu|net)$/;
       const value = control.value;
       return value && !emailRegex.test(value) ? { invalidEmail: true } : null;
     };
@@ -33,6 +33,7 @@ export class LoginComponent {
 
 
   onLogin() {
+    this.loginForm.markAllAsTouched();
       if (this.loginForm.invalid) {
       return;
     }

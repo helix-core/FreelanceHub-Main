@@ -19,10 +19,10 @@ import org.springframework.stereotype.Repository;
 public interface JobRepository extends JpaRepository<Jobs, Integer> {
 	List<Jobs> findByClientIdAndProgress(Client clientId, String progress);
 	
-	@Transactional
-    @Modifying
-    @Query("UPDATE Jobs j SET j.progress = :progress WHERE j.jobId.JobId = :jobId")
-    void updateJobStatus(@Param("jobId") Integer jobId, @Param("progress") String progress);
+//	@Transactional
+//    @Modifying
+//    @Query("UPDATE Jobs j SET j.progress = :progress WHERE j.jobId.JobId = :jobId")
+//    void updateJobStatus(@Param("jobId") Integer jobId, @Param("progress") String progress);
 	
 	@Query("SELECT j FROM Jobs j WHERE j.jobId.JobId = :num")
     Optional<Jobs> findByjobId(Integer num);
