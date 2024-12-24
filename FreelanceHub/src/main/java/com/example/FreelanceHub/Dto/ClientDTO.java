@@ -16,7 +16,6 @@ public class ClientDTO {
 	private String companyName;
 
 	@NotBlank(message = "Description is required")
-	@Size(max = 200, message = "Description cannot exceed 200 characters")
 	private String companyDescription;
 
 	@NotBlank(message = "Type of project is mandatory")

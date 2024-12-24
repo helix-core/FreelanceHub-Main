@@ -1,6 +1,8 @@
 package com.example.FreelanceHub.controllers;
 
 import org.springframework.stereotype.Controller;
+
+import com.example.FreelanceHub.Dto.FreeDTO;
 import com.example.FreelanceHub.models.ClientJob;
 import com.example.FreelanceHub.models.Freelancer;
 import com.example.FreelanceHub.models.FreelancerJob;
@@ -9,10 +11,12 @@ import com.example.FreelanceHub.repositories.ClientJobRepository;
 import com.example.FreelanceHub.repositories.FreeJobRepository;
 import com.example.FreelanceHub.repositories.FreelancerRepository;
 import com.example.FreelanceHub.repositories.JobRepository;
+import com.example.FreelanceHub.services.FreelancerService;
 import com.example.FreelanceHub.services.JobService;
 import com.example.FreelanceHub.services.NotificationService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,6 +57,9 @@ public class FreelancerController {
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private FreelancerService freelancerservice;
 
     @GetMapping("/apply")
     public ResponseEntity<?> getJobDetails(@RequestParam Integer id, @RequestParam("userId") String userId,
@@ -239,11 +246,25 @@ public class FreelancerController {
             }
             List<FreelancerJob> completedJobs = freeJobRepository.findByFreeIdAndProgress(userId, "completed");
 
+            List<String> previousWorkLinks = new ArrayList<>();
+            if (userId != null) {
+                List<FreelancerJob> job = freeJobRepository.findByFreeIdAndStatus(userId, "ongoing");
+                for (FreelancerJob jobItem : job) {
+                    if (jobItem.getPreviousWorkLink() != null) {
+                        previousWorkLinks.addAll(jobItem.getPreviousWorkLinksAsList());
+                    }
+                }
+                // for (String val : previousWorkLinks) {
+                // System.out.println(val);
+                // }
+            }
+
             // Prepare the response
             Map<String, Object> response = new HashMap<>();
             response.put("freelancer", freelancer.get()); // Add freelancer data
             response.put("ongoingJobs", ongoingJobs); // Add ongoing jobs
             response.put("completedJobs", completedJobs); // Add completed jobs
+            response.put("previousWorkLinks", previousWorkLinks);
 
             return ResponseEntity.ok(response); // Return the response as JSON
         } catch (Exception e) {
@@ -264,22 +285,32 @@ public class FreelancerController {
     }
 
     @PostMapping("/freelancer/update")
-    public ResponseEntity<Map<String, String>> updateFreelancer(@RequestBody Freelancer freelancer) {
-        Optional<Freelancer> optionalFreelancer = freelancerRepository.findByFreeId(freelancer.getFreeId());
+    public ResponseEntity<Map<String, String>> updateFreelancer(
+            @RequestParam(value = "resume", required = false) MultipartFile resume,
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+            @Valid FreeDTO freelancerDTO) {
+        Optional<Freelancer> optionalFreelancer = freelancerRepository.findByFreeId(freelancerDTO.getFreeId());
 
         Freelancer existingFreelancer = optionalFreelancer
                 .orElseThrow(() -> new RuntimeException("Freelancer not found"));
+        System.out.print(resume);
+        System.out.print(profileImage);
 
         // Update only editable fields
-        existingFreelancer.setFreeEmail(freelancer.getFreeEmail());
-        existingFreelancer.setFreeName(freelancer.getFreeName());
-        existingFreelancer.setFreeAge(freelancer.getFreeAge());
-        existingFreelancer.setCountry(freelancer.getCountry());
-        existingFreelancer.setFOW(freelancer.getFOW());
-        existingFreelancer.setExperience(freelancer.getExperience());
-        existingFreelancer.setQualification(freelancer.getQualification());
-        existingFreelancer.setSkills(freelancer.getSkills());
-        existingFreelancer.setPassword(freelancer.getPassword());
+        String imageUrl = profileImage != null ? freelancerservice.saveProfileImage(profileImage)
+                : existingFreelancer.getProfile_image();
+        String pdfUrl = resume != null ? freelancerservice.saveFile(resume) : existingFreelancer.getResume();
+        existingFreelancer.setFreeEmail(freelancerDTO.getFreeEmail());
+        existingFreelancer.setFreeName(freelancerDTO.getFreeName());
+        existingFreelancer.setFreeAge(freelancerDTO.getFreeAge());
+        existingFreelancer.setCountry(freelancerDTO.getCountry());
+        existingFreelancer.setFOW(freelancerDTO.getFOW());
+        existingFreelancer.setExperience(freelancerDTO.getExperience());
+        existingFreelancer.setQualification(freelancerDTO.getQualification());
+        existingFreelancer.setSkills(freelancerDTO.getSkills());
+        existingFreelancer.setPassword(freelancerDTO.getPassword());
+        existingFreelancer.setProfile_image(imageUrl);
+        existingFreelancer.setResume(pdfUrl);
 
         freelancerRepository.save(existingFreelancer);
 

@@ -29,7 +29,7 @@ public String progress;
 private String githublink;
 
 @Column(name = "payment_stat", nullable = false)
-private String payment_stat;
+private String payment_stat="pending";
 
 public ClientJob getJobId() {
 	return jobId;

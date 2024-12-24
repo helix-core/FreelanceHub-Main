@@ -22,6 +22,10 @@
                     <h2>{{ freelancer?.freeName }}</h2>
                     <p>{{ freelancer?.qualification }}</p>
                 </div>
+
+                <button *ngIf="freelancer?.resume" class="view-resume-btn">
+                    <a [href]="freelancer?.resume" target="_blank">View Resume</a>
+                </button>
                 
                 <div class="rating-container">
                     <div class="stars">
@@ -57,10 +61,12 @@
                         </ul>
                     </div>
                 </div>
-        
+
+              
                 <!-- Right Section -->
                 <div class="right-section">
                     <!-- Accepted Projects -->
+                     <div class="projects-section">
                     <div class="accepted-projects">
                         <h3>Accepted Projects</h3>
                         <div class="project" *ngFor="let project of ongoingJobs">
@@ -80,7 +86,21 @@
                             <p>Wage: <span>{{ project.salary }}</span></p>
                         </div>
                     </div>
+                    </div>
+                    <div class="previous-work" *ngIf="userRole === 'client' && previousWorkLinks.length > 0">
+                        <h3>Previous Work Links</h3>
+                        <ul>
+                            <li *ngFor="let link of previousWorkLinks">
+                                <a [href]="link" target="_blank" rel="noopener noreferrer">{{ link }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                   
+                   
                 </div>
+              
+                
+                
             </div>
         </div>
         </div>

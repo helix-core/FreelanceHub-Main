@@ -33,6 +33,7 @@ export class LoginComponent {
 
 
   onLogin() {
+    this.loginForm.markAllAsTouched();
       if (this.loginForm.invalid) {
       return;
     }

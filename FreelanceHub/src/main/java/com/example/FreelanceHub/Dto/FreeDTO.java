@@ -44,7 +44,6 @@ public class FreeDTO {
 	@Pattern(regexp = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{6,}$", message = "Password must contain at least one uppercase letter, one number, and one special character")
 	private String password;
 
-	@NotNull(message = "Retyped password is required")
 	private String rePassword;
 
 	@AssertTrue(message = "You must agree to the terms and conditions")
@@ -154,6 +153,26 @@ public class FreeDTO {
 
 	public void setProfileImage(MultipartFile profileImage) {
 		this.profileImage = profileImage;
+	}
+
+	public String resumeUrl;
+
+	public String getResumeUrl() {
+		return resumeUrl;
+	}
+
+	public void setResumeUrl(String resumeUrl) {
+		this.resumeUrl = resumeUrl;
+	}
+
+	private String freeId;
+
+	public String getFreeId() {
+		return freeId;
+	}
+
+	public void setFreeId(String freeId) {
+		this.freeId = freeId;
 	}
 
 	// Getters and Setters
