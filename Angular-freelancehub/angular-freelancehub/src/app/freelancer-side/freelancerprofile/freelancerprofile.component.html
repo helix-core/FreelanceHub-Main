@@ -34,9 +34,9 @@
                     <p class="rating-info">Based on {{ totalRatings }} {{ totalRatings === 1 ? 'rating' : 'ratings' }}</p>
                 </div>
 
-                <button *ngIf="userRole === 'freelancer'" class="edit-btn">
-                    <a routerLink="/freelancer/edit" class="edit-button">Edit Profile</a>
-                </button>
+                <a routerLink="/freelancer/edit" class="edit-button"><button *ngIf="userRole === 'freelancer'" class="edit-btn">
+                    Edit Profile
+                </button></a>
                 
             </div>
         
