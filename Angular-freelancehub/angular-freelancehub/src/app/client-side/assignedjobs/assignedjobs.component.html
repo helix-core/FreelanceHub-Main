@@ -106,7 +106,20 @@
             <span class="project-title">{{ job.jobId.jobTitle }}</span>
             <div class="status-container">
               <!-- Completed Status -->
-              <div class="status-button completed">Completed</div>
+              <div
+              class="status-button completed"
+              [ngClass]="{
+                'view-hover': hoverStatId === job.jobId
+              }"
+              (mouseover)="hoverStatId = job.jobId"
+              (mouseleave)="hoverStatId = null"
+            >
+              <a *ngIf="hoverStatId === job.jobId" [href]="job.jobDetails.githublink" target="_blank">
+                View Project
+              </a>
+              <span *ngIf="hoverStatId !== job.jobId">Completed</span>
+            </div>
+              
               <!-- Payment Status -->
               <div
               class="status-pay"

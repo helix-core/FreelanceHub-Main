@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -381,7 +382,8 @@ public class ClientController {
         existingClient.setTypeOfProject((String) requestBody.get("typeOfProject"));
         existingClient.setRepName((String) requestBody.get("repName"));
         existingClient.setRepDesignation((String) requestBody.get("repDesignation"));
-        existingClient.setPassword((String) requestBody.get("password"));
+        String hashedPassword = BCrypt.hashpw((String)requestBody.get("password"), BCrypt.gensalt());
+        existingClient.setPassword(hashedPassword);
 
         clientRepository.save(existingClient);
         return ResponseEntity.ok("Client updated successfully");

@@ -1,12 +1,448 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* Global styles */
 html, body { 
     height: 100%; 
 }
+
 body { 
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Mulish", sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f5f5f5; /* Light background color for the body */
+}
+
+/* Header and Navbar */
+.header {
+    margin-bottom: 20px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    z-index: 1000;
+    background-color: #fff; /* Ensure the navbar has a background */
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 15px;
+}
+
+.navbar-title {
+    color: #232B50;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+/* Main Content Layout */
+.container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    margin-top: 50px;
+    height: 100vh;
+}
+
+/* Left Section */
+.left-section {
+    flex: 1.5;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.left-section h2,
+.left-section h3,
+.left-section p {
+    color: #232B50;
+}
+
+.client-card {
+    margin-top: 20px;
+    padding: 10px;
+    margin-left: 0px;
+    border-radius: 8px;
+    position: relative;
+    right: 10px;
+    background: linear-gradient(270deg, rgba(21, 201, 180, 0.50) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.50) 100%);
+}
+
+/* Right Section */
+.right-section {
+    flex: 1;
+    padding: 20px;
+}
+
+.right-section h3 {
+    margin-bottom: 20px;
+    position: relative;
+    left: 190px;
+    color: #232B50;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #232B50;
+}
+
+/* Slider Container */
+.slider-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.custom-slider {
+    width: 100%;
+    position: relative;
+}
+
+input[type="range"] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 8px;
+    background: #ddd;
+    border-radius: 5px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #21c9b4;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.slider-bar {
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+}
+
+.slider-values {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 14px;
+    color: #232b50;
+    margin-top: 10px;
+}
+
+.slider-value {
+    font-size: 14px;
+    color: #232b50;
+    font-weight: bold;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.min-value,
+.max-value {
+    font-size: 14px;
+    color: #232b50;
+}
+
+/* Upload Container */
+.upload-container {
+    margin-top: 20px;
+    padding: 15px;
+    background: linear-gradient(270deg, rgba(21, 201, 180, 0.50) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.50) 100%);
+    border: 1px dashed #232B50;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    color: #232B50;
+}
+
+.upload-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #232B50;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.upload-container button {
+    background-color: #232b50;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.uploadedFilesList ul {
+    padding-left: 20px;
+    color: #232b50;
+    list-style-type: disc;
+}
+
+.uploadedFilesList li {
+    font-size: 14px;
+    color: #232B50;
+    margin-bottom: 5px;
+}
+
+.uploadedFilesList button {
+    background: none;
+    border: none;
+    color: #232b50;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0;
+}
+
+/* Skills Container */
+.skills-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.circular-progress-container {
+    text-align: center;
+}
+
+.circular-progress {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: conic-gradient(#21c9b4 0deg,
+            #21c9b4 var(--percentage, 0deg),
+            #ddd var(--percentage, 0deg),
+            #ddd 360deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.percentage {
+    position: absolute;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #232B50;
+}
+
+.skills-missing-container {
+    text-align: left;
+    font-size: 14px;
+    bottom: 30px;
+    overflow-y: auto;
+}
+
+.skills-missing-container h5 {
+    font-size: 16px;
+    font-weight: bold;
+    color: #232B50;
+    margin-bottom: 8px;
+}
+
+.skills-missing-container ul {
+    list-style: disc;
+    margin: 0;
+    padding-left: 20px;
+    color: #333;
+    word-wrap: break-word;
+}
+
+.skills-missing-container ul li {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* Style the Submit Button */
+#submitButton {
+    background-color: #232B50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    margin-top: 10px;
+    position: relative;
+    left: 225px;
+}
+
+#submitButton:hover {
+    transform: scale(1.05);
+}
+
+/* Tooltip */
+a.home {
+    text-decoration: none; 
+    color: #232B50;
+}
+
+.home:hover .tooltiptext {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tooltiptext {
+    position: absolute;
+    top: 110%;
+    left: 10%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.5em;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+form {
+    border-left: 1px solid #232B50;
+    padding-left: 30px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+
+    .navbar-title {
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .logo {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .container {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        margin-top: 20px;
+    }
+
+    .left-section,
+    .right-section {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .right-section {
+        margin-top: 20px;
+    }
+
+    .client-card {
+        padding: 10px;
+    }
+
+    .slider-values {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .slider-container .slider-value {
+        text-align: center;
+    }
+
+    #submitButton {
+        left: 0;
+        width: 100%;
+    }
+
+    .skills-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .circular-progress {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-title {
+        font-size: 20px;
+    }
+
+    .left-section h2,
+    .left-section h3 {
+        font-size: 18px;
+    }
+
+    .left-section p {
+        font-size: 14px;
+    }
+
+    .slider-values {
+        font-size: 12px;
+    }
+
+    .upload-container input[type="text"] {
+        font-size: 12px;
+    }
+
+    .upload-container button {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    #submitButton {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .tooltiptext {
+        font-size: 0.6em;
+    }
+
+    .skills-missing-container h5 {
+        font-size: 14px;
+    }
+}
+
+/* Error Message */
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
 }

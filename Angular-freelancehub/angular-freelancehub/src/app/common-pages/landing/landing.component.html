@@ -54,7 +54,7 @@
             class="button-primary">
             Dashboard
         </a>
-        <a routerLink="/explore" class="button-primary">Explore</a>
+        <a [routerLink]="userRole === null ? '/login' : '/explore' " class="button-primary">Explore</a>
     </div>
 </section>
 <section class="services">

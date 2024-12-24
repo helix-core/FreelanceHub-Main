@@ -20,6 +20,7 @@ export class AssignedjobsComponent implements OnInit {
   selectedBidAmount: number | null = null;
   showPaymentModal: boolean = false;
   hoverJobId: string | null = null; 
+  hoverStatId: string | null = null; 
   showPasswordModal:boolean=false;
   password:string='';
 
@@ -135,7 +136,7 @@ export class AssignedjobsComponent implements OnInit {
           // Pay Later logic
           this.updateJob('completed', 'Unpaid'); // Update job to completed and payment status to 'Unpaid'
           this.notificationService.showNotification('Project verified successfully! Payment Pending!', 'success');
-          this.ratingService.openRatingPopup(this.selectedJob!);
+          // this.ratingService.openRatingPopup(this.selectedJob!);
           this.closePaymentModal();
            // Open the rating popup after decision
         }

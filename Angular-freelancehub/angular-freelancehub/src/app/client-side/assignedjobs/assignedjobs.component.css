@@ -217,6 +217,25 @@ h2 {
   .completed {
     background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
   }
+  
+  .view-hover {
+    background: #232b50; /* Change the background on hover */
+    color: #ececec; /* Change the text color */
+    border: 1px solid #ececec;
+  }
+  
+  .view-hover:hover {
+    cursor: pointer; /* Change cursor to indicate clickable area */
+  }
+  
+  .status-button a {
+    text-decoration: none;
+    color: inherit; /* Inherit the color from parent */
+  }
+  
+  .status-button span {
+    display: inline-block;
+  }
 
   .status-container {
     display: flex;
@@ -345,8 +364,8 @@ h2 {
 
 .btn-view-link:hover {
   background: #ececec;
-  color: white; /* Change to white for contrast */
-  border: 2px solid white;
+  color: rgb(32, 232, 159); /* Change to white for contrast */
+  border: 2px solid rgb(32, 232, 159);
 }
 
 .btn-verify {
