@@ -109,7 +109,7 @@ isFile: boolean = false;
 
    customEmailValidator(): ValidatorFn {
       return (control: AbstractControl): ValidationErrors | null => {
-      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu)$/;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu|net)$/;
         const value = control.value;
         return value && !emailRegex.test(value) ? { invalidEmail: true } : null;
       };

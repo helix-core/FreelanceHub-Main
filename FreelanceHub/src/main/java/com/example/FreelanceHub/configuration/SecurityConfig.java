@@ -23,17 +23,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors().configurationSource(corsConfigurationSource())  // Custom CORS configuration
+                .cors().configurationSource(corsConfigurationSource()) // Custom CORS configuration
                 .and()
-                .csrf().disable()  // Disable CSRF for stateless requests
+                .csrf().disable() // Disable CSRF for stateless requests
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()  // Allow preflight requests
-                .requestMatchers("/api/signup/**", "/api/login/**").permitAll()  // Public endpoints
-                .anyRequest().authenticated()  // Protect all other endpoints
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // Allow preflight requests
+                .requestMatchers("/api/signup/**", "/api/login/**").permitAll() // Public endpoints
+                .anyRequest().authenticated() // Protect all other endpoints
                 .and()
                 .exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> {
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  // 401 Unauthorized
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unauthorized
                     response.setContentType("application/json");
                     response.getWriter().write("{\"message\":\"Unauthorized access\"}");
                 });
@@ -42,23 +42,23 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();  // Use BCrypt for password hashing
+        return new BCryptPasswordEncoder(); // Use BCrypt for password hashing
     }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        return config.getAuthenticationManager();  // Provide the AuthenticationManager
+        return config.getAuthenticationManager(); // Provide the AuthenticationManager
     }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200"));  // Allow Angular frontend
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // HTTP methods
-        configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));  // Required headers
-        configuration.setAllowCredentials(true);  // Allow credentials
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200")); // Allow Angular frontend
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // HTTP methods
+        configuration.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization")); // Required headers
+        configuration.setAllowCredentials(true); // Allow credentials
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);  // Apply CORS globally
+        source.registerCorsConfiguration("/**", configuration); // Apply CORS globally
         return source;
     }
 }

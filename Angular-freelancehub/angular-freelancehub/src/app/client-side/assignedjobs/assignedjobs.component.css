@@ -217,42 +217,154 @@ h2 {
   .completed {
     background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
   }
-  
-  
-  .btn-view-link {
-      text-decoration: none;
-      background-color: #28a745;
-      color: white;
-      padding: 10px 15px;
-      border-radius: 5px;
-      font-size: 16px;
-      transition: background-color 0.3s;
-      margin-top:20px;
-      position:relative;
-      top:20px;
+
+  .status-container {
+    display: flex;
+    gap: 15px;
   }
   
-  .btn-view-link:hover {
-      background-color: #218838;
+  .status-pay {
+    width: 154px;
+    height: 31px;
+    border-radius: 15px;
+    display: flex;
+    color: #232b50;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
   }
   
-  .verify-form {
-      display: inline-block;
+  .unpaid {
+    background: linear-gradient(270deg, #ececec 20.1%, #ececec 52.1%, #e2e2e2 82.6%);
+    border: 1px solid #ececec;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
-  .btn-verify {
-      background-color: #232B50;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      position:relative;
-      left:780px;
-      top:22px;
+  .pay-hover {
+    background: #232b50;
+    color: #ececec; /* Change text color on hover */
   }
+  
+  .pay-hover:hover {
+    cursor: pointer; /* Change cursor to indicate clickable area */
+  }
+  .paid {
+    background:linear-gradient(270deg, #ECECEC 20.1%, #ECECEC 52.1%, #E2E2E2 82.6%);
+    border: 1px solid #ECECEC; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  }
+
+  .password-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  .password-modal .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .password-input {
+    width: 80%;
+    padding: 10px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  
+  
+  .payment-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out; /* Optional for smooth appearance */
+    /* pointer-events: none; */
+  }
+  
+  .modal-content {
+    text-align: center;
+  }
+  
+  .confirm-btn, .cancel-btn {
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .payment-modal.show {
+    pointer-events: auto; /* Enable events when modal is visible */
+  }
+
+  .project-actions {
+    display: flex;
+    justify-content: space-between; /* Place items at opposite ends */
+    align-items: center; /* Align items vertically */
+    width: 100%; /* Ensure it spans the container width */
+    margin-top: 20px; /* Optional spacing */
+}
+
+.btn-view-link, .btn-verify {
+    width: 154px;
+    height: 31px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: none;
+}
+
+.btn-view-link {
+    background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
+    color: #232B50;
+}
+
+.btn-view-link:hover {
+  background: #ececec;
+  color: white; /* Change to white for contrast */
+  border: 2px solid white;
+}
+
+.btn-verify {
+    color: #ececec;
+    background: #232B50;
+}
+
+.btn-verify:hover {
+  background: #ececec;
+    border: 2px solid #232B50;
+    color:#232B50;
+}
+
+.verify-form {
+    margin: 0; /* Ensure proper alignment with the link */
+}
+
+  
 /*swathi changes*/
 a.home{
     text-decoration: none; 
@@ -575,4 +687,77 @@ a.home{
       opacity: 1;
     }
   }
+
+  /*payment css*/
+  /* Popup Container */
+.payment-decision-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Make sure it's above other content */
+  transition: opacity 0.3s ease;
+}
+
+
+/* Title */
+.popup-content h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Buttons */
+.pay-btn {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Pay Now Button */
+.pay-btn.pay-now {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.pay-btn.pay-now:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(46, 204, 113, 0.5);
+}
+
+/* Pay Later Button */
+.pay-btn.pay-later {
+  background-color: #f39c12;
+  color: white;
+}
+
+.pay-btn.pay-later:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 10px rgba(241, 140, 17, 0.5);
+}
+
+
+/* Animation for popup */
+@keyframes slide-in {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+
   
