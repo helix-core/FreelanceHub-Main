@@ -310,3 +310,175 @@ a.home{
     transition: opacity 0.3s ease; /* Smooth fade-in effect */
     z-index: 10;             /* Ensure tooltip appears above other elements */
   }
+
+  /* Mobile view (up to 600px) */
+@media (max-width: 600px) {
+    .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .navbar-left {
+        margin-bottom: 10px;
+    }
+
+    .logo {
+        width: 25px;
+        height: 25px;
+        margin-right: 10px;
+    }
+
+    .navbar-title {
+        font-size: 24px;
+    }
+
+    .dashboard-header {
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .dashboard-header h1 {
+        font-size: 28px;
+    }
+
+    .icons {
+        /* flex-direction: column;
+        margin-top: 10px; */
+        align-items: center;
+    }
+
+    .icons span {
+        /* margin-bottom: 10px; */
+        padding: 5px 5px;
+    }
+
+    .container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .form-container {
+        padding: 10px;
+    }
+
+    .input-text, input[type="number"], select {
+        width: 100%;
+        font-size: 0.9rem;
+    }
+
+    .number-range input[type="number"] {
+        width: 60px;
+    }
+
+    button {
+        width: 80%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+
+    .error-message {
+        font-size: 0.7em;
+        margin-left: 8px;
+        margin-bottom: 6px;
+    }
+
+    #skills-input {
+        font-size: 0.8rem;
+    }
+
+    #skills-display {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .skill-tag {
+        font-size: 0.8em;
+        padding: 4px 8px;
+    }
+
+    .tooltip {
+        font-size: 0.6em;
+    }
+}
+
+/* Tablet view (600px to 1024px) */
+@media (min-width: 600px) and (max-width: 1024px) {
+    .navbar {
+        padding: 10px 20px;
+    }
+
+    .navbar-title {
+        font-size: 28px;
+    }
+
+    .dashboard-header {
+        /* flex-direction: row; */
+        justify-content: space-between;
+        margin-top: 60px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 32px;
+    }
+
+    .container {
+        width: 80%;
+    }
+
+    .form-container {
+        padding: 20px;
+    }
+
+    .input-text, input[type="number"], select {
+        font-size: 1rem;
+    }
+
+    .number-range input[type="number"] {
+        width: 80px;
+    }
+
+    button {
+        width: 60%;
+    }
+
+    .error-message {
+        font-size: 0.8em;
+    }
+    
+}
+
+/* Desktop view (above 1024px) */
+@media (min-width: 1024px) {
+    .navbar {
+        padding: 10px 30px;
+    }
+
+    .navbar-title {
+        font-size: 34px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 40px;
+    }
+
+    .container {
+        width: 70%;
+    }
+
+    .form-container {
+        padding: 30px;
+    }
+
+    .input-text, input[type="number"], select {
+        font-size: 1rem;
+    }
+
+    .number-range input[type="number"] {
+        width: 100px;
+    }
+
+    button {
+        width: 40%;
+    }
+}
