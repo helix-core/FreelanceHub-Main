@@ -18,6 +18,7 @@ import { AcceptedjobsComponent } from './freelancer-side/acceptedjobs/acceptedjo
 import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
 import { EditClientFormComponent } from './client-side/edit-client-form/edit-client-form.component';
 import { WalletComponent } from './common-pages/wallet/wallet.component';
+import { ResetPasswordComponent } from './common-pages/reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: 'signup/client', component: SignupclientComponent },
@@ -31,14 +32,15 @@ const routes: Routes = [
   { path: 'bidding', component: BiddingComponent},
   { path: 'profile/freelancer', component:FreelancerProfileComponent },
   { path: 'freelancer/profile/:freeId', component: FreelancerProfileComponent },
-  {path:'freelancer/edit' ,component:FreelancerEditComponent},
+  {path:'freelancer/edit/:userId' ,component:FreelancerEditComponent},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
+   { path: 'verify-reset-password', component: ResetPasswordComponent },
    { path: 'explore', component: ExploreComponent },
   {path:'apply',component:ApplyjobComponent},
   {path:'applied-jobs',component:AppliedjobsComponent},
   {path:'accepted-jobs',component:AcceptedjobsComponent},
   {path:'profile/client',component:ClientprofileComponent},
-  {path:'profile-client-edit',component:EditClientFormComponent},
+  {path:'profile-client-edit/:userId',component:EditClientFormComponent},
   { path: 'payment',component: WalletComponent}
   ];
 

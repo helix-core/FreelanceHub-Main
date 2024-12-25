@@ -36,6 +36,10 @@ public class ClientService {
         }
     }
 
+    public boolean isEmailAlreadyRegistered(String email) {
+        return clientRepository.existsByCompEmail(email);
+    }
+
     public boolean validateClient(String compEmail, String password) {
         Client client = clientRepository.findBycompEmail(compEmail);
         return client != null && BCrypt.checkpw(password, client.getPassword());
@@ -76,4 +80,11 @@ public class ClientService {
         return clientRepository.findByClientId(clientId);
     }
 
+    public Client findByEmail(String email) {
+        return clientRepository.findBycompEmail(email);
+    }
+
+    public Client findByResetToken(String resetToken) {
+        return clientRepository.findByResetToken(resetToken);
+    }
 }

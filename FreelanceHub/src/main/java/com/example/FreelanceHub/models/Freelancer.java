@@ -1,6 +1,7 @@
 package com.example.FreelanceHub.models;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -179,5 +180,27 @@ public class Freelancer {
 
 	public void setResume(String resume) {
 		this.resume = resume;
+	}
+
+	@Column
+	private String resetToken;
+
+	@Column
+	private LocalDateTime tokenExpiry;
+
+	public String getResetToken() {
+		return resetToken;
+	}
+
+	public void setResetToken(String resetToken) {
+		this.resetToken = resetToken;
+	}
+
+	public LocalDateTime getTokenExpiry() {
+		return tokenExpiry;
+	}
+
+	public void setTokenExpiry(LocalDateTime tokenExpiry) {
+		this.tokenExpiry = tokenExpiry;
 	}
 }

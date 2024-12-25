@@ -1,14 +1,14 @@
 <div class="whole-container">
-<div class="header">
+  <div class="header">
     <div class="navbar">
         <div class="navbar-left">
             <img src="assets/images/Twitch.png" class="logo" alt="" />
-            <span class="navbar-title"><a routerLink="/landing" class="home"><div class="tooltiptext">Home</div>Freelancehub</a></span>
+            <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub<div class="tooltiptext">Home</div></a></span>
         </div>
     </div>
-</div>
+  </div>
 
-<div class="search-bar-container">
+  <div class="search-bar-container">
     <div class="heading">
         <h2>Scale up your work with our freelancers</h2>
     </div>
@@ -17,10 +17,10 @@
             (keydown.enter)="performSearch()" />
         <button (click)="performSearch()">Search</button>
     </div>
-</div>
+  </div>
 
-<main>
-    <section class="job-listings">
+  <main>
+    <section class="job-listings" [class.scrollable]="jobs.length > 2">
         <div *ngIf="jobs.length === 0">
             <p class="null-text">No jobs available to apply at the moment</p>
         </div>
@@ -40,5 +40,5 @@
             </a>
         </div>
     </section>
-</main>
+  </main>
 </div>

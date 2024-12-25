@@ -35,7 +35,7 @@
                 </div>
 
                 <button *ngIf="userRole === 'freelancer'" class="edit-btn">
-                    <a routerLink="/freelancer/edit" class="edit-button">Edit Profile</a>
+                    <a [routerLink]="['/freelancer/edit',freelancerId]" class="edit-button">Edit Profile</a>
                 </button>
                 
             </div>

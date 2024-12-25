@@ -28,6 +28,7 @@ import { NotificationService } from './notification.service';
 import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
 import { WalletComponent } from './common-pages/wallet/wallet.component';
 import { WalletService } from './wallet.service';
+import { ResetPasswordComponent } from './common-pages/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { WalletService } from './wallet.service';
     FreelancerProfileComponent,
     ExploreComponent,
     NotificationComponent,
-    WalletComponent
+    WalletComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

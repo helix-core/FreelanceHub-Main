@@ -6,6 +6,8 @@ import java.util.Map;
 // import io.jsonwebtoken.Jwts;
 // import io.jsonwebtoken.SignatureAlgorithm;
 
+import com.example.FreelanceHub.repositories.ClientRepository;
+import com.example.FreelanceHub.repositories.FreelancerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +49,12 @@ import jakarta.validation.Valid;
 public class UserController {
 
     @Autowired
+    private ClientRepository clientRepository;
+
+    @Autowired
+    private FreelancerRepository freelancerRepository;
+
+    @Autowired
     private ClientService clientService;
 
     @Autowired
@@ -72,6 +80,18 @@ public class UserController {
         return "landing";
     }
 
+    @GetMapping("/userStats")
+    public Map<String, Long> getUserStats() {
+        long clientCount = clientRepository.count(); // Get total clients
+        long freelancerCount = freelancerRepository.count(); // Get total freelancers
+
+        Map<String, Long> stats = new HashMap<>();
+        stats.put("clientCount", clientCount);
+        stats.put("freelancerCount", freelancerCount);
+
+        return stats;
+    }
+
     // Selection Page
     @GetMapping("/signup/selection")
     public String showSignupSelectionPage() {
@@ -93,6 +113,11 @@ public class UserController {
         if (result.hasErrors()) {
             response.put("message", "Validation errors occurred. Please correct the errors and try again.");
             return ResponseEntity.badRequest().body(response);
+        }
+        boolean emailExists = clientService.isEmailAlreadyRegistered(clientDTO.getCompEmail());
+        if (emailExists) {
+            response.put("message", "Email already exists. Please use a different email.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
         Client client = new Client();
         client.setCompEmail(clientDTO.getCompEmail());
@@ -125,11 +150,19 @@ public class UserController {
             @RequestParam("profileImage") MultipartFile profileImage,
             @Valid FreeDTO freelancerDTO,
             BindingResult bindingResult) {
+        Map<String, String> response = new HashMap<>();
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
             bindingResult.getFieldErrors().forEach(error -> errors.put(error.getField(), error.getDefaultMessage()));
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
         }
+
+        boolean emailExists = freeService.isEmailAlreadyRegistered(freelancerDTO.getFreeEmail());
+        if (emailExists) {
+            response.put("message", "Email already exists. Please use a different email.");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        }
+
         String imageUrl = freeService.saveProfileImage(profileImage);
         String pdfUrl = freeService.saveFile(resume);
         Freelancer freelancer = new Freelancer();
@@ -147,11 +180,9 @@ public class UserController {
         freelancer.setResume(pdfUrl);
         boolean success = freeService.registerFreelancer(freelancer);
         if (success) {
-            Map<String, String> response = new HashMap<>();
             response.put("message", "Freelancer Registered Successfully");
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } else {
-            Map<String, String> response = new HashMap<>();
             response.put("message", "Error in Registration");
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }

@@ -106,7 +106,7 @@
                 <span>
                     <input type="password" formControlName="confirmPassword" placeholder="Re-type Password *" />
                 </span>
-                <span *ngIf="editClientForm.get('confirmPassword')?.errors?.['required'];else lastBefore" class="error-message">
+                <span *ngIf="editClientForm.get('confirmPassword')?.touched && editClientForm.get('confirmPassword')?.errors?.['required'];else lastBefore" class="error-message">
                     Confirm password is required.
                 </span>
                 <ng-template #lastBefore>
@@ -118,7 +118,7 @@
             </div>
 
             <!-- Submit Button -->
-            <button type="submit" [disabled]="editClientForm.invalid">Update</button>
+            <button type="submit">Update</button>
         </form>
     </div>
 </div>

@@ -35,7 +35,6 @@ public class FreelancerService {
     @Autowired
     FreeJobRepository freeJobRepository;
 
-
     public boolean registerFreelancer(Freelancer freelancer) {
         try {
 
@@ -48,6 +47,10 @@ public class FreelancerService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean isEmailAlreadyRegistered(String email) {
+        return freeRepository.existsByFreeEmail(email);
     }
 
     public boolean validateFreelancer(String freeEmail, String password) {
@@ -129,5 +132,13 @@ public class FreelancerService {
                 freeRepository.save(freelancer); // Update the freelancer with the hashed password
             }
         }
+    }
+
+    public Freelancer findByEmail(String email) {
+        return freeRepository.findByfreeEmail(email);
+    }
+
+    public Freelancer findByResetToken(String resetToken) {
+        return freeRepository.findByResetToken(resetToken);
     }
 }

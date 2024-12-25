@@ -10,5 +10,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface FreelancerRepository extends JpaRepository<Freelancer, Integer> {
 	Freelancer findByfreeEmail(String freeEmail);
+
 	Optional<Freelancer> findByFreeId(String freeId);
+
+	boolean existsByFreeEmail(String email);
+
+	Freelancer findByResetToken(String resetToken);
 }

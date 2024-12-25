@@ -15,12 +15,28 @@ export class LandingComponent {
   unreadCount: number = 0;
   dropdownVisible: boolean = false;
   profileDropdownVisible: boolean = false;
+  clientCount: number = 0;
+  freelancerCount: number = 0;
 
   constructor(private authService: AuthService,private http:HttpClient) {}
 
   ngOnInit(): void {
     this.userRole = this.authService.getRole();
      this.getNotifications();
+      this.fetchUserStats();
+  }
+
+   fetchUserStats() {
+    this.http.get<{ clientCount: number; freelancerCount: number }>('/api/userStats')
+      .subscribe(
+        (data) => {
+          this.clientCount = data.clientCount;
+          this.freelancerCount = data.freelancerCount;
+        },
+        (error) => {
+          console.error('Error fetching user stats:', error);
+        }
+      );
   }
   toggleDropdown() {
     this.dropdownVisible = !this.dropdownVisible;

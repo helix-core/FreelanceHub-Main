@@ -17,16 +17,17 @@
     totalRatings: number = 0;
     userRole:String='';
      previousWorkLinks: string[] = [];
+     freelancerId: string | null = null;
 
     constructor(private profileService: FreelancerService, private ratingService: RatingService, private route: ActivatedRoute, private authService: AuthService) {}
 
     ngOnInit(): void {
-      const freelancerId = this.route.snapshot.paramMap.get('freeId');
+      this.freelancerId = localStorage.getItem('userId');
       this.userRole=this.authService.getUserRole() || '';
-      if (freelancerId) {
-        console.log(freelancerId);
+      if (this.freelancerId) {
+        console.log(this.freelancerId);
         // Fetch the profile of the specific freelancer
-        this.profileService.getFreelancerProfile(freelancerId).subscribe(
+        this.profileService.getFreelancerProfile(this.freelancerId).subscribe(
           (data) => {
             console.log(data.freelancer);
             this.freelancer = data.freelancer;

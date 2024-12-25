@@ -169,6 +169,31 @@
         <p class="sub-heading">Join thousands of freelancers and clients already using our platform</p>
         <a href="/signup/selection" class="create-account-btn">Create Account</a>
     </div>
+
+    <div class="stats-container">
+        <div class="stats-header">
+            <h1>Platform Insights</h1>
+            <p>Real-time statistics of our growing community</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i> <!-- FontAwesome icon -->
+                </div>
+                <h2>{{ clientCount }}</h2>
+                <p>Clients Registered</p>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon">
+                    <i class="fas fa-user-tie"></i> <!-- FontAwesome icon -->
+                </div>
+                <h2>{{ freelancerCount }}</h2>
+                <p>Freelancers Registered</p>
+            </div>
+        </div>
+    </div>
+
+
     <div class="footer">
         <div class="footer-logos">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -211,6 +236,9 @@
             </svg>
 
         </div>
+
+       
+
         <div class="footer-column">
             <h3 class="footer-title">For Client</h3>
             <ul class="footer-links">
