@@ -263,3 +263,134 @@ a.home{
     transition: opacity 0.3s ease; /* Smooth fade-in effect */
     z-index: 10;             /* Ensure tooltip appears above other elements */
   }
+
+
+  /* Responsive Design for max-width: 900px */
+@media (max-width: 900px) {
+    .job {
+        width: 100%;
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .job h3 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .job p {
+        font-size: 14px;
+    }
+
+    .navbar-title {
+        font-size: 28px;
+    }
+
+    .icons span {
+        padding: 8px;
+    }
+}
+
+/* Responsive Design for max-width: 768px */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 15px;
+    }
+
+    .navbar-left {
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .dashboard-header {
+        width: 100%;
+        text-align: center;
+    }
+
+    .icons {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .icons span {
+        padding: 5px;
+    }
+
+    .container {
+        padding: 15px;
+    }
+
+    .bidding-btn {
+        width: 100%;
+    }
+}
+
+/* Responsive Design for max-width: 600px */
+@media (max-width: 600px) {
+    .navbar-title {
+        font-size: 24px;
+    }
+
+    .logo {
+        width: 24px;
+        height: 24px;
+    }
+
+    .job {
+        padding: 10px;
+    }
+
+    .job h3 {
+        font-size: 16px;
+    }
+
+    .job p {
+        font-size: 12px;
+    }
+
+    .common-bidding-btn-container {
+        margin-top: 30px;
+    }
+
+    .bidding-btn {
+        font-size: 16px;
+    }
+}
+
+/* Responsive Design for max-width: 480px */
+@media (max-width: 480px) {
+    .navbar-title {
+        font-size: 20px;
+    }
+
+    .icons {
+        /* flex-direction: column; */
+        align-items: center;
+    }
+
+    .icons span {
+        padding: 5px 5px;
+    }
+
+    .posted-jobs {
+        gap: 15px;
+    }
+
+    .job {
+        padding: 10px;
+    }
+
+    .bidding-btn {
+        font-size: 14px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .null-text {
+        font-size: 1em;
+    }
+}

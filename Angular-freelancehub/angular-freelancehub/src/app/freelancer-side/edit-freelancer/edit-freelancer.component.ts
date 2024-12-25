@@ -21,6 +21,7 @@ resumePreview: any;
 isFile: boolean = false;
 userId: string | null = null;
 
+
   constructor(
     private route: ActivatedRoute,
     private freelancerService: FreelancerService,
@@ -182,6 +183,7 @@ userId: string | null = null;
    if (this.freelancerForm.valid) {
    
     if (this.userId) {
+
       const formData = new FormData();
       
     // Append the form fields to formData
@@ -203,6 +205,7 @@ userId: string | null = null;
         formData.append('resume', resume);
       }
       formData.append('freeId', this.userId);  // Append user ID
+
       this.freelancerService.updateFreelancer(formData).subscribe(
         () => {
           if (localStorage.getItem('userId')) {

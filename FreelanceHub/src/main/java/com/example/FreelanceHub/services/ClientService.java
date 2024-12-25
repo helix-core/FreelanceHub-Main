@@ -87,4 +87,5 @@ public class ClientService {
     public Client findByResetToken(String resetToken) {
         return clientRepository.findByResetToken(resetToken);
     }
+
 }

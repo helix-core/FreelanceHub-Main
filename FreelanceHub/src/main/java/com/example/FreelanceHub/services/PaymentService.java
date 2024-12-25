@@ -2,7 +2,9 @@ package com.example.FreelanceHub.services;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -124,4 +126,34 @@ public class PaymentService {
     public List<Transaction> getTransactionHistory(String userId) {
         return transactionRepository.findByUserId(userId);
     }
+    
+    public Map<String, BigDecimal> getMonthlySpending(String clientId) {
+        List<Transaction> transactions = transactionRepository.findByUserIdAndType(clientId, "PAYMENT");
+        Map<String, BigDecimal> monthlySpending = new HashMap<>();
+
+        for (Transaction transaction : transactions) {
+            String month = transaction.getTimestamp().getMonth().toString(); // Get month name
+            monthlySpending.put(month, 
+                monthlySpending.getOrDefault(month, BigDecimal.ZERO).add(transaction.getAmount()));
+        }
+
+        return monthlySpending;
+    }
+    
+    public Map<String, BigDecimal> getMonthlyEarnings(String freelancerId) {
+        // Fetch the transactions related to the freelancer (Assume paymentService has this method)
+        List<Transaction> transactions = transactionRepository.findByUserIdAndType(freelancerId,"PAYMENT_RECEIVED");
+        
+        Map<String, BigDecimal> monthlyEarning = new HashMap<>();
+
+        for (Transaction transaction : transactions) {
+            String month = transaction.getTimestamp().getMonth().toString(); // Get month name
+            monthlyEarning.put(month, 
+                monthlyEarning.getOrDefault(month, BigDecimal.ZERO).add(transaction.getAmount()));
+        }
+        
+        return monthlyEarning;
+
+    }
+
 }

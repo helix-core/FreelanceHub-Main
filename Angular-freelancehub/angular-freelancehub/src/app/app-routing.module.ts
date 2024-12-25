@@ -32,9 +32,11 @@ const routes: Routes = [
   { path: 'bidding', component: BiddingComponent},
   { path: 'profile/freelancer', component:FreelancerProfileComponent },
   { path: 'freelancer/profile/:freeId', component: FreelancerProfileComponent },
+
   {path:'freelancer/edit/:userId' ,component:FreelancerEditComponent},
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
    { path: 'verify-reset-password', component: ResetPasswordComponent },
+//   {path:'freelancer/edit' ,component:FreelancerEditComponent},
+  { path: '', redirectTo: '/landing', pathMatch: 'full' },
    { path: 'explore', component: ExploreComponent },
   {path:'apply',component:ApplyjobComponent},
   {path:'applied-jobs',component:AppliedjobsComponent},

@@ -18,6 +18,7 @@ export class LandingComponent {
   clientCount: number = 0;
   freelancerCount: number = 0;
 
+
   constructor(private authService: AuthService,private http:HttpClient) {}
 
   ngOnInit(): void {
@@ -50,7 +51,11 @@ export class LandingComponent {
   }
 
   getNotifications() {
-    const userId=localStorage.getItem("userId");
+    if (typeof window === 'undefined' || !localStorage) {
+      console.warn('localStorage is not available in this environment.');
+      return;
+    }
+    const userId = localStorage.getItem("userId");
     if (!userId) {
       throw new Error('User is not logged in. No userId found in localStorage.');
     }
@@ -85,5 +90,7 @@ export class LandingComponent {
   handleLogout(): void {
     this.authService.logout(); // Call the logout function in the service
   }
+
+ 
 }
 

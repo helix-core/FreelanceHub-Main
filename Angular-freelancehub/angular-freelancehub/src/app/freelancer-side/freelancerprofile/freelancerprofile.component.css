@@ -81,7 +81,8 @@
     
     .profile-header {
       display: flex;
-      justify-content: flex-start;
+/*       justify-content: flex-start; */
+      justify-content: space-between;/*was flex start*/
       align-items: center;
       background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
       padding: 20px;
@@ -112,7 +113,7 @@
 
  
   .profile-info{
-      margin-right: 1000px;
+      margin-right: 900px; /*was 20*/
       margin-bottom: 10px;
     }
   
@@ -160,7 +161,7 @@
   .right-section{
       flex: 2;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;/*was row*/
       gap: 20px;
   }
   .project {
@@ -282,24 +283,66 @@
           transition: opacity 0.3s ease; /* Smooth fade-in effect */
           z-index: 10;             /* Ensure tooltip appears above other elements */
         }
+ 
+     .rating-container {
+      text-align: left;
+      padding: 10px;
+      background-color:  rgba(244, 255, 254, 0.5);
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .stars {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      justify-content: center;
+    }
+    
+    .stars span {
+      font-size: 35px; /* Increase the size of stars */
+      color: #ccc;
+      margin-right: 8px; /* Add more spacing between stars */
+      cursor: pointer;
+    }
+    
+    .stars span.filled {
+      color: gold;
+    }
+    
+    .rating-info {
+      font-size: 16px; /* Increase font size for rating info */
+      color: #555;
+      margin-top: 10px;
+      text-align: center;
+    }
+    
+    .rating-info strong {
+      color: #333;
+    }
+    
 
-        .projects-section{
-          display: flex;
-          flex-direction: column;
-          flex: 1;
-        }
-               
 
-                .previous-work {
-                  flex: 1;
-                  padding: 15px;
-                  border: 1px solid #57c3c2;
-                  border-radius: 8px;
-                  max-height: fit-content;
-                  overflow-y: auto;
-                  background: #fff;
-                }
-
+    /* Responsive Design */
+@media (max-width: 1200px) {
+  .main-content {
+      flex-direction: column;
+  }
+  .projects-section{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }          
+.previous-work {
+flex: 1;
+padding: 15px;
+border: 1px solid #57c3c2;
+border-radius: 8px;
+max-height: fit-content;
+overflow-y: auto;
+background: #fff;
+}
+}
 
   /* Responsive Styling */
 
@@ -311,90 +354,131 @@
     padding: 10px;
   }
 
-  .navbar-title {
-    font-size: 28px;
-    text-align: center;
+  .left-section,
+  .right-section {
+      flex: none;
+      width: 100%;
   }
 
   .profile-header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+      /* flex-direction: column; */
+      align-items: flex-start;
+      padding: 15px;
   }
 
   .profile-pic {
-    width: 60px;
-    height: 60px;
+      width: 70px;
+      height: 70px;
   }
 
   .profile-info {
-    margin-right: 0;
-    margin-top: 10px;
+      margin-right: 0;
   }
 
-  .edit-btn {
-    width: 100%;
-    text-align: center;
-    margin-top: 10px;
+  .rating-container {
+      margin-top: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Navbar */
+  /* .navbar-left {
+      flex-direction: column;
+      align-items: flex-start;
+  } */
+
+  .navbar-title {
+      font-size: 24px;
+  }
+
+  .logo {
+      width: 25px;
+      height: 25px;
+      margin-right: 10px;
   }
 
   .main-content {
-    flex-direction: column;
+      flex-direction: column;
   }
 
   .left-section,
   .right-section {
-    width: 100%;
-    padding: 10px;
-  }
-}
-
-/* For mobile screens (max-width: 480px) */
-@media (max-width: 480px) {
-  .navbar {
-    padding: 5px;
-  }
-
-  .logo {
-    width: 25px;
-    height: 25px;
-    margin-right: 10px;
-  }
-
-  .navbar-title {
-    font-size: 24px;
+      width: 100%;
+      padding: 10px;
   }
 
   .profile-header {
-    padding: 10px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 15px;
   }
 
   .profile-pic {
-    width: 50px;
-    height: 50px;
-  }
-
-  .profile-info h2 {
-    font-size: 18px;
+      width: 60px;
+      height: 60px;
   }
 
   .edit-btn {
-    padding: 8px;
-  }
-
-  .main-content {
-    gap: 10px;
+      width: 100%;
+      margin-top: 15px;
   }
 
   .project {
-    padding: 8px;
-    font-size: 0.9em;
-  }
-
-  .tooltiptext {
-    font-size: 0.4em;
+      padding: 8px;
   }
 }
+
+@media (max-width: 480px) {
+  .navbar {
+      flex-direction: column;
+      padding: 10px;
+  }
+
+  .navbar-left {
+      margin-bottom: 10px;
+  }
+
+  .profile-header {
+      padding: 10px;
+  }
+
+  .profile-pic {
+      width: 50px;
+      height: 50px;
+  }
+
+  .profile-info {
+      margin-right: 0;
+  }
+
+  .main-content {
+      gap: 10px;
+  }
+
+  .left-section,
+  .right-section {
+      width: 100%;
+      padding: 5px;
+  }
+
+  .stars span {
+      font-size: 28px; /* Slightly smaller stars on small screens */
+  }
+
+  .rating-info {
+      font-size: 14px;
+  }
+
+  .project {
+      padding: 5px;
+  }
+
+  .edit-btn {
+      padding: 10px;
+      width: 100%;
+  }
+}
+
  
      .rating-container {
       position:absolute;
@@ -468,4 +552,5 @@
         .previous-work ul li a:hover {
           text-decoration: underline;
         }
+    
     

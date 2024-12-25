@@ -141,4 +141,5 @@ public class FreelancerService {
     public Freelancer findByResetToken(String resetToken) {
         return freeRepository.findByResetToken(resetToken);
     }
+
 }

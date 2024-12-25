@@ -203,4 +203,5 @@ public class Freelancer {
 	public void setTokenExpiry(LocalDateTime tokenExpiry) {
 		this.tokenExpiry = tokenExpiry;
 	}
+
 }

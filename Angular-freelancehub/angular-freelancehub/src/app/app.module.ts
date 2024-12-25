@@ -29,6 +29,30 @@ import { ClientprofileComponent } from './client-side/clientprofile/clientprofil
 import { WalletComponent } from './common-pages/wallet/wallet.component';
 import { WalletService } from './wallet.service';
 import { ResetPasswordComponent } from './common-pages/reset-password/reset-password.component';
+import { BaseChartDirective } from 'ng2-charts';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { Chart } from 'chart.js';
+import { 
+  CategoryScale, 
+  LinearScale, 
+  PointElement, 
+  LineElement, 
+  Title, 
+  Tooltip, 
+  Legend,
+  Filler  
+} from 'chart.js';
+
+Chart.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 @NgModule({
   declarations: [
@@ -61,7 +85,8 @@ import { ResetPasswordComponent } from './common-pages/reset-password/reset-pass
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BaseChartDirective
   ],
   providers: [
     provideHttpClient(
@@ -71,7 +96,8 @@ import { ResetPasswordComponent } from './common-pages/reset-password/reset-pass
     ClientService,
     RoleService,
     NotificationService,
-    WalletService
+    WalletService,
+    provideCharts(withDefaultRegisterables())
   ],
   bootstrap: [AppComponent]
 })
