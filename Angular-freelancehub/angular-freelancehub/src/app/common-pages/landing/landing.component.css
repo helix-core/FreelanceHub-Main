@@ -5,12 +5,15 @@
         padding: 0;
         box-sizing: border-box;
         font-family: 'Mulish', sans-serif;
+        zoom: 102%;
+        
     }
 
 
     .whole-container{
-        background-color: #f8f9fa;
+        /* background-color: #f8f9fa; */
         height: 100%;
+        background: #f5f5f5;
     }
 
     .navbar {
@@ -18,7 +21,7 @@
         justify-content: space-between;
         align-items: center;
         padding: 20px 50px;
-        background-color: #fff;
+        /* background-color: #fff; */
         box-sizing: border-box;
         overflow: hidden;
     }
@@ -202,25 +205,6 @@
         margin-bottom: 20px;
     }
 
-
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Mulish', sans-serif;
-
-    }
-
-    body {
-        background-color: #FFFFFF;
-        color: #232B50;
-    }
-
-    .container {
-        width: 1440px;
-        margin: 0 auto;
-    }
-
     .section {
         text-align: center;
         padding: 50px 0 0;
@@ -232,6 +216,7 @@
         font-weight: 600;
         font-size: 30px;
         margin-bottom: 60px;
+        color: #232B50
     }
 
     .cards {
@@ -308,22 +293,15 @@
 
     /* Container */
 
-    * {
-        font-family: 'Mulish', sans-serif;
-        margin: 0;
-        zoom: 102%;
-        padding: 0;
-        color: #232B50;
-    }
-
     .container {
         display: flex;
         flex-direction: column;
         width: 100%;
         align-items: center;
-        background-color: f8f9fa(0 100% 0%);
+        /* background-color: #f8f9fa; */
         padding-top: 2rem;
         box-sizing: content-box;
+        margin: 0 auto;
     }
 
     /* Header */
@@ -531,12 +509,7 @@
         font-size: 11px;
         line-height: 17px;
     }
-    .toast-top-center {
-        top: 20px !important; /* Move slightly below the top of the page */
-        left: 50% !important; /* Center horizontally */
-        transform: translateX(-50%) !important; /* Correct centering */
-        background-color: greenyellow;
-    }
+    
                   
 
 

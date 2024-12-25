@@ -219,7 +219,6 @@ public class UserController {
 
     @GetMapping("/getUnreadNotifications")
     @ResponseBody
-
     public Map<String, Object> getUnreadNotifications(@RequestParam("userId") String userId) {
         // Keep only the most recent 10 notifications
         notificationService.delNotification(userId);
