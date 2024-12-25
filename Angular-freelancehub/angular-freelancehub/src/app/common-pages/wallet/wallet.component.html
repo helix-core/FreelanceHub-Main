@@ -1,8 +1,18 @@
+<header class="navbar">
+  <div class="navbar-left">
+      <img src="assets/images/Twitch.png" alt="Logo" class="logo" />
+      <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub<div class="tooltiptext">Home</div></a></span>
+  </div>
+</header>
 <div class="wallet-container">
-    <h2>Wallet</h2>
+    
+  
+  <div class="payment-header">
+    <h1>Payments <span>Dashboard</span></h1>
+  </div>
   
     <div *ngIf="userRole === 'client'">
-      <h3>Client Dashboard</h3>
+      <h3>You current balance is:</h3>
       <div>
         <p>Wallet Balance: {{ clientWalletBalance | currency }}</p>
         <button (click)="openAddCreditsModal()">Add Credits</button>
@@ -18,19 +28,43 @@
         </div>
       </div>
   
-      <!-- Pie chart for client credits -->
-      <div *ngIf="showPieChart">
-        <!-- Add pie chart logic here (you can use a library like chart.js) -->
+
+      <div style="display: flex; justify-content: space-between; gap: 20px;">
+      <!-- Pie chart for monthly spending -->
+      <div *ngIf="monthlySpendingData?.datasets" style="flex: 1;">
+        <h4>Monthly Spending</h4>
+        <canvas baseChart
+                [data]="monthlySpendingData"
+                [labels]="monthlySpendingLabels"
+                [type]="'pie'">
+        </canvas>
       </div>
+
+      <!-- Line chart-->
+      <div style="flex: 1;width: 500px; height: 300px;">
+        <h4>Weekly Transactions</h4>
+        <canvas class="line-chart"
+          baseChart
+          [data]="lineChartData"
+          [options]="lineChartOptions"
+          [type]="'line'"
+        >
+        </canvas>
+      </div>
+      </div>
+
   
       <!-- Transaction History -->
       <div>
-        <h4>Transaction History</h4>
+        <h4 class="trans-header">Transaction History</h4>
+        <div class="table-container">
         <table>
           <thead>
             <tr>
               <th>Transaction ID</th>
               <th>Amount</th>
+              <th>Description</th>
+              <th>Timestamp</th>
               <th>Type</th>
               <th>Status</th>
             </tr>
@@ -39,16 +73,20 @@
             <tr *ngFor="let transaction of clientTransactions">
               <td>{{ transaction.transactionId }}</td>
               <td>{{ transaction.amount | currency }}</td>
+              <td>{{ transaction.description }}</td>
+              <td>{{ transaction.timestamp }}</td>
               <td>{{ transaction.type }}</td>
               <td>{{ transaction.status }}</td>
             </tr>
           </tbody>
         </table>
+        </div>
+
       </div>
     </div>
   
     <div *ngIf="userRole === 'freelancer'">
-      <h3>Freelancer Dashboard</h3>
+      <h3>You current balance is:</h3>
       <div>
         <p>Wallet Balance: {{ freelancerWalletBalance | currency }}</p>
         <button (click)="openWithdrawModal()">Request Withdrawal</button>
@@ -63,34 +101,62 @@
           <button (click)="closeWithdrawModal()">Cancel</button>
         </div>
       </div>
-  
-      <!-- Pie chart for freelancer earnings -->
-      <div *ngIf="showPieChart">
-        <!-- Add pie chart logic here -->
+
+      <!-- Freelancer's Charts: Monthly Earnings and Weekly Transaction Volume -->
+      <div style="display: flex; justify-content: space-between; gap: 20px;">
+
+        <!-- Pie chart for freelancer's monthly earnings -->
+        <div *ngIf="monthlyEarningData?.datasets" style="flex: 1;">
+          <h4>Monthly Earnings</h4>
+          <canvas baseChart
+                  [data]="monthlyEarningData"
+                  [labels]="monthlyEarningData"
+                  [type]="'pie'">
+          </canvas>
+        </div>
+
+        <!-- Line chart for freelancer's weekly transaction volume -->
+        <div style="flex: 1;">
+          <h4>Weekly Transaction Volume</h4>
+          <canvas class="line-chart"
+                  baseChart
+                  [data]="lineChartData"
+                  [options]="lineChartOptions"
+                  [type]="'line'">
+          </canvas>
+        </div>
+
       </div>
+
+  
   
       <!-- Transaction History -->
       <div>
         <h4>Transaction History</h4>
-        <table>
-          <thead>
-            <tr>
-              <th>Transaction ID</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let transaction of freelancerTransactions">
-              <td>{{ transaction.transactionId }}</td>
-              <td>{{ transaction.amount | currency }}</td>
-              <td>{{ transaction.type }}</td>
-              <td>{{ transaction.status }}</td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Timestamp</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let transaction of freelancerTransactions">
+                <td>{{ transaction.transactionId }}</td>
+                <td>{{ transaction.amount | currency }}</td>
+                <td>{{ transaction.description }}</td>
+                <td>{{ transaction.timestamp }}</td>
+                <td>{{ transaction.type }}</td>
+                <td>{{ transaction.status }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-  </div>
-  
+</div>

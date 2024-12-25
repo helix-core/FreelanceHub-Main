@@ -39,4 +39,17 @@ export class WalletService {
       responseType: 'text'
     });
   }
+
+  getMonthlySpending(clientId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/monthlySpending/${clientId}`);
+  }
+
+  getMonthlyEarnings(freelancerId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/monthlyEarnings/${freelancerId}`);
+  }
+
+  getDailyTransactionVolume(userId: string) {
+    return this.http.get<{ [date: string]: number }>(`${this.baseUrl}/transactions/daily-volume/${userId}`);
+  }
+  
 }

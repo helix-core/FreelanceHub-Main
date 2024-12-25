@@ -127,9 +127,10 @@ public class UserController {
         client.setRepName(clientDTO.getRepName());
         client.setRepDesignation(clientDTO.getRepDesignation());
         String hashedPassword = BCrypt.hashpw(clientDTO.getPassword(), BCrypt.gensalt());
+        clientService.hashExistingPasswords();
         client.setPassword(hashedPassword);
 
-        boolean isRegistered = clientService.registerClient(client);
+      boolean isRegistered = clientService.registerClient(client);
         if (isRegistered) {
             response.put("message", "Sign Up Successful!");
             return ResponseEntity.ok(response);
@@ -178,6 +179,8 @@ public class UserController {
         freelancer.setPassword(hashedPassword);
         freelancer.setProfile_image(imageUrl);
         freelancer.setResume(pdfUrl);
+        freeService.hashExistingFreelancerPasswords();
+        
         boolean success = freeService.registerFreelancer(freelancer);
         if (success) {
             response.put("message", "Freelancer Registered Successfully");
@@ -202,6 +205,8 @@ public class UserController {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
         Map<String, String> response = new HashMap<>();
+        freeService.hashExistingFreelancerPasswords();
+        clientService.hashExistingPasswords();
 
         // Check in Client table
         Client client = clientService.clientRepository.findBycompEmail(email);
@@ -246,7 +251,6 @@ public class UserController {
 
     @GetMapping("/getUnreadNotifications")
     @ResponseBody
-
     public Map<String, Object> getUnreadNotifications(@RequestParam("userId") String userId) {
         // Keep only the most recent 10 notifications
         notificationService.delNotification(userId);

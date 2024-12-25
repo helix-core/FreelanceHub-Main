@@ -19,6 +19,7 @@
      previousWorkLinks: string[] = [];
      freelancerId: string | null = null;
 
+
     constructor(private profileService: FreelancerService, private ratingService: RatingService, private route: ActivatedRoute, private authService: AuthService) {}
 
     ngOnInit(): void {
@@ -28,6 +29,7 @@
         console.log(this.freelancerId);
         // Fetch the profile of the specific freelancer
         this.profileService.getFreelancerProfile(this.freelancerId).subscribe(
+
           (data) => {
             console.log(data.freelancer);
             this.freelancer = data.freelancer;

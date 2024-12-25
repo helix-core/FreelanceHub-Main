@@ -214,7 +214,7 @@ public class ClientController {
 
         List<FreelancerJob> allBids = freelancerJobRepository.findByJobId(clientJob);
 
-        notificationService.addNotification(userId, "Your bid was accepted! Check the dashboard.");
+        notificationService.addNotification(userId, "Your bid was accepted! Advance: received! Check the dashboard.");
 
         for (FreelancerJob bid : allBids) {
             if (!bid.getFreeId().getFreeId().equals(userId)) {
@@ -248,7 +248,7 @@ public class ClientController {
                 paidJobs.add(job);
             }
         }
-
+        Collections.reverse(paidJobs);
         // Combine unpaid jobs first, followed by paid jobs
         unpaidJobs.addAll(paidJobs);
 
@@ -311,20 +311,28 @@ public class ClientController {
         String paymentStatus = (String) requestData.get("paymentStatus");
 
         Jobs job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("Job not found"));
-
+        String notif="";
+        
         if (progress != null) {
+        	if(!job.getProgress().equals(progress)) {
+        		System.out.println(job.getProgress());
+        		System.out.println(progress);
+            	notif+="One of your projects was marked complete!";
+            }
             job.setProgress(progress);
         }
         if (paymentStatus != null) {
+        	if(notif.equals("")) {
+        		notif+="One of your completed projects got a payment! Check the dashboard!";
+        	}else {
+        		notif+=" Payment status: "+paymentStatus;
+        	}
             job.setPayment_stat(paymentStatus);
         }
 
         jobRepository.save(job);
 
-        notificationService.addNotification(
-            job.getFreeId().getFreeId(),
-            "Job status updated to " + progress + " with payment status " + paymentStatus
-        );
+        notificationService.addNotification(job.getFreeId().getFreeId(),notif);
 
         return ResponseEntity.ok("Job updated successfully!");
     }
@@ -390,6 +398,7 @@ public class ClientController {
         existingClient.setPassword(hashedPassword);
         existingClient.setResetToken(null);
         existingClient.setTokenExpiry(null);
+
 
         clientRepository.save(existingClient);
         return ResponseEntity.ok("Client updated successfully");

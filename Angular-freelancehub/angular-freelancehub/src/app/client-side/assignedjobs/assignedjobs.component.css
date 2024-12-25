@@ -6,6 +6,7 @@
     font-family: 'Mulish',sans-serif;
 }
 
+
 .whole-container {
     display: flex;
     justify-content: center;
@@ -22,6 +23,8 @@
     /* max-width: 600px; */
     padding: 20px;
     margin-top: 5px;
+    max-height: 720px; /* Adjust based on your layout */
+    overflow-y: scroll;
 }
 
 .header{
@@ -217,6 +220,25 @@ h2 {
   .completed {
     background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
   }
+  
+  .view-hover {
+    background: #232b50; /* Change the background on hover */
+    color: #ececec; /* Change the text color */
+    border: 1px solid #ececec;
+  }
+  
+  .view-hover:hover {
+    cursor: pointer; /* Change cursor to indicate clickable area */
+  }
+  
+  .status-button a {
+    text-decoration: none;
+    color: inherit; /* Inherit the color from parent */
+  }
+  
+  .status-button span {
+    display: inline-block;
+  }
 
   .status-container {
     display: flex;
@@ -291,26 +313,60 @@ h2 {
     position: fixed;
     top: 50%;
     left: 50%;
+    align-content: center;
     transform: translate(-50%, -50%);
     z-index: 1000;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 8px;
+    border-radius: 20px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     animation: fadeIn 0.3s ease-in-out; /* Optional for smooth appearance */
     /* pointer-events: none; */
   }
   
-  .modal-content {
+  .payment-modal .modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
     text-align: center;
   }
   
-  .confirm-btn, .cancel-btn {
+  /* .confirm-btn, .cancel-btn {
     margin: 10px;
     padding: 10px 20px;
     cursor: pointer;
+  } */
+  .confirm-btn, .cancel-btn {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
+  
+  .confirm-btn {
+    background-color: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
+  }
+  
+  .confirm-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(21, 201, 180, 0.5);
+  }
+  
+  /* Pay Later Button */
+  .cancel-btn {
+    background-color: #232B50;
+    color: white;
+  }
+  
+  .cancel-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px #394783;
+  }
+  
   
   .payment-modal.show {
     pointer-events: auto; /* Enable events when modal is visible */
@@ -345,8 +401,8 @@ h2 {
 
 .btn-view-link:hover {
   background: #ececec;
-  color: white; /* Change to white for contrast */
-  border: 2px solid white;
+  color: rgb(32, 232, 159); /* Change to white for contrast */
+  border: 2px solid rgb(32, 232, 159);
 }
 
 .btn-verify {
