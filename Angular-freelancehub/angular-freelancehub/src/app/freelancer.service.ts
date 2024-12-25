@@ -36,11 +36,12 @@ export class FreelancerService {
     return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
   }
   getAppliedJobs(): Observable<FreelancerJob[]> {
-    if (!this.isBrowser()) {
-      throw new Error('localStorage is not available in this context.');
+    
+    if (typeof window === 'undefined' || !localStorage) {
+      console.warn('localStorage is not available in this environment.');
     }
+    const userId = localStorage.getItem("userId");
 
-    const userId = localStorage.getItem('userId');
     if (!userId) {
       throw new Error('User is not logged in. No userId found in localStorage.');
     }
@@ -50,9 +51,6 @@ export class FreelancerService {
   }
 
   getAcceptedJobs(): Observable<FreelancerJob[]> {
-    if (!this.isBrowser()) {
-      throw new Error('localStorage is not available in this context.');
-    }
 
     const userId = localStorage.getItem('userId');
     if (!userId) {

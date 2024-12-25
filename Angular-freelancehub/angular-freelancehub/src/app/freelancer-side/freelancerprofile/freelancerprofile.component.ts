@@ -23,7 +23,11 @@
     constructor(private profileService: FreelancerService, private ratingService: RatingService, private route: ActivatedRoute, private authService: AuthService) {}
 
     ngOnInit(): void {
-      this.freelancerId = localStorage.getItem('userId');
+      if (typeof window === 'undefined' || !localStorage) {
+        console.warn('localStorage is not available in this environment.');
+        return;
+      }
+      this.freelancerId = localStorage.getItem("userId");
       this.userRole=this.authService.getUserRole() || '';
       if (this.freelancerId) {
         console.log(this.freelancerId);

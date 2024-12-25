@@ -20,7 +20,11 @@ client: any;
   constructor(private clientservice: ClientService) {}
 
   ngOnInit(): void {
-     this.userId = localStorage.getItem('userId'); // Fetch userId from local storage
+    if (typeof window === 'undefined' || !localStorage) {
+      console.warn('localStorage is not available in this environment.');
+      return;
+    }
+    this.userId = localStorage.getItem("userId"); // Fetch userId from local storage
     if (this.userId) {
       this.clientservice.getClientProfile(this.userId).subscribe(
         (data) => {
