@@ -35,7 +35,11 @@ export class LandingComponent {
   }
 
   getNotifications() {
-    const userId=localStorage.getItem("userId");
+    if (typeof window === 'undefined' || !localStorage) {
+      console.warn('localStorage is not available in this environment.');
+      return;
+    }
+    const userId = localStorage.getItem("userId");
     if (!userId) {
       throw new Error('User is not logged in. No userId found in localStorage.');
     }
