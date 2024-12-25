@@ -164,16 +164,23 @@ export class SignupfreelancerComponent {
         this.notificationService.showNotification(response.message, 'success', '/login');
       },
       error => {
-        if (error.status === 400 && error.error) {
-          Object.keys(error.error).forEach(field => {
-            const control = this.signupForm.get(field);
-            if (control) {
-              control.setErrors({ serverError: error.error[field] });
-            }
-          });
-        }
+        if (error.status === 409) {
+        // Email already exists
+        this.signupForm.get('freeEmail')?.setErrors({ emailExists: true });
+        this.notificationService.showNotification('Email already exists. Please use a different email.', 'error');
+      } else if (error.status === 400 && error.error) {
+        // Other validation errors
+        Object.keys(error.error).forEach(field => {
+          const control = this.signupForm.get(field);
+          if (control) {
+            control.setErrors({ serverError: error.error[field] });
+          }
+        });
+      } else {
+        this.notificationService.showNotification(error, 'error');
       }
-    );
+    }
+  );
   }
 
   }

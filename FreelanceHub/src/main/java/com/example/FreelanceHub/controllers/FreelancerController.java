@@ -1,5 +1,6 @@
 package com.example.FreelanceHub.controllers;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 
 import com.example.FreelanceHub.Dto.FreeDTO;
@@ -281,7 +282,7 @@ public class FreelancerController {
         if (freelancer.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-
+        freelancer.get().setPassword(null);
         return ResponseEntity.ok(freelancer.get());
     }
 
@@ -309,10 +310,14 @@ public class FreelancerController {
         existingFreelancer.setExperience(freelancerDTO.getExperience());
         existingFreelancer.setQualification(freelancerDTO.getQualification());
         existingFreelancer.setSkills(freelancerDTO.getSkills());
+
         String hashedPassword = BCrypt.hashpw(freelancerDTO.getPassword(), BCrypt.gensalt());
         existingFreelancer.setPassword(hashedPassword);
         existingFreelancer.setProfile_image(imageUrl);
         existingFreelancer.setResume(pdfUrl);
+        existingFreelancer.setTokenExpiry(null);
+        existingFreelancer.setResetToken(null);
+
 
         freelancerRepository.save(existingFreelancer);
 

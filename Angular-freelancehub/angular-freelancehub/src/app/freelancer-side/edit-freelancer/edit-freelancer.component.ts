@@ -19,6 +19,7 @@ export class FreelancerEditComponent implements OnInit {
 defaultImage = 'assets/default-profile.png';
 resumePreview: any;
 isFile: boolean = false;
+userId: string | null = null;
 
 
   constructor(
@@ -33,9 +34,10 @@ isFile: boolean = false;
     this.initializeForm();
 
     // Fetch client details using userId from localStorage
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-       this.freelancerService.getFreelancerDetails(userId).subscribe((freelancer) => {
+     this.route.paramMap.subscribe(params => {
+      this.userId = params.get('userId') || localStorage.getItem('userId');
+    if (this.userId) {
+       this.freelancerService.getFreelancerDetails(this.userId).subscribe((freelancer) => {
       console.log(freelancer);
       this.freelancerForm.patchValue({
         ...freelancer,
@@ -54,6 +56,7 @@ isFile: boolean = false;
       this.isFile = this.resumePreview instanceof File;
       });
     }
+  });
     // Initialize form
   }
 
@@ -178,8 +181,9 @@ isFile: boolean = false;
    console.log(this.freelancerForm.value);
    console.log(this.freelancerForm.valid);
    if (this.freelancerForm.valid) {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
+   
+    if (this.userId) {
+
       const formData = new FormData();
       
     // Append the form fields to formData
@@ -200,10 +204,17 @@ isFile: boolean = false;
       if (resume instanceof File) {
         formData.append('resume', resume);
       }
-      formData.append('freeId', userId);  // Append user ID
+      formData.append('freeId', this.userId);  // Append user ID
+
       this.freelancerService.updateFreelancer(formData).subscribe(
         () => {
-          this.notificationService.showNotification("Profile edited successfully!", 'success', '/profile/freelancer');
+          if (localStorage.getItem('userId')) {
+            // Redirect to profile page if userId is in localStorage
+            this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile/freelancer');
+          } else {
+            // Redirect to login page if userId is not in localStorage
+            this.notificationService.showNotification('Password reset successfully! Please log in.', 'success', '/login');
+          }
         },
         error => {
           this.notificationService.showNotification(error, 'error');

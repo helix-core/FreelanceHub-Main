@@ -50,6 +50,11 @@ public class FreelancerService {
         }
     }
 
+    public boolean isEmailAlreadyRegistered(String email) {
+        return freeRepository.existsByFreeEmail(email);
+    }
+
+
     public boolean validateFreelancer(String freeEmail, String password) {
         Freelancer freelancer = freeRepository.findByfreeEmail(freeEmail);
         return freelancer != null && BCrypt.checkpw(password, freelancer.getPassword());
@@ -130,4 +135,13 @@ public class FreelancerService {
             }
         }
     }
+
+    public Freelancer findByEmail(String email) {
+        return freeRepository.findByfreeEmail(email);
+    }
+
+    public Freelancer findByResetToken(String resetToken) {
+        return freeRepository.findByResetToken(resetToken);
+    }
+
 }

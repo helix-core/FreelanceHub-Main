@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, Valid
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import { NotificationService } from '../../notification.service';
 
 @Component({
   selector: 'app-login',
@@ -12,8 +13,9 @@ import { AuthService } from '../../auth.service';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  
 
-  constructor(private http: HttpClient, private router: Router,private authService:AuthService,private fb:FormBuilder) {}
+  constructor(private http: HttpClient, private router: Router,private authService:AuthService,private fb:FormBuilder,private notificationService:NotificationService) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -25,10 +27,42 @@ export class LoginComponent {
 
   customEmailValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu|net)$/;
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|org|in|edu|net)$/;
       const value = control.value;
       return value && !emailRegex.test(value) ? { invalidEmail: true } : null;
     };
+  }
+
+  openResetPopup(event: Event) {
+  event.preventDefault(); // Prevent page refresh on anchor click
+  const popup = document.getElementById("resetPasswordPopup");
+  if (popup) {
+    popup.style.display = "flex";
+  }
+}
+
+                 
+ closeResetPopup() {
+    const popup = document.getElementById("resetPasswordPopup");
+    if (popup) {
+      popup.style.display = "none"; // Hide the popup
+    }
+  }
+
+
+   sendResetLink() {
+    const resetEmail = (document.getElementById("resetEmail") as HTMLInputElement).value;
+    if (!resetEmail) {
+      alert('Please enter a valid email!');
+      return;
+    }
+
+    // Make API call to send reset link
+    this.http.post('http://localhost:8080/api/reset-password', { email: resetEmail },{ responseType: 'text' })
+      .subscribe({
+         next: (res) => this.notificationService.showNotification(res, 'success'),
+    error: (err) => this.notificationService.showNotification('Error: ' + err.message, 'error')
+      });
   }
 
 
@@ -41,5 +75,7 @@ export class LoginComponent {
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password);
 }
+
+
 
 }

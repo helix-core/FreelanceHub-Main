@@ -367,6 +367,8 @@ public class ClientController {
     @GetMapping("/client/edit/{clientId}")
     public ResponseEntity<Client> showEditForm(@PathVariable("clientId") String clientId) {
         Client client = clientService.findByClientId(clientId);
+        client.setPassword(null);
+
         return ResponseEntity.ok(client); // Returns JSON response
     }
 
@@ -390,8 +392,13 @@ public class ClientController {
         existingClient.setTypeOfProject((String) requestBody.get("typeOfProject"));
         existingClient.setRepName((String) requestBody.get("repName"));
         existingClient.setRepDesignation((String) requestBody.get("repDesignation"));
-        String hashedPassword = BCrypt.hashpw((String)requestBody.get("password"), BCrypt.gensalt());
+
+
+        String hashedPassword = BCrypt.hashpw(requestBody.get("password").toString(), BCrypt.gensalt());
         existingClient.setPassword(hashedPassword);
+        existingClient.setResetToken(null);
+        existingClient.setTokenExpiry(null);
+
 
         clientRepository.save(existingClient);
         return ResponseEntity.ok("Client updated successfully");

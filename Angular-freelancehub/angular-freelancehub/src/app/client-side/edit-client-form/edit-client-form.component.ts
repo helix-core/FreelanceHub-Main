@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ClientService } from '../../client.service';
 import { NotificationService } from '../../notification.service';
 
@@ -13,23 +13,27 @@ import { NotificationService } from '../../notification.service';
 })
 export class EditClientFormComponent implements OnInit {
   editClientForm!: FormGroup;
+   userId: string | null = null;
    constructor(
     private fb: FormBuilder,
     private clientService: ClientService,
     private notificationService : NotificationService,
-    private router: Router
+    private router: Router,
+    private route:ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.initializeForm();
 
     // Fetch client details using userId from localStorage
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      this.clientService.getClientDetails(userId).subscribe((client) => {
+    this.route.paramMap.subscribe(params => {
+      this.userId = params.get('userId') || localStorage.getItem('userId');
+    if (this.userId) {
+      this.clientService.getClientDetails(this.userId).subscribe((client) => {
         this.editClientForm.patchValue(client);
       });
     }
+  });
   }
 
   initializeForm(): void {
@@ -65,15 +69,20 @@ export class EditClientFormComponent implements OnInit {
   }
 
   updateClient(): void {
+    this.editClientForm.markAllAsTouched();
   if (this.editClientForm.valid) {
     const updatedClient = this.editClientForm.value;
-    const userId = localStorage.getItem('userId'); // Retrieve userId from localStorage
-    if (userId) {
-      updatedClient.userId = userId; // Add userId to the request body
+    if (this.userId) {
+      updatedClient.userId = this.userId; // Add userId to the request body
       this.clientService.updateClientDetails(updatedClient).subscribe(
         () => {
-
-          this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile/client'); // Redirect to the profile page
+           if (localStorage.getItem('userId')) {
+            // Redirect to profile page if userId is in localStorage
+            this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile/client');
+          } else {
+            // Redirect to login page if userId is not in localStorage
+            this.notificationService.showNotification('Password reset successfully! Please log in.', 'success', '/login');
+          }
 
         },
         (error) => {

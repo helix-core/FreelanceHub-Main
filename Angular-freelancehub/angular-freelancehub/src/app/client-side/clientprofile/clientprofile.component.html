@@ -16,7 +16,7 @@
       <p>{{ client?.companyDescription }}</p>
     </div>
     <button class="edit-btn">
-      <a routerLink="/profile-client-edit" class="edit-button">Edit Profile</a>
+      <a [routerLink]="['/profile-client-edit',userId]" class="edit-button">Edit Profile</a>
     </button>
   </div>
 

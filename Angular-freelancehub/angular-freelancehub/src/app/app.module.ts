@@ -28,6 +28,7 @@ import { NotificationService } from './notification.service';
 import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
 import { WalletComponent } from './common-pages/wallet/wallet.component';
 import { WalletService } from './wallet.service';
+import { ResetPasswordComponent } from './common-pages/reset-password/reset-password.component';
 import { BaseChartDirective } from 'ng2-charts';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { Chart } from 'chart.js';
@@ -77,7 +78,8 @@ Chart.register(
     FreelancerProfileComponent,
     ExploreComponent,
     NotificationComponent,
-    WalletComponent
+    WalletComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

@@ -81,6 +81,7 @@
     
     .profile-header {
       display: flex;
+/*       justify-content: flex-start; */
       justify-content: space-between;/*was flex start*/
       align-items: center;
       background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%);
@@ -320,6 +321,7 @@
       color: #333;
     }
     
+
 
     /* Responsive Design */
 @media (max-width: 1200px) {
