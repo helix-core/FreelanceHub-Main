@@ -15,7 +15,7 @@ export class LandingComponent {
   unreadCount: number = 0;
   dropdownVisible: boolean = false;
   profileDropdownVisible: boolean = false;
-  
+
 
   constructor(private authService: AuthService,private http:HttpClient) {}
 
