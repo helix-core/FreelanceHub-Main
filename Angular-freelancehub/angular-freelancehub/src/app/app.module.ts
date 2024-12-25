@@ -28,6 +28,30 @@ import { NotificationService } from './notification.service';
 import { ClientprofileComponent } from './client-side/clientprofile/clientprofile.component';
 import { WalletComponent } from './common-pages/wallet/wallet.component';
 import { WalletService } from './wallet.service';
+import { BaseChartDirective } from 'ng2-charts';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { Chart } from 'chart.js';
+import { 
+  CategoryScale, 
+  LinearScale, 
+  PointElement, 
+  LineElement, 
+  Title, 
+  Tooltip, 
+  Legend,
+  Filler  
+} from 'chart.js';
+
+Chart.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
 @NgModule({
   declarations: [
@@ -59,7 +83,8 @@ import { WalletService } from './wallet.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BaseChartDirective
   ],
   providers: [
     provideHttpClient(
@@ -69,7 +94,8 @@ import { WalletService } from './wallet.service';
     ClientService,
     RoleService,
     NotificationService,
-    WalletService
+    WalletService,
+    provideCharts(withDefaultRegisterables())
   ],
   bootstrap: [AppComponent]
 })

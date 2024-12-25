@@ -70,6 +70,10 @@
         flex-shrink: 0;
     }
 
+    .profile-icon-container:hover{
+        cursor:pointer;
+    }
+
     /* Profile Icon */
     .profile-icon {
         width: 30px;
@@ -433,7 +437,7 @@
     #messages-dropdown {
         position: absolute;
         top: 65px; /* Adjust to align below the Messages button */
-        right: 95px; /* Align to the right */
+        right: 89px; /* Align to the right */
         background-color: #fff;
         border: 1px solid #ccc;
         border-radius: 8px;
@@ -455,9 +459,10 @@
 
     /* Dropdown Items */
     #messages-dropdown ul li {
-        padding: 10px 15px;
+        padding: 10px 10px;
         border-bottom: 1px solid #f0f0f0;
         cursor: pointer;
+        font-size:15px;
         transition: background-color 0.3s;
     }
 

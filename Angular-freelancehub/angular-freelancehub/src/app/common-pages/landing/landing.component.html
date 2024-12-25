@@ -39,7 +39,8 @@
                 <div class="dropdown-menu" [ngClass]="{'visible': profileDropdownVisible}">
                     <a routerLink="{{ userRole === 'client' ? '/profile/client' : '/profile/freelancer' }}">Profile</a>
                     <a routerLink="{{ userRole === 'client' ? '/posted-jobs' : '/accepted-jobs' }}">Dashboard</a>
-                    <a (click)="handleLogout()">Logout</a>
+                    <a routerLink="/payment">Wallet</a>
+                    <a routerLink="#" (click)="handleLogout()">Logout</a>
                 </div>
             </li>
         </ul>

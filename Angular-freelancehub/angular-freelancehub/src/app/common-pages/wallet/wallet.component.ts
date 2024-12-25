@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { WalletService } from '../../wallet.service'; // Import your wallet service to interact with the backend
 import { Router } from '@angular/router';
+import { ChartConfiguration, ChartOptions} from 'chart.js';
+import { format } from 'date-fns';
+import { NotificationService } from '../../notification.service';
+
 
 @Component({
   selector: 'app-wallet',
@@ -21,9 +25,42 @@ export class WalletComponent implements OnInit {
   freelancerTransactions: any[] = [];
   showAddCreditsModal: boolean = false;
   showWithdrawModal: boolean = false;
-  showPieChart: boolean = true; // You can use chart.js for pie charts
+  monthlySpendingData: any = [];
+  monthlySpendingLabels: string[] = [];
+  monthlySpendingValues: number[] = [];
+  monthlyEarningData: any = [];
+  monthlyEarningLabels: string[] = [];
+  monthlyEarningValues: number[] = [];
 
-  constructor(private walletService: WalletService, private router: Router) { }
+  public lineChartData: ChartConfiguration<'line'>['data'] = {
+    labels: [],
+    datasets: [
+      {
+        data: [],
+        label: 'Weekly Transactions',
+        fill: 'origin',
+        backgroundColor: 'rgba(0, 123, 255, 0.3)',
+        borderColor: 'rgba(0, 123, 255, 1)',
+        pointBackgroundColor: 'rgba(0, 123, 255, 1)',
+        tension: 0.4,
+      },
+    ],
+  };
+
+  public lineChartOptions: ChartOptions<'line'> = {
+    responsive: true,
+    maintainAspectRatio:false,
+    plugins: {
+      legend: { display: true },
+      tooltip: { mode: 'index', intersect: false },
+    },
+    scales: {
+      x: {},
+      y: { beginAtZero: true },
+    },
+  };
+
+  constructor(private walletService: WalletService, private router: Router, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.userRole = localStorage.getItem('userRole') || 'client'; // Check role from local storage
@@ -31,8 +68,12 @@ export class WalletComponent implements OnInit {
 
     if (this.userRole === 'client') {
       this.getClientWalletInfo();
+      this.getMonthlySpendingData();
+      this.getDailyTransactionVol();
     } else if (this.userRole === 'freelancer') {
       this.getFreelancerWalletInfo();
+      this.getMonthlyEarningData();
+      this.getDailyTransactionVol();
     }
   }
 
@@ -69,6 +110,7 @@ export class WalletComponent implements OnInit {
     this.walletService.addCredits(this.userId, this.creditsToAdd).subscribe(response => {
       this.getClientWalletInfo(); // Refresh wallet info after adding credits
       this.closeAddCreditsModal();
+      this.notificationService.showNotification("Credit Added Successfully!", 'success',);
     });
   }
 
@@ -86,6 +128,98 @@ export class WalletComponent implements OnInit {
     this.walletService.requestWithdrawal(this.userId, this.withdrawAmount).subscribe(response => {
       this.getFreelancerWalletInfo(); // Refresh wallet info after withdrawal
       this.closeWithdrawModal();
+      this.notificationService.showNotification("Amount withdraw successful!", 'success');
+    },error=>{
+      this.notificationService.showNotification("Withdrawal failed! Insufficient fund!", 'error',);
+    }
+    );
+  }
+  getMonthlySpendingData() {
+    this.walletService.getMonthlySpending(this.userId).subscribe((data: any) => {
+      this.monthlySpendingLabels = Object.keys(data); // Months
+      this.monthlySpendingValues = Object.values(data); // Spending amounts
+      this.preparePieChart();
     });
   }
+
+  getMonthlyEarningData() {
+    this.walletService.getMonthlyEarnings(this.userId).subscribe((data: any) => {
+      this.monthlyEarningLabels = Object.keys(data); // Months
+      this.monthlyEarningValues = Object.values(data); // Earnings amounts
+      this.prepareFreelancerPieChart();
+    });
+  }
+
+  getDailyTransactionVol(){
+    this.walletService.getDailyTransactionVolume(this.userId).subscribe((data) => {
+      const dates = Object.keys(data).sort(); // Sort dates in ascending order
+      const formattedDates=dates.map(date => format(new Date(date), 'MMM dd')); 
+      const counts = dates.map((date) => data[date]);
+
+      this.lineChartData.labels = formattedDates;
+      this.lineChartData.datasets[0].data = counts;
+      this.lineChartData = {
+        ...this.lineChartData,
+        labels: formattedDates,
+        datasets: [{
+          ...this.lineChartData.datasets[0],
+          data: counts
+        }]
+      };
+    });
+  }
+  
+  preparePieChart() {
+    this.monthlySpendingData = {
+      labels: this.monthlySpendingLabels,
+      datasets: [
+        {
+          data: this.monthlySpendingValues,
+          backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#4BC0C0',
+            '#9966FF',
+            '#FF9F40',
+          ],
+          hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#4BC0C0',
+            '#9966FF',
+            '#FF9F40',
+          ],
+        },
+      ],
+    };
+  }
+  prepareFreelancerPieChart() {
+    this.monthlyEarningData = {
+      labels: this.monthlyEarningLabels,
+      datasets: [
+        {
+          data: this.monthlyEarningValues,
+          backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#4BC0C0',
+            '#9966FF',
+            '#FF9F40',
+          ],
+          hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#4BC0C0',
+            '#9966FF',
+            '#FF9F40',
+          ],
+        },
+      ],
+    };
+  }
+
 }
