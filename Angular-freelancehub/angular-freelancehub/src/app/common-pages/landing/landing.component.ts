@@ -11,6 +11,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 })
 export class LandingComponent {
   userRole: string | null = null;
+  userId: string | null = null;
   notifications: { message: string }[] = [];
   unreadCount: number = 0;
   dropdownVisible: boolean = false;
@@ -23,6 +24,7 @@ export class LandingComponent {
 
   ngOnInit(): void {
     this.userRole = this.authService.getRole();
+    this.userId=this.authService.getUserId();
      this.getNotifications();
       this.fetchUserStats();
   }

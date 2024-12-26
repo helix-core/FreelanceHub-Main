@@ -37,7 +37,14 @@
                     <img src="assets/images/profile_png.png" alt="" class="profile-icon">
                 </div>
                 <div class="dropdown-menu" [ngClass]="{'visible': profileDropdownVisible}">
-                    <a routerLink="{{ userRole === 'client' ? '/profile/client' : '/profile/freelancer' }}">Profile</a>
+                    <!-- <a routerLink="{{ userRole === 'client' ? '/profile/client' : '/profile/freelancer' }}">Profile</a> -->
+                    <a 
+                    [routerLink]="userRole === 'client' 
+                      ? ['/profile/client'] 
+                      : ['/profile/freelancer', userId]">
+                    Profile
+                  </a>
+                  
                     <a routerLink="{{ userRole === 'client' ? '/posted-jobs' : '/accepted-jobs' }}">Dashboard</a>
                     <a routerLink="/payment">Wallet</a>
                     <a routerLink="#" (click)="handleLogout()">Logout</a>
