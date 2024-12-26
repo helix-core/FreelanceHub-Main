@@ -16,9 +16,8 @@
     averageRating: number = 0; 
     totalRatings: number = 0;
     userRole:String='';
-     previousWorkLinks: string[] = [];
-     freelancerId: string | null = null;
-
+    previousWorkLinks: string[] = [];
+    
 
     constructor(private profileService: FreelancerService, private ratingService: RatingService, private route: ActivatedRoute, private authService: AuthService) {}
 
@@ -27,12 +26,12 @@
         console.warn('localStorage is not available in this environment.');
         return;
       }
-      this.freelancerId = localStorage.getItem("userId");
+      const freelancerId = this.route.snapshot.paramMap.get('freeId');
       this.userRole=this.authService.getUserRole() || '';
-      if (this.freelancerId) {
-        console.log(this.freelancerId);
+      if (freelancerId) {
+        console.log(freelancerId);
         // Fetch the profile of the specific freelancer
-        this.profileService.getFreelancerProfile(this.freelancerId).subscribe(
+        this.profileService.getFreelancerProfile(freelancerId).subscribe(
 
           (data) => {
             console.log(data.freelancer);

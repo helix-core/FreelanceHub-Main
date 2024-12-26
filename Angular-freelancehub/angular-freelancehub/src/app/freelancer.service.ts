@@ -32,9 +32,7 @@ export class FreelancerService {
     return this.http.post<any>(`${this.apiUrledit}/update`, freelancer);
   }
 
-  private isBrowser(): boolean {
-    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
-  }
+
   getAppliedJobs(): Observable<FreelancerJob[]> {
     
     if (typeof window === 'undefined' || !localStorage) {

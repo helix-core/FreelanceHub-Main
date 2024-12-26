@@ -74,9 +74,6 @@ Chart.register(
     ExploreComponent,
     ClientprofileComponent,
     EditClientFormComponent,
-    FreelancerEditComponent,
-    FreelancerProfileComponent,
-    ExploreComponent,
     NotificationComponent,
     WalletComponent,
     ResetPasswordComponent
