@@ -46,7 +46,7 @@ public class PasswordController {
         }
 
         String resetToken = emailService.generateResetToken();
-        String resetLink = "http://localhost:4200/verify-reset-password?token=" + resetToken;
+        String resetLink = "http://localhost:8080/verify-reset-password?token=" + resetToken;
 
         if (client != null) {
             client.setResetToken(resetToken);
