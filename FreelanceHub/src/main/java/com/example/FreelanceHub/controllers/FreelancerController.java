@@ -318,7 +318,6 @@ public class FreelancerController {
         existingFreelancer.setTokenExpiry(null);
         existingFreelancer.setResetToken(null);
 
-
         freelancerRepository.save(existingFreelancer);
 
         Map<String, String> response = new HashMap<>();

@@ -7,17 +7,18 @@ import { Job } from './models/job.model';
   providedIn: 'root'
 })
 export class ClientService {
-  private apiUrlprofile = '/api/profile/client';
-  private baseUrl = '/api/client';
+
+  
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
 
   constructor(private http: HttpClient) {}
 
   getClientFormData(): Observable<any> {
-    return this.http.get<any>('/api/signup/client');
+    return this.http.get<any>(`${this.URL}/signup/client`);
   }
   
   registerClient(formData: any): Observable<any> {
-    return this.http.post<any>('/api/signup/client', formData);
+    return this.http.post<any>(`${this.URL}/signup/client`, formData);
   }
 
   postJob(job: any) {
@@ -26,7 +27,7 @@ export class ClientService {
       throw new Error('User is not logged in. No userId found in localStorage.');
     }
     const params = new HttpParams().set('userId', userId);
-    return this.http.post('/api/postjob', job,{ params });
+    return this.http.post(`${this.URL}/postjob`, job,{ params });
   }
 
   getPostedJobs(): Observable<Job[]> {
@@ -35,17 +36,17 @@ export class ClientService {
       throw new Error('User is not logged in. No userId found in localStorage.');
     }
     const params = new HttpParams().set('userId', userId);
-    return this.http.get<Job[]>('/api/posted-jobs',{params});
+    return this.http.get<Job[]>(`${this.URL}/posted-jobs`,{params});
   }
    getClientProfile(userId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrlprofile}?userId=${userId}`);
+    return this.http.get<any>(`${this.URL}/profile/client?userId=${userId}`);
   }
    getClientDetails(clientId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/edit/${clientId}`);
+    return this.http.get(`${this.URL}/client/edit/${clientId}`);
   }
 
   updateClientDetails(updatedClient: any): Observable<any> {
-  return this.http.post(`${this.baseUrl}/edit`, updatedClient,{responseType:'text'});
+  return this.http.post(`${this.URL}/client/edit`, updatedClient,{responseType:'text'});
 }
 
 

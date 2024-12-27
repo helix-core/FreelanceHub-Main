@@ -210,7 +210,8 @@ userId: string | null = null;
         () => {
           if (localStorage.getItem('userId')) {
             // Redirect to profile page if userId is in localStorage
-            this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile/freelancer');
+            this.router.navigate([`/profile/freelancer/${this.userId}`]);
+            this.notificationService.showNotification('Profile edited successfully!', 'success');
           } else {
             // Redirect to login page if userId is not in localStorage
             this.notificationService.showNotification('Password reset successfully! Please log in.', 'success', '/login');

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { WalletService } from '../../wallet.service'; // Import your wallet service to interact with the backend
+import { WalletService } from '../../wallet.service';
 import { Router } from '@angular/router';
-import { ChartConfiguration, ChartOptions} from 'chart.js';
-import { format } from 'date-fns';
+import { ChartConfiguration,ChartOptions } from 'chart.js';
 import { NotificationService } from '../../notification.service';
-
+import {format} from 'date-fns';
 
 @Component({
   selector: 'app-wallet',
@@ -60,7 +59,7 @@ export class WalletComponent implements OnInit {
     },
   };
 
-  constructor(private walletService: WalletService, private router: Router, private notificationService: NotificationService) { }
+  constructor(private walletService:WalletService, private router: Router, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
     this.userRole = localStorage.getItem('userRole') || 'client'; // Check role from local storage

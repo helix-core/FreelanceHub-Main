@@ -13,6 +13,7 @@ import { NotificationService } from '../../notification.service';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
   
 
   constructor(private http: HttpClient, private router: Router,private authService:AuthService,private fb:FormBuilder,private notificationService:NotificationService) {}
@@ -58,7 +59,7 @@ export class LoginComponent {
     }
 
     // Make API call to send reset link
-    this.http.post('http://localhost:8080/api/reset-password', { email: resetEmail },{ responseType: 'text' })
+    this.http.post(`${this.URL}/reset-password`, { email: resetEmail },{ responseType: 'text' })
       .subscribe({
          next: (res) => this.notificationService.showNotification(res, 'success'),
     error: (err) => this.notificationService.showNotification('Error: ' + err.message, 'error')

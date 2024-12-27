@@ -62,8 +62,10 @@ export class RatingService {
       );
   }
 
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
+
   getRatingCount(freelancerId: string): Observable<number> {
-    return this.http.get<number>(`/api/ratings?freelancerId=${freelancerId}`);
+    return this.http.get<number>(`${this.URL}/ratings?freelancerId=${freelancerId}`);
   }
 
 }

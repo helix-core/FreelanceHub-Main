@@ -518,12 +518,14 @@
            font-size: 2.5rem;
            margin-bottom: 10px;
            font-weight: bold;
+           color: #232B50;
        }
 
        .stats-header p {
            font-size: 1.2rem;
            font-weight: 300;
            opacity: 0.9;
+           color: #232B50;
        }
 
        .stats-grid {
@@ -564,6 +566,7 @@
        .stat-item p {
            font-size: 1.2rem;
            opacity: 0.85;
+        color: #232B50;
        }
 
 /* Responsive Styles */
