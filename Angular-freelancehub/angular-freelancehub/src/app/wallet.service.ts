@@ -7,49 +7,50 @@ import { Observable } from 'rxjs';
 })
 
 export class WalletService {
-  private baseUrl = '/api/payment';  // Your backend API endpoint
+ 
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api"
 
   constructor(private http: HttpClient) { }
 
   getWalletBalance(userId: string): Observable<number> {
-    return this.http.get<number>(`${this.baseUrl}/balance/${userId}`);
+    return this.http.get<number>(`${this.URL}/payment/balance/${userId}`);
   }
 
   getTransactionHistory(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/transactions/${userId}`);
+    return this.http.get<any[]>(`${this.URL}/payment/transactions/${userId}`);
   }
 
   addCredits(clientId: string, amount: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/addCredits/${clientId}`, null, {
+    return this.http.post(`${this.URL}/payment/addCredits/${clientId}`, null, {
       params: { amount: amount.toString() },
       responseType: 'text' 
     });
   }
 
   makePayment(clientId: string, freelancerId: string, amount: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/pay/${clientId}/${freelancerId}`, null, {
+    return this.http.post(`${this.URL}/payment/pay/${clientId}/${freelancerId}`, null, {
       params: { amount: amount.toString() },
       responseType:'text'
     });
   }
 
   requestWithdrawal(freelancerId: string, amount: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/withdraw/${freelancerId}`, null, {
+    return this.http.post(`${this.URL}/payment/withdraw/${freelancerId}`, null, {
       params: { amount: amount.toString() },
       responseType: 'text'
     });
   }
 
   getMonthlySpending(clientId: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/monthlySpending/${clientId}`);
+    return this.http.get<any>(`${this.URL}/payment/monthlySpending/${clientId}`);
   }
 
   getMonthlyEarnings(freelancerId: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/monthlyEarnings/${freelancerId}`);
+    return this.http.get<any>(`${this.URL}/payment/monthlyEarnings/${freelancerId}`);
   }
 
   getDailyTransactionVolume(userId: string) {
-    return this.http.get<{ [date: string]: number }>(`${this.baseUrl}/transactions/daily-volume/${userId}`);
+    return this.http.get<{ [date: string]: number }>(`${this.URL}/payment/transactions/daily-volume/${userId}`);
   }
   
 }

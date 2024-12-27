@@ -8,14 +8,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = '/api'; // Adjust to your backend URL
+  
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api"
 
   constructor(private http: HttpClient, private router: Router, private notificationService: NotificationService) {}
 
   login(email: string, password: string) {
     const loginData = { email, password };
 
-    this.http.post<any>(`${this.apiUrl}/login`, loginData).subscribe({
+    this.http.post<any>(`${this.URL}/login`, loginData).subscribe({
       next: (response: any) => {
         if (response.status === 'success') {
           // Store user data in localStorage/sessionStorage
@@ -75,6 +76,6 @@ export class AuthService {
   }
 
    verifyResetToken(token: string): Observable<any> {
-    return this.http.get<any>(`/api/verify-reset-password?token=${token}`);
+    return this.http.get<any>(`${this.URL}/verify-reset-password?token=${token}`);
   }
 }

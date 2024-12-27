@@ -18,19 +18,21 @@ export class LandingComponent {
   profileDropdownVisible: boolean = false;
   clientCount: number = 0;
   freelancerCount: number = 0;
+   private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api"
 
 
   constructor(private authService: AuthService,private http:HttpClient) {}
 
   ngOnInit(): void {
+    this.fetchUserStats();
     this.userRole = this.authService.getRole();
     this.userId=this.authService.getUserId();
      this.getNotifications();
-      this.fetchUserStats();
+      
   }
 
    fetchUserStats() {
-    this.http.get<{ clientCount: number; freelancerCount: number }>('/api/userStats')
+    this.http.get<{ clientCount: number; freelancerCount: number }>(`${this.URL}/userStats`)
       .subscribe(
         (data) => {
           this.clientCount = data.clientCount;

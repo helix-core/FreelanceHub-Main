@@ -13,6 +13,7 @@ export class ExploreComponent implements OnInit{
   jobs: any[] = [];
   role: string | null = '';
   userId: string | null = '';
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -50,7 +51,7 @@ export class ExploreComponent implements OnInit{
   performSearch(): void {
     if (this.searchQuery.trim()) {
       this.http
-        .get<any>(`api/search?query=${encodeURIComponent(this.searchQuery)}&userId=${this.userId}`)
+        .get<any>(`${this.URL}/search?query=${encodeURIComponent(this.searchQuery)}&userId=${this.userId}`)
         .subscribe(
           (response) => {
             this.jobs = response.jobs;
@@ -67,7 +68,7 @@ export class ExploreComponent implements OnInit{
 
   fetchAllJobs(): void {
     this.http
-      .get<any>(`api/search?query=&userId=${this.userId}`)
+      .get<any>(`${this.URL}/search?query=&userId=${this.userId}`)
       .subscribe(
         (response) => {
           this.jobs = response.jobs;

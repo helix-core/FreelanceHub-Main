@@ -72,13 +72,19 @@ public class UserController {
     @Autowired
     private RatingService ratingService;
 
-    @GetMapping("")
-    public String showLandingpage(Model model) {
-        String role = (String) session.getAttribute("role");
-        model.addAttribute("role", role);
+//    @GetMapping("")
+//    public String showLandingpage(Model model) {
+//        String role = (String) session.getAttribute("role");
+//        model.addAttribute("role", role);
+//
+//        return "index.html";
+//    }
 
-        return "landing";
-    }
+//    @GetMapping(value = "//{path:[^\\.]*}")
+//    public String redirect() {
+//        // Redirect all routes to the Angular index.html
+//        return "forward:/index.html";
+//    }
 
     @GetMapping("/userStats")
     public Map<String, Long> getUserStats() {
