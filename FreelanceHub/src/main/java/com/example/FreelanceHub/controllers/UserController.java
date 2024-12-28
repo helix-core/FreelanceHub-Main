@@ -72,13 +72,19 @@ public class UserController {
     @Autowired
     private RatingService ratingService;
 
-    @GetMapping("")
-    public String showLandingpage(Model model) {
-        String role = (String) session.getAttribute("role");
-        model.addAttribute("role", role);
+//    @GetMapping("")
+//    public String showLandingpage(Model model) {
+//        String role = (String) session.getAttribute("role");
+//        model.addAttribute("role", role);
+//
+//        return "index.html";
+//    }
 
-        return "landing";
-    }
+//    @GetMapping(value = "//{path:[^\\.]*}")
+//    public String redirect() {
+//        // Redirect all routes to the Angular index.html
+//        return "forward:/index.html";
+//    }
 
     @GetMapping("/userStats")
     public Map<String, Long> getUserStats() {
@@ -130,7 +136,7 @@ public class UserController {
         clientService.hashExistingPasswords();
         client.setPassword(hashedPassword);
 
-      boolean isRegistered = clientService.registerClient(client);
+        boolean isRegistered = clientService.registerClient(client);
         if (isRegistered) {
             response.put("message", "Sign Up Successful!");
             return ResponseEntity.ok(response);
@@ -147,8 +153,8 @@ public class UserController {
     }
 
     @PostMapping("/signup/freelancer")
-    public ResponseEntity<?> registerFreelancer(@RequestParam("resume") MultipartFile resume,
-            @RequestParam("profileImage") MultipartFile profileImage,
+    public ResponseEntity<?> registerFreelancer(@RequestParam(value = "resume", required = false) MultipartFile resume,
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
             @Valid FreeDTO freelancerDTO,
             BindingResult bindingResult) {
         Map<String, String> response = new HashMap<>();
@@ -164,8 +170,17 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
 
-        String imageUrl = freeService.saveProfileImage(profileImage);
-        String pdfUrl = freeService.saveFile(resume);
+        String imageUrl = null;
+        String pdfUrl = null;
+        
+        if (profileImage != null && !profileImage.isEmpty()) {
+            imageUrl = freeService.saveProfileImage(profileImage);
+        }
+
+        if (resume != null && !resume.isEmpty()) {
+            pdfUrl = freeService.saveFile(resume);
+        }
+        
         Freelancer freelancer = new Freelancer();
         freelancer.setFreeEmail(freelancerDTO.getFreeEmail());
         freelancer.setFreeName(freelancerDTO.getFreeName());
@@ -177,10 +192,17 @@ public class UserController {
         freelancer.setQualification(freelancerDTO.getQualification());
         String hashedPassword = BCrypt.hashpw(freelancerDTO.getPassword(), BCrypt.gensalt());
         freelancer.setPassword(hashedPassword);
-        freelancer.setProfile_image(imageUrl);
-        freelancer.setResume(pdfUrl);
+//        freelancer.setProfile_image(imageUrl);
+//        freelancer.setResume(pdfUrl);
+        if (imageUrl != null) {
+            freelancer.setProfile_image(imageUrl);
+        }
+
+        if (pdfUrl != null) {
+            freelancer.setResume(pdfUrl);
+        }
         freeService.hashExistingFreelancerPasswords();
-        
+
         boolean success = freeService.registerFreelancer(freelancer);
         if (success) {
             response.put("message", "Freelancer Registered Successfully");

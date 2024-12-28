@@ -34,7 +34,9 @@ public class FreelancerService {
 
     @Autowired
     FreeJobRepository freeJobRepository;
-
+    
+    @Autowired
+    private S3Service s3Service;
 
     public boolean registerFreelancer(Freelancer freelancer) {
         try {
@@ -53,7 +55,6 @@ public class FreelancerService {
     public boolean isEmailAlreadyRegistered(String email) {
         return freeRepository.existsByFreeEmail(email);
     }
-
 
     public boolean validateFreelancer(String freeEmail, String password) {
         Freelancer freelancer = freeRepository.findByfreeEmail(freeEmail);
@@ -81,44 +82,57 @@ public class FreelancerService {
                 .orElseThrow(() -> new EntityNotFoundException("Freelancer not found for freeId: " + freeId));
     }
 
+//    public String saveProfileImage(MultipartFile profileImage) {
+//        if (profileImage == null || profileImage.isEmpty()) {
+//            return null; // Handle case where no image is uploaded
+//        }
+//
+//        // Define the path where the profile images will be saved
+//        String fileName = UUID.randomUUID().toString() + "-" + profileImage.getOriginalFilename();
+//        Path targetLocation = Paths.get("src/main/resources/static/images/profile_images/" + fileName);
+//
+//        try {
+//            // Save the file to the target location
+//            Files.copy(profileImage.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            return null; // Handle exception if file saving fails
+//        }
+//
+//        // Return the relative URL to the image
+//        return "/images/profile_images/" + fileName;
+//    }
+//
+//    public String saveFile(MultipartFile file) {
+//        if (file != null && !file.isEmpty()) {
+//            // Save file to the local storage
+//            String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
+//            Path targetLocation = Paths.get("src/main/resources/static/uploads/" + fileName);
+//
+//            try {
+//                // Save the file to the target location
+//                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+//                // Return the relative path to the image
+//                return "/uploads/" + fileName;
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//                return null; // Handle exception if file saving fails
+//            }
+//        }
+//        return null; // Return null if both file and link are empty
+//    }
     public String saveProfileImage(MultipartFile profileImage) {
         if (profileImage == null || profileImage.isEmpty()) {
-            return null; // Handle case where no image is uploaded
+            return null;
         }
-
-        // Define the path where the profile images will be saved
-        String fileName = UUID.randomUUID().toString() + "-" + profileImage.getOriginalFilename();
-        Path targetLocation = Paths.get("src/main/resources/static/images/profile_images/" + fileName);
-
-        try {
-            // Save the file to the target location
-            Files.copy(profileImage.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null; // Handle exception if file saving fails
-        }
-
-        // Return the relative URL to the image
-        return "/images/profile_images/" + fileName;
+        return s3Service.uploadFile(profileImage, "profile-images");
     }
 
     public String saveFile(MultipartFile file) {
-        if (file != null && !file.isEmpty()) {
-            // Save file to the local storage
-            String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
-            Path targetLocation = Paths.get("src/main/resources/static/uploads/" + fileName);
-
-            try {
-                // Save the file to the target location
-                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-                // Return the relative path to the image
-                return "/uploads/" + fileName;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null; // Handle exception if file saving fails
-            }
+        if (file == null || file.isEmpty()) {
+            return null;
         }
-        return null; // Return null if both file and link are empty
+        return s3Service.uploadFile(file, "resumes");
     }
 
     public void hashExistingFreelancerPasswords() {

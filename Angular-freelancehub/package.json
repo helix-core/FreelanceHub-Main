@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "chart.js": "^3.9.1",
+    "date-fns": "^4.1.0",
+    "ng2-charts": "^7.0.0"
+  }
+}

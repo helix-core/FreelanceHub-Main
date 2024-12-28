@@ -9,27 +9,22 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class FreelancerService {
-  private apiUrlProf = '/api/profile/freelancer'; // Update with the correct endpoint
-  private apiUrledit = '/api/freelancer';
-
-  private apiUrl = '/api/signup/freelancer';
-  private apiUrljob = '/api/applied-jobs';
-  private acceptedJobsUrl = '/api/accepted-jobs';
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
   
   constructor(private http: HttpClient) { }
 
   registerFreelancer(formData: any): Observable<any> {
-    return this.http.post('/api/signup/freelancer', formData)
+    return this.http.post(`${this.URL}/signup/freelancer`, formData)
   }
   getFreelancerProfile(userId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrlProf}?userId=${userId}`);
+    return this.http.get<any>(`${this.URL}/profile/freelancer?userId=${userId}`);
   }
   getFreelancerDetails(freelancerId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrledit}/edit/${freelancerId}`);
+    return this.http.get<any>(`${this.URL}/freelancer/edit/${freelancerId}`);
   }
 
   updateFreelancer(freelancer: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrledit}/update`, freelancer);
+    return this.http.post<any>(`${this.URL}/freelancer/update`, freelancer);
   }
 
 
@@ -45,7 +40,7 @@ export class FreelancerService {
     }
 
     const params = new HttpParams().set('userId', userId);
-    return this.http.get<FreelancerJob[]>(this.apiUrljob, { params });
+    return this.http.get<FreelancerJob[]>(`${this.URL}/applied-jobs`, { params });
   }
 
   getAcceptedJobs(): Observable<FreelancerJob[]> {
@@ -56,6 +51,6 @@ export class FreelancerService {
     }
 
     const params = new HttpParams().set('userId', userId);
-    return this.http.get<FreelancerJob[]>(this.acceptedJobsUrl, { params });
+    return this.http.get<FreelancerJob[]>(`${this.URL}/accepted-jobs`, { params });
   }
 }
