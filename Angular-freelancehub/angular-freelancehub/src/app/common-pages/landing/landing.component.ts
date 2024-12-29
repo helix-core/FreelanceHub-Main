@@ -64,7 +64,7 @@ export class LandingComponent {
       throw new Error('User is not logged in. No userId found in localStorage.');
     }
     const params=new HttpParams().set('userId', userId);
-    this.http.get<{ notifications: { message: string }[]; unreadCount: number }>('/api/getUnreadNotifications',{params})
+    this.http.get<{ notifications: { message: string }[]; unreadCount: number }>(`${this.URL}/getUnreadNotifications`,{params})
       .subscribe(
         (data) => {
           this.notifications = data.notifications || [];
@@ -82,7 +82,7 @@ export class LandingComponent {
       throw new Error('User is not logged in. No userId found in localStorage.');
     }
     const params=new HttpParams().set('userId', userId);
-    this.http.post('api/markNotificationsAsRead',null, {params}).subscribe(
+    this.http.post(`${this.URL}/markNotificationsAsRead`,null, {params}).subscribe(
       () => {
         this.unreadCount = 0;
       },

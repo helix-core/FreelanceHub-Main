@@ -4,8 +4,8 @@
 <header class="header">
   <div class="navbar">
       <div class="navbar-left">
-          <img src="assets/images/Twitch.png" class="logo" alt="Freelancehub Logo" />
-          <span class="navbar-title"><a routerLink="/landing" class="home">Freelancehub<div class="tooltiptext">Home</div></a></span>
+          <img src="assets/images/final_logo.png" class="logo" alt="Freelancehub Logo" />
+          <span class="navbar-title"><a routerLink="/landing" class="home">FreelanceHub<div class="tooltiptext">Home</div></a></span>
       </div>
   </div>
 </header>
@@ -95,7 +95,11 @@
         </div>
       </div>
       <div id="skills-container">
-        <input type="text" id="skills-input" (keydown)="onSkillInput($event)" placeholder="Type a skill and press Enter">
+        <p style="color: #232b50;font-weight: bolder;">Skills</p>
+        <div class="input-container">
+          <input type="text" id="skills-input" (keydown)="onSkillInput($event)" placeholder="Type a skill and press Enter or +">
+          <button type="button" id="add-skill-btn" (click)="addSkill()">+</button>
+        </div>
         <div
           *ngIf="freelancerForm.get('skills')?.hasError('required') && (freelancerForm.get('skills')?.touched || freelancerForm.get('skills')?.dirty)"
           class="error-message">

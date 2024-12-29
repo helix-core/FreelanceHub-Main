@@ -153,10 +153,10 @@ public class UserController {
     }
 
     @PostMapping("/signup/freelancer")
-    public ResponseEntity<?> registerFreelancer(@RequestParam("resume") MultipartFile resume,
-            @RequestParam("profileImage") MultipartFile profileImage,
-            @Valid FreeDTO freelancerDTO,
-            BindingResult bindingResult) {
+    public ResponseEntity<?> registerFreelancer(@RequestParam(value = "resume", required = false) MultipartFile resume,
+                                                @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+                                                @Valid FreeDTO freelancerDTO,
+                                                BindingResult bindingResult) {
         Map<String, String> response = new HashMap<>();
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
@@ -170,8 +170,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
         }
 
-        String imageUrl = freeService.saveProfileImage(profileImage);
-        String pdfUrl = freeService.saveFile(resume);
+        String imageUrl = null;
+        String pdfUrl = null;
+
+        if (profileImage != null && !profileImage.isEmpty()) {
+            imageUrl = freeService.saveProfileImage(profileImage);
+        }
+
+        if (resume != null && !resume.isEmpty()) {
+            pdfUrl = freeService.saveFile(resume);
+        }
+
+
         Freelancer freelancer = new Freelancer();
         freelancer.setFreeEmail(freelancerDTO.getFreeEmail());
         freelancer.setFreeName(freelancerDTO.getFreeName());
@@ -183,9 +193,18 @@ public class UserController {
         freelancer.setQualification(freelancerDTO.getQualification());
         String hashedPassword = BCrypt.hashpw(freelancerDTO.getPassword(), BCrypt.gensalt());
         freelancer.setPassword(hashedPassword);
-        freelancer.setProfile_image(imageUrl);
-        freelancer.setResume(pdfUrl);
+//        freelancer.setProfile_image(imageUrl);
+//        freelancer.setResume(pdfUrl);
         freeService.hashExistingFreelancerPasswords();
+
+        // Set only if not null
+        if (imageUrl != null) {
+            freelancer.setProfile_image(imageUrl);
+        }
+
+        if (pdfUrl != null) {
+            freelancer.setResume(pdfUrl);
+        }
 
         boolean success = freeService.registerFreelancer(freelancer);
         if (success) {

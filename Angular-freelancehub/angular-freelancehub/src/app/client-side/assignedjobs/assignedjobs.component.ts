@@ -23,6 +23,7 @@ export class AssignedjobsComponent implements OnInit {
   hoverStatId: string | null = null; 
   showPasswordModal:boolean=false;
   password:string='';
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
 
   constructor(private http: HttpClient,private notificationService: NotificationService, private ratingService:RatingService, private walletService: WalletService) {}
 
@@ -37,7 +38,7 @@ export class AssignedjobsComponent implements OnInit {
       throw new Error('User is not logged in. No userId found in localStorage.');
     }
     const params = new HttpParams().set('userId', userId);
-    this.http.get('/api/assigned-jobs',{params}).subscribe(
+    this.http.get(`${this.URL}/assigned-jobs`,{params}).subscribe(
       (response: any) => {
         this.ongoingJobs = response.ongoingJobs || [];
         this.completedJobs = response.completedJobs || [];
@@ -104,7 +105,7 @@ export class AssignedjobsComponent implements OnInit {
       (balance: number) => {
         if (isPayNow) {
           this.http
-          .post('/api/verify-password', { clientId, password: this.password }, { responseType: 'text' })
+          .post(`${this.URL}/verify-password`, { clientId, password: this.password }, { responseType: 'text' })
           .subscribe(
             (response: any) => {
           // Pay Now logic
@@ -157,7 +158,7 @@ export class AssignedjobsComponent implements OnInit {
     };
   
     // Call backend to update the job
-    this.http.post('/api/update-job', requestData, { responseType: 'text' }).subscribe(
+    this.http.post(`${this.URL}/update-job`, requestData, { responseType: 'text' }).subscribe(
       (response) => {
         this.fetchAssignedJobs(); // Refresh the job list
       },

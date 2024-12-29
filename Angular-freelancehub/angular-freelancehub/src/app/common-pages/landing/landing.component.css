@@ -17,16 +17,28 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 20px 50px;
+        padding: 20px 50px 20px 20px;
         /* background-color: #fff; */
         box-sizing: border-box;
         overflow: hidden;
     }
 
+    .navbarleft{
+        display: flex;
+        align-items: center;
+    }
+
+    .logo2{
+        width: 80px;
+        height: 35px;
+        margin-top: 5px;
+    }
+
     .logo {
-        font-size: 24px;
+        font-size: 34px;
         font-weight: bold;
         color: #232B50;
+        margin-top: 2px;
     }
 
     .nav-links {
