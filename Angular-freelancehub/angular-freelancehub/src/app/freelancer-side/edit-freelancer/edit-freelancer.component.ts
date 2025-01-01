@@ -45,12 +45,12 @@ userId: string | null = null;
          FOW: freelancer.fow // Set skills as a string for the form control
       });
        this.skills = freelancer.skillsAsList || [];
-     this.imagePreview = freelancer.profile_image
-        ? `http://localhost:8080${freelancer.profile_image}`
-        : this.defaultImage;
-      this.resumePreview = freelancer.resume
-        ? `http://localhost:8080${freelancer.resume}`
-        : '';
+     this.imagePreview = freelancer.profile_image;
+        // ? `http://localhost:8080${freelancer.profile_image}`
+        // : this.defaultImage;
+      this.resumePreview = freelancer.resume;
+        // ? `http://localhost:8080${freelancer.resume}`
+        // : '';
       this.freelancerForm.get('profileImage')?.setValue(freelancer.profile_image);
       this.freelancerForm.get('resume')?.setValue(freelancer.resume);
       this.isFile = this.resumePreview instanceof File;
@@ -176,6 +176,15 @@ userId: string | null = null;
    this.freelancerForm.get('skills')?.setValue(this.skills.join(','));
   }
 
+   addSkill(skill?: string): void {
+    const input = document.getElementById('skills-input') as HTMLInputElement;
+    const skillToAdd = skill || input.value.trim(); // Use the provided skill or input value
+    if (skillToAdd) {
+        this.skills.push(skillToAdd);
+        this.freelancerForm.get('skills')?.setValue(this.skills.join(','));
+        if (!skill) input.value = ''; // Clear input field only when coming from the button click
+    }
+}
   updateFreelancer(): void {
     this.freelancerForm.markAllAsTouched();
    console.log(this.freelancerForm.value);

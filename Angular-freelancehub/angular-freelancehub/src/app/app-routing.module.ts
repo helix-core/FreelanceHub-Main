@@ -31,7 +31,7 @@ const routes: Routes = [
   { path: 'assigned-jobs', component: AssignedjobsComponent},
   { path: 'bidding', component: BiddingComponent},
   { path: 'profile/freelancer/:freeId', component:FreelancerProfileComponent },
-  {path:'freelancer/edit' ,component:FreelancerEditComponent},
+  {path:'freelancer/edit/:userId' ,component:FreelancerEditComponent},
   { path: 'verify-reset-password', component: ResetPasswordComponent },
   { path: '', redirectTo: '/landing', pathMatch: 'full' },
   { path: 'explore', component: ExploreComponent },

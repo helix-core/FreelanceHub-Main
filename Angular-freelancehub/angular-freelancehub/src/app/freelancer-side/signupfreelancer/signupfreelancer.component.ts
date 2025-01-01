@@ -17,7 +17,7 @@ export class SignupfreelancerComponent {
 
   signupForm!: FormGroup;
   skills: string[] = [];
-  imagePreview: string | ArrayBuffer | null = 'assets/default-profile.png'; // Path to your default image
+  imagePreview: string | ArrayBuffer | null = null 
   defaultImage = 'assets/default-profile.png';
   resumePreview: File | null = null;
 
@@ -42,8 +42,8 @@ export class SignupfreelancerComponent {
       password: ['', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/)]],
       rePassword: ['', [Validators.required, Validators.minLength(8)]],
       termsAndConditions: [false, Validators.requiredTrue],
-      profileImage: [null, Validators.required],
-       resume: [null, Validators.required],  // Added for file resume
+      profileImage: [null],
+       resume: [null],  // Added for file resume
     },{
       validators: [this.passwordMatchValidator]
     });
@@ -127,6 +127,16 @@ export class SignupfreelancerComponent {
       this.signupForm.get('skills')?.setValue(this.skills.join(','));
     }
   }
+
+  addSkill(skill?: string): void {
+    const input = document.getElementById('skills-input') as HTMLInputElement;
+    const skillToAdd = skill || input.value.trim(); // Use the provided skill or input value
+    if (skillToAdd) {
+        this.skills.push(skillToAdd);
+        this.signupForm.get('skills')?.setValue(this.skills.join(','));
+        if (!skill) input.value = ''; // Clear input field only when coming from the button click
+    }
+}
 
   removeSkill(skill: string): void {
     this.skills = this.skills.filter(s => s !== skill);

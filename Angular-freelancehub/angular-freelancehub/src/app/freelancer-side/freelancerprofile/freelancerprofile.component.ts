@@ -17,6 +17,7 @@
     totalRatings: number = 0;
     userRole:String='';
     previousWorkLinks: string[] = [];
+     userId: string | null = null;
     
 
     constructor(private profileService: FreelancerService, private ratingService: RatingService, private route: ActivatedRoute, private authService: AuthService) {}
@@ -26,6 +27,7 @@
         console.warn('localStorage is not available in this environment.');
         return;
       }
+      this.userId = localStorage.getItem("userId");
       const freelancerId = this.route.snapshot.paramMap.get('freeId');
       this.userRole=this.authService.getUserRole() || '';
       if (freelancerId) {
@@ -36,12 +38,12 @@
           (data) => {
             console.log(data.freelancer);
             this.freelancer = data.freelancer;
-            if (this.freelancer && this.freelancer.profile_image) {
-            this.freelancer.profile_image = 'http://localhost:8080' + this.freelancer.profile_image;
-          }
-           if (this.freelancer && this.freelancer.resume) {
-                    this.freelancer.resume = 'http://localhost:8080' + this.freelancer.resume;
-                }
+          //   if (this.freelancer && this.freelancer.profile_image) {
+          //   this.freelancer.profile_image = 'http://localhost:8080' + this.freelancer.profile_image;
+          // }
+          //  if (this.freelancer && this.freelancer.resume) {
+          //           this.freelancer.resume = 'http://localhost:8080' + this.freelancer.resume;
+          //       }
           if (this.userRole === 'client') {
             console.log(data.previousWorkLinks)
             this.previousWorkLinks = data.previousWorkLinks || [];
@@ -62,12 +64,12 @@
           this.profileService.getFreelancerProfile(userId).subscribe(
             (data) => {
               this.freelancer = data.freelancer;
-              if (this.freelancer && this.freelancer.profile_image) {
-            this.freelancer.profile_image = 'http://localhost:8080' + this.freelancer.profile_image;
-          }
-          if (this.freelancer && this.freelancer.resume) {
-                    this.freelancer.resume = 'http://localhost:8080' + this.freelancer.resume;
-                }
+          //     if (this.freelancer && this.freelancer.profile_image) {
+          //   this.freelancer.profile_image = 'http://localhost:8080' + this.freelancer.profile_image;
+          // }
+          // if (this.freelancer && this.freelancer.resume) {
+          //           this.freelancer.resume = 'http://localhost:8080' + this.freelancer.resume;
+          //       }
 
                  if (this.freelancer && this.freelancer.previousWorkLink) {
                     this.freelancer.previousWorkLinks = this.freelancer.previousWorkLink.split(',');

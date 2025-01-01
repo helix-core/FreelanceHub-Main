@@ -10,6 +10,7 @@ export class RatingService {
   showRatingPopup: boolean = false;
   rating: number = 0;
   currentJob: any;
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
 
   constructor(private http: HttpClient, private notificationService: NotificationService) {}
 
@@ -50,7 +51,7 @@ export class RatingService {
     
     // Send the rating to the backend
     this.http
-      .post('/api/ratings',null, {params})
+      .post(`${this.URL}/ratings`,null, {params})
       .subscribe(
         (response) => {
           this.notificationService.showNotification('Rating submitted successfully!', 'success');
@@ -62,7 +63,6 @@ export class RatingService {
       );
   }
 
-  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
 
   getRatingCount(freelancerId: string): Observable<number> {
     return this.http.get<number>(`${this.URL}/ratings?freelancerId=${freelancerId}`);

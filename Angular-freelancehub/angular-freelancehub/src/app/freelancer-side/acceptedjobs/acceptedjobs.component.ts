@@ -16,6 +16,7 @@ export class AcceptedjobsComponent implements OnInit{
   githubLink: string = '';
   notificationType: string = '';
   notificationMessage: string = '';
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
 
   constructor(
     private freelancerservice: FreelancerService,
@@ -34,7 +35,7 @@ export class AcceptedjobsComponent implements OnInit{
   loadAcceptedJobs() {
   const userId = localStorage.getItem('userId');
   if (userId) {
-    this.http.get<FreelancerJob[]>(`/api/accepted-jobs?userId=${userId}`).subscribe(
+    this.http.get<FreelancerJob[]>(`${this.URL}/accepted-jobs?userId=${userId}`).subscribe(
       (data) => {
         console.log('Accepted Jobs:', data);  // Log data to check structure
         this.acceptedJobs = data;
@@ -78,7 +79,7 @@ export class AcceptedjobsComponent implements OnInit{
     formData.append('jobId', jobId.toString());
     formData.append('githubLink', this.githubLink);
 
-    this.http.post('/api/upload-project', formData,{responseType:'text'}).subscribe(
+    this.http.post(`${this.URL}/upload-project`, formData,{responseType:'text'}).subscribe(
       (response) => {
         this.githubLink='';
         this.loadAcceptedJobs();

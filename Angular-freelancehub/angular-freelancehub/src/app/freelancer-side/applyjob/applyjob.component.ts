@@ -22,6 +22,7 @@ jobForm: FormGroup;
   newLink: string = '';
   circularProgressStyle: string = '';
   linkError:string='';
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
 
   constructor(
     private fb: FormBuilder,
@@ -57,7 +58,7 @@ jobForm: FormGroup;
     }
 
     const params = new HttpParams().set('userId', userId);
-    this.http.get(`/api/apply?id=${jobId}`, { params }).subscribe(
+    this.http.get(`${this.URL}/apply?id=${jobId}`, { params }).subscribe(
       (data: any) => {
         this.job = data.job;
         this.matchedSkillsPercentage = data.matchedSkillsPercentage;
@@ -141,7 +142,7 @@ removeLink(index: number): void {
     fromObject: formData,
   });
    console.log(formData);
- this.http.post<{ message: string }>('/api/apply', params).subscribe(
+ this.http.post<{ message: string }>(`${this.URL}/apply`, params).subscribe(
   (response) => {
     // Handle successful submission
     this.notificationService.showNotification(response.message, 'success', '/applied-jobs');

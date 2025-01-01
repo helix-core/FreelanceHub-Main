@@ -19,6 +19,7 @@ export class BiddingComponent implements OnInit {
   selectedBidAmount: number | null = null;
   showPasswordModal:boolean=false;
   password:string='';
+  private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
 
   constructor(private http: HttpClient,private notificationService: NotificationService,private walletService: WalletService) {}
 
@@ -28,7 +29,7 @@ export class BiddingComponent implements OnInit {
 
   fetchJobsWithBids(): void {
     const userId=localStorage.getItem("userId");
-    this.http.get('/api/bidding', { params: { sortBy: this.sortBy ,userId: userId || ''} }).subscribe(
+    this.http.get(`${this.URL}/bidding`, { params: { sortBy: this.sortBy ,userId: userId || ''} }).subscribe(
       (response: any) => {
         this.jobsWithBids = Array.isArray(response.jobsWithBids) ? response.jobsWithBids : [];
       },
@@ -65,7 +66,7 @@ export class BiddingComponent implements OnInit {
     this.walletService.getWalletBalance(clientId!).subscribe(
       (balance: number) => {
           this.http
-          .post('/api/verify-password', { clientId, password: this.password }, { responseType: 'text' })
+          .post(`${this.URL}/verify-password`, { clientId, password: this.password }, { responseType: 'text' })
           .subscribe(
             (response: any) => {
         if (balance < this.selectedBidAmount!) {
@@ -78,7 +79,7 @@ export class BiddingComponent implements OnInit {
               (response: any) => {
                 this.notificationService.showNotification(response, 'success');
                 this.http
-                  .post('/api/acceptBid', { jobId: this.selectedJobId, userId: this.selectedFreelancerId }, { responseType: 'text' })
+                  .post(`${this.URL}/acceptBid`, { jobId: this.selectedJobId, userId: this.selectedFreelancerId }, { responseType: 'text' })
                   .subscribe(
                     (acceptResponse) => {
                       this.notificationService.showNotification(acceptResponse, 'success');

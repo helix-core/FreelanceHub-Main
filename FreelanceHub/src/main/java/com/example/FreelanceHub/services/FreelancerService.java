@@ -34,9 +34,10 @@ public class FreelancerService {
 
     @Autowired
     FreeJobRepository freeJobRepository;
-    
+
     @Autowired
-    private S3Service s3Service;
+    S3Service s3Service;
+
 
     public boolean registerFreelancer(Freelancer freelancer) {
         try {
@@ -121,6 +122,7 @@ public class FreelancerService {
 //        }
 //        return null; // Return null if both file and link are empty
 //    }
+
     public String saveProfileImage(MultipartFile profileImage) {
         if (profileImage == null || profileImage.isEmpty()) {
             return null;

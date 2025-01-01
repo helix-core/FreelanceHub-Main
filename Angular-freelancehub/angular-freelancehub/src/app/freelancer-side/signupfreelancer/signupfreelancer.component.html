@@ -1,8 +1,8 @@
 <header class="navbar">
     <div class="navbar-left">
-        <img src="assets/images/Twitch.png" class="logo"
+        <img src="assets/images/final_logo.png" class="logo"
             alt="Freelancehub Logo">
-        <h1 class="navbar-title">Freelancehub</h1>
+        <h1 class="navbar-title">FreelanceHub</h1>
     </div>
 </header>
 
@@ -90,7 +90,11 @@
 
             <!-- Skills Field -->
             <div id="skills-container">
-                <input type="text" id="skills-input" (keydown)="onSkillInput($event)" placeholder="Type a skill and press Enter">
+                <div class="input-container">
+                <input type="text" id="skills-input" (keydown)="onSkillInput($event)" placeholder="Type a skill and press Enter or +">
+                 <button type="button" id="add-skill-btn" (click)="addSkill()">+</button>
+                </div>
+                
                 <div *ngIf="signupForm.get('skills')?.hasError('required') && (signupForm.get('skills')?.touched || signupForm.get('skills')?.dirty)"
                     class="error-message">
                     <span>Atleast one skill is required</span>

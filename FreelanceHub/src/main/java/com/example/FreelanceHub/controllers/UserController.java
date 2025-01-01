@@ -154,9 +154,10 @@ public class UserController {
 
     @PostMapping("/signup/freelancer")
     public ResponseEntity<?> registerFreelancer(@RequestParam(value = "resume", required = false) MultipartFile resume,
-            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
-            @Valid FreeDTO freelancerDTO,
-            BindingResult bindingResult) {
+                                                @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+                                                @Valid FreeDTO freelancerDTO,
+                                                BindingResult bindingResult) {
+
         Map<String, String> response = new HashMap<>();
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
@@ -172,7 +173,7 @@ public class UserController {
 
         String imageUrl = null;
         String pdfUrl = null;
-        
+
         if (profileImage != null && !profileImage.isEmpty()) {
             imageUrl = freeService.saveProfileImage(profileImage);
         }
@@ -180,7 +181,7 @@ public class UserController {
         if (resume != null && !resume.isEmpty()) {
             pdfUrl = freeService.saveFile(resume);
         }
-        
+
         Freelancer freelancer = new Freelancer();
         freelancer.setFreeEmail(freelancerDTO.getFreeEmail());
         freelancer.setFreeName(freelancerDTO.getFreeName());
@@ -194,6 +195,9 @@ public class UserController {
         freelancer.setPassword(hashedPassword);
 //        freelancer.setProfile_image(imageUrl);
 //        freelancer.setResume(pdfUrl);
+        freeService.hashExistingFreelancerPasswords();
+
+        // Set only if not null
         if (imageUrl != null) {
             freelancer.setProfile_image(imageUrl);
         }
@@ -201,7 +205,7 @@ public class UserController {
         if (pdfUrl != null) {
             freelancer.setResume(pdfUrl);
         }
-        freeService.hashExistingFreelancerPasswords();
+
 
         boolean success = freeService.registerFreelancer(freelancer);
         if (success) {

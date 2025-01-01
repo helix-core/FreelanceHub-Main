@@ -152,7 +152,8 @@ public class Freelancer {
 	@Column(name = "rating")
 	private Double rating;
 
-	@Column(nullable=true)
+	@Column(nullable = true)
+
 	private String profile_image;
 
 	public String getProfile_image() {

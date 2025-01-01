@@ -27,10 +27,11 @@ public class S3Service {
             metadata.setContentLength(file.getSize());
 
             s3Client.putObject(new PutObjectRequest(
-                bucketName,
-                fileName,
-                file.getInputStream(),
-                metadata
+                    bucketName,
+                    fileName,
+                    file.getInputStream(),
+                    metadata
+
             ));
 
             return s3Client.getUrl(bucketName, fileName).toString();

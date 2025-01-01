@@ -1,5 +1,6 @@
 package com.example.FreelanceHub.Dto;
 
+import jakarta.annotation.Nullable;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.persistence.PrePersist;
@@ -56,6 +57,7 @@ public class FreeDTO {
 			throw new IllegalArgumentException("Passwords do not match");
 		}
 	}
+
 
 	private MultipartFile profileImage;
 
@@ -154,6 +156,7 @@ public class FreeDTO {
 	public void setProfileImage(MultipartFile profileImage) {
 		this.profileImage = profileImage;
 	}
+
 
 	public String resumeUrl;
 
