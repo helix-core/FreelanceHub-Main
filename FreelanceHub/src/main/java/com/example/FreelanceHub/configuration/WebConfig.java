@@ -24,12 +24,11 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true); // Allow credentials (cookies, etc.)
     }
 
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/").addResourceLocations("classpath:/static/");
    }
-
-
 
 
 }

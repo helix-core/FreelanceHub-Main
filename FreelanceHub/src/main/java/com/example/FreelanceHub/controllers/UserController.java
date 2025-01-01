@@ -157,6 +157,7 @@ public class UserController {
                                                 @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
                                                 @Valid FreeDTO freelancerDTO,
                                                 BindingResult bindingResult) {
+
         Map<String, String> response = new HashMap<>();
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
@@ -181,7 +182,6 @@ public class UserController {
             pdfUrl = freeService.saveFile(resume);
         }
 
-
         Freelancer freelancer = new Freelancer();
         freelancer.setFreeEmail(freelancerDTO.getFreeEmail());
         freelancer.setFreeName(freelancerDTO.getFreeName());
@@ -205,6 +205,7 @@ public class UserController {
         if (pdfUrl != null) {
             freelancer.setResume(pdfUrl);
         }
+
 
         boolean success = freeService.registerFreelancer(freelancer);
         if (success) {

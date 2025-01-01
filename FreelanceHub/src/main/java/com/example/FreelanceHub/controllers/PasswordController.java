@@ -46,6 +46,7 @@ public class PasswordController {
         }
 
         String resetToken = emailService.generateResetToken();
+
         String resetLink = "http://freelancehub-frontend.s3-website-us-east-1.amazonaws.com/verify-reset-password?token=" + resetToken;
 
 

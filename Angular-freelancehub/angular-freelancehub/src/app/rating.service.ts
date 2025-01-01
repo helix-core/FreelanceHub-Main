@@ -63,7 +63,6 @@ export class RatingService {
       );
   }
 
-  
 
   getRatingCount(freelancerId: string): Observable<number> {
     return this.http.get<number>(`${this.URL}/ratings?freelancerId=${freelancerId}`);

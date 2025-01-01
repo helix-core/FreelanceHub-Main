@@ -38,6 +38,7 @@ public class FreelancerService {
     @Autowired
     S3Service s3Service;
 
+
     public boolean registerFreelancer(Freelancer freelancer) {
         try {
 

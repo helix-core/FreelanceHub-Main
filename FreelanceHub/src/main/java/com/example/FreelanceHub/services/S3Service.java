@@ -31,6 +31,7 @@ public class S3Service {
                     fileName,
                     file.getInputStream(),
                     metadata
+
             ));
 
             return s3Client.getUrl(bucketName, fileName).toString();
