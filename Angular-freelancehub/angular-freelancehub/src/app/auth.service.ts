@@ -19,44 +19,37 @@ export class AuthService {
     this.http.post<any>(`${this.URL}/login`, loginData).subscribe({
       next: (response: any) => {
         if (response.status === 'success') {
-          // Store user data in localStorage/sessionStorage
           if (typeof window !== 'undefined' && localStorage) {
-            localStorage.setItem('userRole', response.role); // client, freelancer, etc.
-            localStorage.setItem('userId', response.userId); // Set the user ID
+            localStorage.setItem('userRole', response.role); 
+            localStorage.setItem('userId', response.userId); 
           }
           this.notificationService.showNotification(response.message, 'success', '/landing');
-          // alert('Login Successful!');
-          // this.router.navigate(['/landing']); // Redirect to a dashboard or landing page
         } else {
-          // alert(response.message);
           this.notificationService.showNotification(response.message, 'error');
         }
       },
       error: (error) => {
         this.notificationService.showNotification('An error occurred during login.', 'error');
-        // alert('An error occurred during login.');
       }
     });
   }
 
-  // Check if the user is logged in
+  
   isLoggedIn(): boolean {
-    // Check if 'window' and 'localStorage' are available before accessing it
     return typeof window !== 'undefined' && localStorage ? !!localStorage.getItem('userRole') : false;
   }
 
-  // Get current user role
+  
   getUserRole(): string | null {
-    // Check if 'window' is available and 'localStorage' is accessible
     if (typeof window !== 'undefined' && localStorage) {
       return localStorage.getItem('userRole');
     } else {
       console.warn('localStorage is not available in this environment.');
-      return null; // Return a default fallback value
+      return null;
     }
   }
 
-  // Logout the user
+  
   logout() {
     if (typeof window !== 'undefined' && localStorage) {
       localStorage.removeItem('userRole');
@@ -66,12 +59,10 @@ export class AuthService {
   }
 
   getRole(): string | null {
-    // Check if 'window' and 'localStorage' are available before accessing it
     return typeof window !== 'undefined' && localStorage ? localStorage.getItem('userRole') : null;
   }
 
   getUserId(): string | null {
-    // Check if 'window' and 'localStorage' are available before accessing it
     return typeof window !== 'undefined' && localStorage ? localStorage.getItem('userId') : null;
   }
 

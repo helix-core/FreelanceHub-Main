@@ -26,39 +26,36 @@ public class EmailService {
     private FreelancerRepository freelancerRepository;
 
     public void sendResetLink(String email, String resetLink) {
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(email);
-//        message.setSubject("Password Reset Request");
-//        message.setText("Click the link to reset your password: " + resetLink);
-//        mailsender.send(message);
         try {
-            // Determine whether the email belongs to a client or freelancer and get their name
             String userName;
             if (clientRepository.findBycompEmail(email) != null) {
-                userName = clientRepository.findBycompEmail(email).getCompanyName(); // Client company name
+                userName = clientRepository.findBycompEmail(email).getCompanyName();
             } else if (freelancerRepository.findByfreeEmail(email) != null) {
-                userName = freelancerRepository.findByfreeEmail(email).getFreeName(); // Freelancer name
+                userName = freelancerRepository.findByfreeEmail(email).getFreeName();
             } else {
-                userName = "Valued User"; // Fallback name
+                userName = "Valued User";
             }
 
             MimeMessage mimeMessage = mailsender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
             helper.setTo(email);
             helper.setSubject("Password Reset Request");
-
-            // HTML Email Content
             String emailContent = "<!DOCTYPE html>" +
                     "<html>" +
                     "<head>" +
                     "<style>" +
                     "body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; }" +
-                    ".container { max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 10px; border: 1px solid #ccc; }" +
-                    ".header { background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%); color: #232B50; text-align: center; padding: 10px; border-radius: 10px 10px 0 0;border:1px solid black; }" +
+                    ".container { max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 10px; border: 1px solid #ccc; }"
+                    +
+                    ".header { background: linear-gradient(270deg, rgba(21, 201, 180, 0.5) 0%, rgba(21, 201, 180, 0.45) 30%, rgba(32, 232, 160, 0.45) 70%, rgba(32, 232, 160, 0.5) 100%); color: #232B50; text-align: center; padding: 10px; border-radius: 10px 10px 0 0;border:1px solid black; }"
+                    +
                     ".header h1 { margin: 0; font-size: 24px; }" +
-                    ".content { padding: 20px; color: #333; line-height: 1.6;border-right:1px solid black;border-left:1px solid black; }" +
-                    ".content a { display: inline-block; background: #232B50; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; }" +
-                    ".footer { text-align: center; padding: 10px; font-size: 12px; color: black; background: #f4f4f4; border:1px solid black;border-radius: 0 0 10px 10px; }" +
+                    ".content { padding: 20px; color: #333; line-height: 1.6;border-right:1px solid black;border-left:1px solid black; }"
+                    +
+                    ".content a { display: inline-block; background: #232B50; color: #ffffff; text-decoration: none; padding: 10px 20px; border-radius: 5px; }"
+                    +
+                    ".footer { text-align: center; padding: 10px; font-size: 12px; color: black; background: #f4f4f4; border:1px solid black;border-radius: 0 0 10px 10px; }"
+                    +
                     "</style>" +
                     "</head>" +
                     "<body>" +
@@ -68,7 +65,8 @@ public class EmailService {
                     "</div>" +
                     "<div class='content'>" +
                     "<p>Hello " + userName + ",</p>" +
-                    "<p>We received a request to reset your password. Click the button below to reset your password:</p>" +
+                    "<p>We received a request to reset your password. Click the button below to reset your password:</p>"
+                    +
                     "<a href='" + resetLink + "'>Reset Password</a>" +
                     "<p>If you didn’t request this, you can safely ignore this email.</p>" +
                     "</div>" +
@@ -78,9 +76,7 @@ public class EmailService {
                     "</div>" +
                     "</body>" +
                     "</html>";
-
-
-            helper.setText(emailContent, true); // Enable HTML content
+            helper.setText(emailContent, true);
             mailsender.send(mimeMessage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -92,7 +88,6 @@ public class EmailService {
     }
 
     public void resetPasswordToken(String email) {
-        // For Freelancer
         Freelancer freelancer = freelancerRepository.findByfreeEmail(email);
         if (freelancer != null) {
             freelancer.setResetToken(null);
@@ -100,7 +95,6 @@ public class EmailService {
             freelancerRepository.save(freelancer);
         }
 
-        // For Client
         Client client = clientRepository.findBycompEmail(email);
         if (client != null) {
             client.setResetToken(null);

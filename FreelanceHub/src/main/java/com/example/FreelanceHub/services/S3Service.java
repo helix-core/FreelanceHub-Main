@@ -25,15 +25,11 @@ public class S3Service {
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             metadata.setContentLength(file.getSize());
-
             s3Client.putObject(new PutObjectRequest(
                     bucketName,
                     fileName,
                     file.getInputStream(),
-                    metadata
-
-            ));
-
+                    metadata));
             return s3Client.getUrl(bucketName, fileName).toString();
         } catch (IOException e) {
             throw new RuntimeException("Failed to upload file to S3", e);

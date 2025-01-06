@@ -14,7 +14,9 @@ import jakarta.persistence.GenerationType;
 @Table(name = "notifications")
 public class Notification {
 
-	public Notification() {}
+    public Notification() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,9 +27,8 @@ public class Notification {
     @Column(name = "message", nullable = false)
     private String message;
 
-	@Column(name = "status", nullable = false) 
-	private String isRead = "false";
-	 
+    @Column(name = "status", nullable = false)
+    private String isRead = "false";
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
@@ -37,8 +38,7 @@ public class Notification {
         this.userId = userId;
         this.message = message;
     }
-    
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }
@@ -63,13 +63,13 @@ public class Notification {
         this.message = message;
     }
 
-	 public String isRead() { 
-		 return isRead; 
-	 } 
-	 public void setRead(String read) { 
-		 isRead = read; 
-	 }
-	 
+    public String isRead() {
+        return isRead;
+    }
+
+    public void setRead(String read) {
+        isRead = read;
+    }
 
     public LocalDateTime getCreatedAt() {
         return createdAt;

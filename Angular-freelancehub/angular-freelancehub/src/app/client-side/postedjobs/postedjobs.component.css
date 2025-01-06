@@ -19,7 +19,6 @@
 
 .container {
     width: 100%;
-    /* max-width: 600px; */
     padding: 20px;
     margin-top: 5px;
 }
@@ -155,7 +154,7 @@ h2 {
 
 .job p span:first-of-type {
     display: block;
-    margin-bottom: 5px; /* Adds a small space below the description */
+    margin-bottom: 5px; 
 }
 
 .common-bidding-btn-container {
@@ -223,7 +222,7 @@ a.home{
 
   .tooltip {
     position: absolute;
-    bottom: 110%;          /* Position the tooltip above the image */
+    bottom: 110%;         
     left: 50%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
@@ -232,9 +231,9 @@ a.home{
     border-radius: 5px;
     font-size: 0.7em;
     white-space: nowrap;
-    opacity: 0;            /* Initially hidden */
-    visibility: hidden;    /* Ensures it's not interactable when hidden */
-    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+    opacity: 0;            
+    visibility: hidden;    
+    transition: opacity 0.3s ease; 
   }
   .button:hover .tooltip {
     opacity: 1;
@@ -248,8 +247,8 @@ a.home{
 
   .tooltiptext {
     position: absolute;
-    top: 110%;               /* Position the tooltip below the text */
-    left:10%;              /* Center the tooltip horizontally */
+    top: 110%;              
+    left:10%;              
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
@@ -257,14 +256,13 @@ a.home{
     border-radius: 5px;
     font-size: 0.5em;
     white-space: nowrap;
-    opacity: 0;              /* Initially hidden */
-    visibility: hidden;      /* Not interactable when hidden */
-    transition: opacity 0.3s ease; /* Smooth fade-in effect */
-    z-index: 10;             /* Ensure tooltip appears above other elements */
+    opacity: 0;             
+    visibility: hidden;     
+    transition: opacity 0.3s ease; 
+    z-index: 10;            
   }
 
 
-  /* Responsive Design for max-width: 900px */
 @media (max-width: 900px) {
     .job {
         width: 100%;
@@ -290,7 +288,7 @@ a.home{
     }
 }
 
-/* Responsive Design for max-width: 768px */
+
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -326,7 +324,7 @@ a.home{
     }
 }
 
-/* Responsive Design for max-width: 600px */
+
 @media (max-width: 600px) {
     .navbar-title {
         font-size: 24px;
@@ -358,14 +356,14 @@ a.home{
     }
 }
 
-/* Responsive Design for max-width: 480px */
+
 @media (max-width: 480px) {
     .navbar-title {
         font-size: 20px;
     }
 
     .icons {
-        /* flex-direction: column; */
+       
         align-items: center;
     }
 

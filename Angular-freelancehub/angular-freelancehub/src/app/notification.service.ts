@@ -34,7 +34,4 @@ export class NotificationService {
     this.notificationType.next(null);
   }
 }
-// function param(target: NotificationService, propertyKey: 'message'): void {
-//   throw new Error('Function not implemented.');
-// }
 

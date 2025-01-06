@@ -33,7 +33,7 @@
     <div class="container">
         <h2>Assigned Projects</h2>
       
-        <!-- Rating Popup -->
+       
         <div *ngIf="showRatingPopup" class="rating-popup">
           <div class="popup-content">
             <span class="close-btn" (click)="closePopup()">X</span>
@@ -47,7 +47,7 @@
           </div>
         </div>
 
-        <!-- Password Confirmation Modal -->
+       
         <div *ngIf="showPasswordModal && selectedJob?.id" class="password-modal">
           <div class="modal-content">
             <h2>Password Confirmation</h2>
@@ -63,7 +63,7 @@
           </div>
         </div>
 
-        <!-- Payment Decision Popup -->
+        
         <div *ngIf="showPaymentDecision" class="payment-decision-popup">
           <div class="popup-content">
             <span class="close-btn" (click)="closePayPopup()">X</span>
@@ -74,7 +74,7 @@
         </div>
 
 
-        <!-- Ongoing Jobs -->
+     
         <div *ngIf="ongoingJobs && ongoingJobs.length > 0" class="project-card-container">
           <div *ngFor="let job of ongoingJobs" class="project-card">
             <div class="project-header ongoing-header">
@@ -95,9 +95,9 @@
           </div>
         </div>
       
-        <!-- Completed Jobs -->
+        
         <div *ngIf="completedJobs && completedJobs.length > 0" class="project-card-container">
-        <!-- Sort and display unpaid jobs first, followed by paid jobs -->
+       
         <div
           *ngFor="let job of completedJobs"
           class="project-card"
@@ -105,7 +105,6 @@
           <div class="project-header completed-header">
             <span class="project-title">{{ job.jobId.jobTitle }}</span>
             <div class="status-container">
-              <!-- Completed Status -->
               <div
               class="status-button completed"
               [ngClass]="{
@@ -120,7 +119,7 @@
               <span *ngIf="hoverStatId !== job.jobId">Completed</span>
             </div>
               
-              <!-- Payment Status -->
+     
               <div
               class="status-pay"
               [ngClass]="{
@@ -139,7 +138,7 @@
         </div>
         </div>
 
-        <!-- Payment Confirmation Modal -->
+     
         <div *ngIf="showPaymentModal && selectedJob?.id" class="payment-modal">
           <div class="modal-content">
             <h2>Payment Confirmation</h2>
@@ -151,8 +150,7 @@
           </div>
         </div>
 
-      
-        <!-- No jobs message -->
+
         <div *ngIf="(!ongoingJobs || ongoingJobs.length === 0) && (!completedJobs || completedJobs.length === 0)">
           <p class="null-text">No jobs assigned at the moment</p>
         </div>

@@ -3,9 +3,6 @@ package com.example.FreelanceHub.controllers;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-// import io.jsonwebtoken.Jwts;
-// import io.jsonwebtoken.SignatureAlgorithm;
-
 import com.example.FreelanceHub.repositories.ClientRepository;
 import com.example.FreelanceHub.repositories.FreelancerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,43 +69,16 @@ public class UserController {
     @Autowired
     private RatingService ratingService;
 
-//    @GetMapping("")
-//    public String showLandingpage(Model model) {
-//        String role = (String) session.getAttribute("role");
-//        model.addAttribute("role", role);
-//
-//        return "index.html";
-//    }
-
-//    @GetMapping(value = "//{path:[^\\.]*}")
-//    public String redirect() {
-//        // Redirect all routes to the Angular index.html
-//        return "forward:/index.html";
-//    }
-
     @GetMapping("/userStats")
     public Map<String, Long> getUserStats() {
-        long clientCount = clientRepository.count(); // Get total clients
-        long freelancerCount = freelancerRepository.count(); // Get total freelancers
+        long clientCount = clientRepository.count();
+        long freelancerCount = freelancerRepository.count();
 
         Map<String, Long> stats = new HashMap<>();
         stats.put("clientCount", clientCount);
         stats.put("freelancerCount", freelancerCount);
 
         return stats;
-    }
-
-    // Selection Page
-    @GetMapping("/signup/selection")
-    public String showSignupSelectionPage() {
-        return "selection"; // Render the signup-selection.html page
-    }
-
-    // Client Signup Page
-    @GetMapping("/signup/client")
-    public String showClientSignupPage(Model model) {
-        model.addAttribute("client", new Client());
-        return "signupclient"; // Render the signup-client.html page
     }
 
     @PostMapping("/signup/client")
@@ -146,7 +116,6 @@ public class UserController {
         }
     }
 
-    // Freelancer Signup Page
     @GetMapping("/signup/freelancer")
     public ResponseEntity<String> showFreelancerSignupPage() {
         return ResponseEntity.status(HttpStatus.OK).body("Frontend handled by Angular");
@@ -154,9 +123,9 @@ public class UserController {
 
     @PostMapping("/signup/freelancer")
     public ResponseEntity<?> registerFreelancer(@RequestParam(value = "resume", required = false) MultipartFile resume,
-                                                @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
-                                                @Valid FreeDTO freelancerDTO,
-                                                BindingResult bindingResult) {
+            @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+            @Valid FreeDTO freelancerDTO,
+            BindingResult bindingResult) {
 
         Map<String, String> response = new HashMap<>();
         if (bindingResult.hasErrors()) {
@@ -193,11 +162,8 @@ public class UserController {
         freelancer.setQualification(freelancerDTO.getQualification());
         String hashedPassword = BCrypt.hashpw(freelancerDTO.getPassword(), BCrypt.gensalt());
         freelancer.setPassword(hashedPassword);
-//        freelancer.setProfile_image(imageUrl);
-//        freelancer.setResume(pdfUrl);
         freeService.hashExistingFreelancerPasswords();
 
-        // Set only if not null
         if (imageUrl != null) {
             freelancer.setProfile_image(imageUrl);
         }
@@ -205,7 +171,6 @@ public class UserController {
         if (pdfUrl != null) {
             freelancer.setResume(pdfUrl);
         }
-
 
         boolean success = freeService.registerFreelancer(freelancer);
         if (success) {
@@ -218,12 +183,6 @@ public class UserController {
 
     }
 
-    // Common Login Page
-    @GetMapping("/login")
-    public String showLoginPage() {
-        return "common-login"; // Render the common login.html page
-    }
-
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody LoginRequest loginRequest,
             Model model,
@@ -233,8 +192,6 @@ public class UserController {
         Map<String, String> response = new HashMap<>();
         freeService.hashExistingFreelancerPasswords();
         clientService.hashExistingPasswords();
-
-        // Check in Client table
         Client client = clientService.clientRepository.findBycompEmail(email);
         if (client != null && BCrypt.checkpw(password, client.getPassword())) {
             String role = clientService.getUserRole(client.getClientId());
@@ -246,7 +203,6 @@ public class UserController {
             return ResponseEntity.ok(response);
         }
 
-        // Check in Freelancer table
         Freelancer freelancer = freeService.freeRepository.findByfreeEmail(email);
         if (freelancer != null && BCrypt.checkpw(password, freelancer.getPassword())) {
             String role = freeService.getUserRole(freelancer.getFreeId());
@@ -258,7 +214,6 @@ public class UserController {
             return ResponseEntity.ok(response);
         }
 
-        // Invalid login
         response.put("status", "error");
         response.put("message", "Invalid email or password.");
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
@@ -266,19 +221,15 @@ public class UserController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session, RedirectAttributes redirectAttributes) {
-        // Invalidate the session to remove all attributes (including the role)
         session.invalidate();
         redirectAttributes.addFlashAttribute("notificationType", "success");
         redirectAttributes.addFlashAttribute("notificationMessage", "Logged out successfully!");
-
-        // Redirect to the landing or login page
         return "redirect:/";
     }
 
     @GetMapping("/getUnreadNotifications")
     @ResponseBody
     public Map<String, Object> getUnreadNotifications(@RequestParam("userId") String userId) {
-        // Keep only the most recent 10 notifications
         notificationService.delNotification(userId);
         List<Notification> unreadNotifs = notificationService.getNotifications(userId);
         for (Notification notif : unreadNotifs) {
@@ -288,7 +239,6 @@ public class UserController {
                 .filter(notif -> "false".equals(notif.isRead()))
                 .count();
 
-        // Construct the response
         Map<String, Object> response = new HashMap<>();
         response.put("notifications", unreadNotifs);
         response.put("unreadCount", unreadCount);
@@ -296,11 +246,9 @@ public class UserController {
     }
 
     @PostMapping("/markNotificationsAsRead")
-    @ResponseStatus(HttpStatus.NO_CONTENT) // Returns no content if successful
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void markNotificationsAsRead(@RequestParam("userId") String userId) {
-        // Fetch unread notifications for the user
         List<Notification> unreadNotifications = notificationService.getNotifications(userId);
-        // Mark each notification as read
         for (Notification notif : unreadNotifications) {
             notif.setRead("true");
             notificationRepository.save(notif);
@@ -312,17 +260,17 @@ public class UserController {
         String role = (String) session.getAttribute("role");
 
         if (role == null) {
-            return "redirect:/login"; // Redirect to login if role is not found
+            return "redirect:/login";
         }
 
         if (role.equals("client")) {
-            return "redirect:/profile/client"; // Redirect to the client profile page
+            return "redirect:/profile/client";
 
         } else if (role.equals("freelancer")) {
-            return "redirect:/profile/freelancer"; // Redirect to the freelancer profile page
+            return "redirect:/profile/freelancer";
         }
 
-        return "redirect:/"; // Default to landing page if role is unknown
+        return "redirect:/";
     }
 
     @PostMapping("/ratings")

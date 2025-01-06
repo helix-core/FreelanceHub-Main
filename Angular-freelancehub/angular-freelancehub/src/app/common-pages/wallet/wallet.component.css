@@ -1,6 +1,4 @@
-/* General Styles */
-
-  h2, h3, h4 {
+ h2, h3, h4 {
     color: #333;
   }
 
@@ -232,16 +230,11 @@ a.home{
 }
 
 .line-chart {
-  /* margin-top:60px; */
   width: 500px;
   height: 300px;
   justify-self: center;
 }
 
-  
-  
-  
-  /* Responsive Styles */
   @media (max-width: 768px) {
     .wallet-container {
       padding: 10px;

@@ -8,7 +8,6 @@
     <div class="form-container">
         <h1>Edit Client Details</h1>
         <form [formGroup]="editClientForm" (ngSubmit)="updateClient()">
-            <!-- Email -->
             <div class="email">
                 <p>Email</p>
                 <span>
@@ -18,7 +17,6 @@
                 <span *ngIf="editClientForm.get('compEmail')?.errors?.['invalidEmail']" class="error-message">Enter a valid email</span>
             </div>
 
-            <!-- Company Name -->
             <div class="companyname">
                 <p>Company Name</p>
                 <span>
@@ -30,7 +28,6 @@
                 </small>
             </div>
 
-            <!-- Type of Project -->
             <div class="projects">
                 <p>Type of Project</p>
                 <span>
@@ -43,7 +40,6 @@
                 </small>
             </div>
 
-            <!-- Company Description -->
             <div class="desc">
                 <p>Company Description</p>
                 <span>
@@ -56,7 +52,6 @@
                 </small>
             </div>
 
-            <!-- Representative Name -->
             <div class="repname">
                 <p>Representative Name</p>
                 <span>
@@ -68,7 +63,6 @@
                 </small>
             </div>
 
-            <!-- Representative Designation -->
             <div class="desig">
                 <p>Representative Designation</p>
                 <span>
@@ -81,7 +75,6 @@
                 </small>
             </div>
 
-            <!-- Password -->
             <div class="password">
                 <p>Password</p>
                 <span>
@@ -100,7 +93,7 @@
             </ng-template>
             </div>
 
-            <!-- Confirm Password -->
+           
             <div class="retype">
                 <p>Re-type Password</p>
                 <span>
@@ -117,7 +110,7 @@
                 </ng-template>
             </div>
 
-            <!-- Submit Button -->
+          
             <button type="submit" (click)="updateClient()">Update</button>
         </form>
     </div>

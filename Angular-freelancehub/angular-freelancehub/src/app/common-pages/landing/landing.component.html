@@ -40,7 +40,6 @@
                     <img src="assets/images/profile_png.png" alt="" class="profile-icon">
                 </div>
                 <div class="dropdown-menu" [ngClass]="{'visible': profileDropdownVisible}">
-                    <!-- <a routerLink="{{ userRole === 'client' ? '/profile/client' : '/profile/freelancer' }}">Profile</a> -->
                     <a 
                     [routerLink]="userRole === 'client' 
                       ? ['/profile/client'] 
@@ -92,7 +91,6 @@
 </section>
 
 <div class="container">
-    <!-- How It Works Section -->
     <section class="section how-it-works" id="how-it-works">
         <h2>How It Works</h2>
         <div class="cards">
@@ -115,7 +113,7 @@
     </section>
 </div>
 
-<!-- Popular Categories Section -->
+
 <section class="section popular-categories">
     <h2>Popular Categories</h2>
     <div class="categories">
@@ -149,14 +147,14 @@
         <div class="stats-grid">
             <div class="stat-item">
                 <div class="stat-icon">
-                    <i class="fas fa-users"></i> <!-- FontAwesome icon -->
+                    <i class="fas fa-users"></i> 
                 </div>
                 <h2>{{ clientCount }}</h2>
                 <p>Clients Registered</p>
             </div>
             <div class="stat-item">
                 <div class="stat-icon">
-                    <i class="fas fa-user-tie"></i> <!-- FontAwesome icon -->
+                    <i class="fas fa-user-tie"></i> 
                 </div>
                 <h2>{{ freelancerCount }}</h2>
                 <p>Freelancers Registered</p>

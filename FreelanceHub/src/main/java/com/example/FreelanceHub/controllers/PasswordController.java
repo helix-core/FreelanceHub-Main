@@ -47,8 +47,8 @@ public class PasswordController {
 
         String resetToken = emailService.generateResetToken();
 
-        String resetLink = "http://freelancehub-frontend.s3-website-us-east-1.amazonaws.com/verify-reset-password?token=" + resetToken;
-
+        String resetLink = "http://freelancehub-frontend.s3-website-us-east-1.amazonaws.com/verify-reset-password?token="
+                + resetToken;
 
         if (client != null) {
             client.setResetToken(resetToken);
@@ -68,17 +68,11 @@ public class PasswordController {
     public ResponseEntity<Map<String, Object>> handleResetPassword(@RequestParam("token") String token) {
         Freelancer freelancer = freelancerService.findByResetToken(token);
         Client client = clientService.findByResetToken(token);
-
-
-
-        // Step 2: Validate the token and its expiry
         if ((freelancer != null && freelancer.getTokenExpiry().isBefore(LocalDateTime.now())) ||
                 (client != null && client.getTokenExpiry().isBefore(LocalDateTime.now()))) {
             Map<String, Object> response = Map.of("message", "Expired token");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
         }
-
-        // Step 3: If token is valid, check if the email belongs to a client or freelancer
         Map<String, Object> response = new HashMap<>();
         if (client != null) {
             response.put("redirectTo", "client");
@@ -93,29 +87,4 @@ public class PasswordController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
-
-//    @PostMapping("/reset-password/confirm")
-//    public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
-//        Client client = clientRepository.findByResetToken(token).orElse(null);
-//        Freelancer freelancer = freelancerRepository.findByResetToken(token).orElse(null);
-//
-//        if ((client == null || client.getTokenExpiry().isBefore(LocalDateTime.now())) &&
-//                (freelancer == null || freelancer.getTokenExpiry().isBefore(LocalDateTime.now()))) {
-//            return ResponseEntity.badRequest().body("Invalid or expired token");
-//        }
-//
-//        if (client != null) {
-//            client.setPassword(newPassword);
-//            client.setResetToken(null);
-//            client.setTokenExpiry(null);
-//            clientRepository.save(client);
-//        } else {
-//            freelancer.setPassword(newPassword);
-//            freelancer.setResetToken(null);
-//            freelancer.setTokenExpiry(null);
-//            freelancerRepository.save(freelancer);
-//        }
-//
-//        return ResponseEntity.ok("Password reset successful");
-//    }
 }

@@ -18,7 +18,6 @@
         <button (click)="openAddCreditsModal()">Add Credits</button>
       </div>
   
-      <!-- Modal for adding credits -->
       <div *ngIf="showAddCreditsModal" class="modal">
         <div class="modal-content">
           <h4>Add Credits</h4>
@@ -30,7 +29,6 @@
   
 
       <div style="display: flex; justify-content: space-between; gap: 20px;">
-      <!-- Pie chart for monthly spending -->
       <div *ngIf="monthlySpendingData?.datasets" style="flex: 1;">
         <h4>Monthly Spending</h4>
         <canvas baseChart
@@ -40,7 +38,6 @@
         </canvas>
       </div>
 
-      <!-- Line chart-->
       <div style="flex: 1;width: 500px; height: 300px;">
         <h4>Weekly Transactions</h4>
         <canvas class="line-chart"
@@ -52,8 +49,6 @@
       </div>
       </div>
 
-  
-      <!-- Transaction History -->
       <div>
         <h4 class="trans-header">Transaction History</h4>
         <div class="table-container">
@@ -91,7 +86,6 @@
         <button (click)="openWithdrawModal()">Request Withdrawal</button>
       </div>
   
-      <!-- Modal for withdrawal request -->
       <div *ngIf="showWithdrawModal" class="modal">
         <div class="modal-content">
           <h4>Request Withdrawal</h4>
@@ -101,10 +95,7 @@
         </div>
       </div>
 
-      <!-- Freelancer's Charts: Monthly Earnings and Weekly Transaction Volume -->
       <div style="display: flex; justify-content: space-between; gap: 20px;">
-
-        <!-- Pie chart for freelancer's monthly earnings -->
         <div *ngIf="monthlyEarningData?.datasets" style="flex: 1;">
           <h4>Monthly Earnings</h4>
           <canvas baseChart
@@ -114,7 +105,7 @@
           </canvas>
         </div>
 
-        <!-- Line chart for freelancer's weekly transaction volume -->
+        
         <div style="flex: 1;">
           <h4>Weekly Transaction Volume</h4>
           <canvas class="line-chart"
@@ -127,9 +118,6 @@
 
       </div>
 
-  
-  
-      <!-- Transaction History -->
       <div>
         <h4>Transaction History</h4>
         <div class="table-container">

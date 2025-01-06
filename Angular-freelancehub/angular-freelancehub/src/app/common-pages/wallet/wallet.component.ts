@@ -62,7 +62,7 @@ export class WalletComponent implements OnInit {
   constructor(private walletService:WalletService, private router: Router, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
-    this.userRole = localStorage.getItem('userRole') || 'client'; // Check role from local storage
+    this.userRole = localStorage.getItem('userRole') || 'client'; 
     this.userId = localStorage.getItem('userId') || '';
 
     if (this.userRole === 'client') {
@@ -76,7 +76,6 @@ export class WalletComponent implements OnInit {
     }
   }
 
-  // Fetch wallet balance and transaction history for client
   getClientWalletInfo() {
     this.walletService.getWalletBalance(this.userId).subscribe(balance => {
       this.clientWalletBalance = balance;
@@ -86,7 +85,6 @@ export class WalletComponent implements OnInit {
     });
   }
 
-  // Fetch wallet balance and transaction history for freelancer
   getFreelancerWalletInfo() {
     this.walletService.getWalletBalance(this.userId).subscribe(balance => {
       this.freelancerWalletBalance = balance;
@@ -96,7 +94,6 @@ export class WalletComponent implements OnInit {
     });
   }
 
-  // Open modal for adding credits (client)
   openAddCreditsModal() {
     this.showAddCreditsModal = true;
   }
@@ -107,13 +104,12 @@ export class WalletComponent implements OnInit {
 
   addCredits() {
     this.walletService.addCredits(this.userId, this.creditsToAdd).subscribe(response => {
-      this.getClientWalletInfo(); // Refresh wallet info after adding credits
+      this.getClientWalletInfo();
       this.closeAddCreditsModal();
       this.notificationService.showNotification("Credit Added Successfully!", 'success',);
     });
   }
 
-  // Open modal for withdrawal request (freelancer)
   openWithdrawModal() {
     this.showWithdrawModal = true;
   }
@@ -122,10 +118,10 @@ export class WalletComponent implements OnInit {
     this.showWithdrawModal = false;
   }
 
-  // Request withdrawal (freelancer)
+
   requestWithdrawal() {
     this.walletService.requestWithdrawal(this.userId, this.withdrawAmount).subscribe(response => {
-      this.getFreelancerWalletInfo(); // Refresh wallet info after withdrawal
+      this.getFreelancerWalletInfo(); 
       this.closeWithdrawModal();
       this.notificationService.showNotification("Amount withdraw successful!", 'success');
     },error=>{
@@ -135,23 +131,23 @@ export class WalletComponent implements OnInit {
   }
   getMonthlySpendingData() {
     this.walletService.getMonthlySpending(this.userId).subscribe((data: any) => {
-      this.monthlySpendingLabels = Object.keys(data); // Months
-      this.monthlySpendingValues = Object.values(data); // Spending amounts
+      this.monthlySpendingLabels = Object.keys(data); 
+      this.monthlySpendingValues = Object.values(data); 
       this.preparePieChart();
     });
   }
 
   getMonthlyEarningData() {
     this.walletService.getMonthlyEarnings(this.userId).subscribe((data: any) => {
-      this.monthlyEarningLabels = Object.keys(data); // Months
-      this.monthlyEarningValues = Object.values(data); // Earnings amounts
+      this.monthlyEarningLabels = Object.keys(data); 
+      this.monthlyEarningValues = Object.values(data); 
       this.prepareFreelancerPieChart();
     });
   }
 
   getDailyTransactionVol(){
     this.walletService.getDailyTransactionVolume(this.userId).subscribe((data) => {
-      const dates = Object.keys(data).sort(); // Sort dates in ascending order
+      const dates = Object.keys(data).sort(); 
       const formattedDates=dates.map(date => format(new Date(date), 'MMM dd')); 
       const counts = dates.map((date) => data[date]);
 

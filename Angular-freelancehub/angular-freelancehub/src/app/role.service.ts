@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class RoleService {
-  // private apiUrl = 'http://localhost:8080/roles';
   private URL = "http://freelancehub12.us-east-1.elasticbeanstalk.com/api";
 
   constructor(private http: HttpClient) {}

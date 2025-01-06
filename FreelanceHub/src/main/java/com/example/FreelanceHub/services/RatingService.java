@@ -32,24 +32,21 @@ public class RatingService {
     public Rating addRating(String freelancerId, String clientId, int jobId, int ratingValue) {
         Freelancer freelancer = freelancerRepository.findByFreeId((String) freelancerId)
                 .orElseThrow(() -> new RuntimeException("Freelancer not found"));
-        Client client= clientRepository.findByClientId((String) clientId);
+        Client client = clientRepository.findByClientId((String) clientId);
         ClientJob clientjob = clientJobRepository.findById((int) jobId);
         Rating rating = new Rating();
         rating.setFreelancer(freelancer);
         rating.setClient(client);
         rating.setJob(clientjob);
         rating.setRating(ratingValue);
-
         Rating savedRating = ratingRepository.save(rating);
-
-        // Update the average rating for the freelancer
         updateFreelancerRating(freelancer);
 
         return savedRating;
     }
 
     private void updateFreelancerRating(Freelancer freelancer) {
-        List<Rating> ratings = ratingRepository.findAll(); // Ideally filter ratings by freelancer
+        List<Rating> ratings = ratingRepository.findAll();
         double averageRating = ratings.stream()
                 .filter(r -> r.getFreelancer().getFreeId() == freelancer.getFreeId())
                 .mapToInt(Rating::getRating)
@@ -61,14 +58,12 @@ public class RatingService {
     }
 
     public int countFreelancerRatings(String freelancerId) {
-        List<Rating> ratings = ratingRepository.findAll(); // Fetch all ratings
+        List<Rating> ratings = ratingRepository.findAll();
         Freelancer freelancer = freelancerRepository.findByFreeId((String) freelancerId)
                 .orElseThrow(() -> new RuntimeException("Freelancer not found"));
         int ratingCount = (int) ratings.stream()
-                .filter(r -> r.getFreelancer().getFreeId() == freelancer.getFreeId()) // Filter by freelancer ID
-                .count(); // Count the filtered ratings    
+                .filter(r -> r.getFreelancer().getFreeId() == freelancer.getFreeId())
+                .count();
         return ratingCount;
     }
-
-
 }

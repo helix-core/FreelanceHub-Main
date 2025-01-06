@@ -1,5 +1,4 @@
 
-/* General Styles */
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +14,6 @@
     min-height: 100vh;
     background-color: #f8f9fa;
     padding-top: 80px;
-    /* To adjust for fixed navbar */
 }
 
 .title{
@@ -25,17 +23,7 @@
     overflow: hidden;
 }
 
-/* body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: #f8f9fa;
-    padding-top: 80px;
-} */
 
-/* Navbar Styles */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -66,7 +54,7 @@
     font-family: 'Mulish', sans-serif;
 }
 
-/* Form Container */
+
 .form-container {
     width: 100%;
     max-width: 500px;
@@ -86,7 +74,7 @@
     font-weight: 800;
 }
 
-/* Form Elements */
+
 form input,
 form select {
     width: 100%;
@@ -141,7 +129,7 @@ a.update{
     background: #232B50;
 }
 
-/* Skills Container */
+
 #skills-container {
     margin-bottom: 20px;
 }
@@ -186,7 +174,7 @@ a.update{
     display: block;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .form-container {
         transform: none;
@@ -199,127 +187,107 @@ a.update{
     }
 }
 .email{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .email p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0;
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 .name{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .name p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0; 
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 .age{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .age p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0; 
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 .country{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .country p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0; 
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 .fields{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .fields p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0; 
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 .experience{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center;
+    gap: 10px; 
 }
 
 .experience p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0; 
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 .qual{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .qual p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0; 
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 .password{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .password p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0; 
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 .retype{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .retype p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0; 
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 a.home{
     text-decoration: none; 
     color: #232B50;
   }
   .skills-container p {
-    margin: 0; /* Remove default margin to avoid extra spacing */
+    margin: 0; 
 	color: #232B50;
 	font-weight: bolder;
-	/* margin-bottom: revert; */
 }
 .skills-container{
-    /*display: flex;*/
-    align-items: center; /* Align items vertically in the center */
-    gap: 10px; /* Space between the label and input */
+    align-items: center; 
+    gap: 10px; 
 }
 
 .home:hover .tooltiptext {
@@ -329,8 +297,8 @@ a.home{
 
   .tooltiptext {
     position: absolute;
-    top: 110%;               /* Position the tooltip below the text */
-    left:10%;              /* Center the tooltip horizontally */
+    top: 110%;               
+    left:10%;
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
@@ -338,10 +306,10 @@ a.home{
     border-radius: 5px;
     font-size: 0.5em;
     white-space: nowrap;
-    opacity: 0;              /* Initially hidden */
-    visibility: hidden;      /* Not interactable when hidden */
-    transition: opacity 0.3s ease; /* Smooth fade-in effect */
-    z-index: 10;             /* Ensure tooltip appears above other elements */
+    opacity: 0;              
+    visibility: hidden;      
+    transition: opacity 0.3s ease; 
+    z-index: 10;
   }
    .profile-upload-container {
        display: flex;
@@ -477,7 +445,7 @@ a.home{
         }
 
 
-  /* Responsive Design for Tablets and Smaller Devices */
+  
 @media (max-width: 1024px) {
     .navbar-title {
         font-size: 28px;
@@ -559,4 +527,4 @@ a.home{
     }
 }
 
-/*770*/
+

@@ -88,13 +88,13 @@ jobForm: FormGroup;
   }
 
     validateLink(): void {
-        const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w-]*)*\/?$/; // Regex for basic URL validation
+        const urlPattern = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/[\w-]*)*\/?$/; 
         if (!this.newLink.trim()) {
             this.linkError = 'Link is required.';
         } else if (!urlPattern.test(this.newLink)) {
             this.linkError = 'Enter a valid link (e.g., Drive, GitHub, project link).';
         } else {
-            this.linkError = ''; // Clear error if validation passes
+            this.linkError = ''; 
         }
     }
 
@@ -107,15 +107,15 @@ jobForm: FormGroup;
   }
 
 addLink(): void {
-  this.validateLink(); // Validate before adding
+  this.validateLink(); 
         if (!this.linkError && this.newLink.trim()) {
             this.uploadedLinks.push(this.newLink.trim());
-            this.newLink = ''; // Clear input after adding
+            this.newLink = ''; 
         }
 }
 
 removeLink(index: number): void {
-  this.uploadedLinks.splice(index, 1); // Remove the link at the specified index
+  this.uploadedLinks.splice(index, 1); 
 }
 
   onSubmit(): void {
@@ -125,7 +125,7 @@ removeLink(index: number): void {
     return;
   }
 
-  const jobId = this.job?.jobId; // Ensure the job ID is included
+  const jobId = this.job?.jobId; 
   if (!jobId) {
     console.error('Job ID is missing.');
     return;
@@ -133,7 +133,7 @@ removeLink(index: number): void {
 
   const formData = {
     ...this.jobForm.value,
-    previousWorks: this.uploadedLinks.join(','), // Convert links to a comma-separated string
+    previousWorks: this.uploadedLinks.join(','), 
     jobId: jobId,
     userId: userId,
   };
@@ -144,11 +144,9 @@ removeLink(index: number): void {
    console.log(formData);
  this.http.post<{ message: string }>(`${this.URL}/apply`, params).subscribe(
   (response) => {
-    // Handle successful submission
     this.notificationService.showNotification(response.message, 'success', '/applied-jobs');
   },
   (error) => {
-    // Handle error
     if (error.error && error.error.message) {
       this.notificationService.showNotification(error.error.message, 'error');
     } else {

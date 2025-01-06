@@ -50,28 +50,23 @@ public class ClientService {
             Roles role = new Roles(roleName, clientId);
             rolesRepository.save(role);
         } catch (Exception e) {
-            // Log error if needed
             System.err.println("Error adding role: " + e.getMessage());
         }
     }
 
     public String getUserRole(String clientId) {
-        // Fetch the role based on the clientId
         Roles role = rolesRepository.findByRoleId(clientId);
-        return role != null ? role.getRole() : null; // Return role or null if not found
+        return role != null ? role.getRole() : null;
     }
 
     public void hashExistingPasswords() {
-        List<Client> clients = clientRepository.findAll(); // Fetch all clients
-
+        List<Client> clients = clientRepository.findAll();
         for (Client client : clients) {
             String password = client.getPassword();
-
-            // Check if the password is not already hashed
-            if (!password.startsWith("$2a$")) { // BCrypt hash prefix
+            if (!password.startsWith("$2a$")) {
                 String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                 client.setPassword(hashedPassword);
-                clientRepository.save(client); // Update the client with the hashed password
+                clientRepository.save(client);
             }
         }
     }

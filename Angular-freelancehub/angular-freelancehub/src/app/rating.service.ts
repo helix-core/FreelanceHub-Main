@@ -14,24 +14,24 @@ export class RatingService {
 
   constructor(private http: HttpClient, private notificationService: NotificationService) {}
 
-  // Open the rating popup and store the current job
+
   openRatingPopup(job: any): void {
     this.showRatingPopup = true;
-    this.currentJob = job; // Store the job object (includes jobId, freelancerId, clientId)
+    this.currentJob = job; 
   }
 
-  // Close the rating popup
+
   closePopup(): void {
     this.showRatingPopup = false;
-    this.rating = 0; // Reset rating
+    this.rating = 0;
   }
 
-  // Handle rating selection
+  
   rateFreelancer(star: number): void {
-    this.rating = star; // Update the rating based on the clicked star
+    this.rating = star; 
   }
 
-  // Submit the rating
+  
   submitRating(): void {
     if (this.rating === 0) {
       alert('Please select a rating.');
@@ -44,18 +44,18 @@ export class RatingService {
       return;
     }
     const params = new HttpParams()
-    .set('freelancerId', this.currentJob.freeId.freeId)  // Pass freelancerId
-    .set('clientId', userId)                            // Pass clientId
-    .set('jobId', this.currentJob.jobId.jobId) // Pass jobId as string
+    .set('freelancerId', this.currentJob.freeId.freeId)  
+    .set('clientId', userId)                            
+    .set('jobId', this.currentJob.jobId.jobId) 
     .set('rating', this.rating.toString());  
     
-    // Send the rating to the backend
+    
     this.http
       .post(`${this.URL}/ratings`,null, {params})
       .subscribe(
         (response) => {
           this.notificationService.showNotification('Rating submitted successfully!', 'success');
-          this.closePopup(); // Close the rating popup
+          this.closePopup(); 
         },
         (error) => {
           this.notificationService.showNotification('Failed to submit rating.', 'error');
