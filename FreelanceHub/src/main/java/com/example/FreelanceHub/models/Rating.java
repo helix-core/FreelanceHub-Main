@@ -1,4 +1,5 @@
 package com.example.FreelanceHub.models;
+
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
@@ -14,16 +15,16 @@ public class Rating {
     private int rating;
 
     @ManyToOne
-    @JoinColumn(name = "free_id",referencedColumnName = "freeId", nullable = false)
+    @JoinColumn(name = "free_id", referencedColumnName = "freeId", nullable = false)
     private Freelancer freelancer;
 
     @ManyToOne
-    @JoinColumn(name = "client_id",referencedColumnName = "clientId", nullable = false)
-    private Client client; // Optional, if you need to track the client
+    @JoinColumn(name = "client_id", referencedColumnName = "clientId", nullable = false)
+    private Client client;
 
     @ManyToOne
-    @JoinColumn(name = "job_id", referencedColumnName = "jobId",nullable = false)
-    private ClientJob job; // Optional, if you want to track job details
+    @JoinColumn(name = "job_id", referencedColumnName = "jobId", nullable = false)
+    private ClientJob job;
 
     public int getId() {
         return id;
@@ -65,5 +66,4 @@ public class Rating {
         this.job = job;
     }
 
-   
 }

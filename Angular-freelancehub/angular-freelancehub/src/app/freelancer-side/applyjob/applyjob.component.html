@@ -9,7 +9,6 @@
     </header>
 
     <div class="container">
-        <!-- Left Section -->
         <div class="left-section">
             <h2>Job Title:</h2>
             <p>{{ job?.jobTitle }}</p>
@@ -24,10 +23,8 @@
             </div>
         </div>
 
-        <!-- Right Section -->
         <div class="right-section">
             <form [formGroup]="jobForm" (ngSubmit)="onSubmit()">
-                <!-- Sliders Section -->
                 <div *ngFor="let slider of sliders" class="slider-container">
                     <label>{{ slider.label }}:</label>
                     <div class="custom-slider">
@@ -41,7 +38,7 @@
                     </div>
                 </div>
 
-                <!-- Skills Matched -->
+
                 <div class="skills-container">
                     <h4>Skills Analysis</h4>
                     <div class="circular-progress" [ngStyle]="{ background: circularProgressStyle }">
@@ -58,7 +55,7 @@
                     </div>
                 </div>
 
-                <!-- Upload Section -->
+
                 <div class="upload-container">
                     <label for="previousWorks">Upload Previous Works:</label>
                     <input type="text" [(ngModel)]="newLink" placeholder="Enter link and click Add"
@@ -80,8 +77,6 @@
                     </div>
                 </div>
 
-
-                <!-- Submit Button -->
                 <button type="submit" id="submitButton">Submit</button>
             </form>
         </div>

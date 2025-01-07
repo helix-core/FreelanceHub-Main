@@ -27,7 +27,7 @@ export class PostedJobsComponent implements OnInit {
         console.error('Error fetching jobs', error);
       },
       complete: () => {
-        console.log('Job fetching completed'); // Handle completion (optional)
+        console.log('Job fetching completed');
       }
    });
   }

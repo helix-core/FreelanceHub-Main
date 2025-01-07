@@ -38,10 +38,8 @@ public class FreelancerService {
     @Autowired
     S3Service s3Service;
 
-
     public boolean registerFreelancer(Freelancer freelancer) {
         try {
-
             Freelancer savedFreelancer = freeRepository.save(freelancer);
             String uniqueFreeId = "F" + savedFreelancer.getId();
             savedFreelancer.setFreeId(uniqueFreeId);
@@ -73,55 +71,14 @@ public class FreelancerService {
     }
 
     public String getUserRole(String freeId) {
-        // Fetch the role based on the clientId
         Roles role = rolesRepository.findByRoleId(freeId);
-        return role != null ? role.getRole() : null; // Return role or null if not found
+        return role != null ? role.getRole() : null;
     }
 
     public Freelancer findByFreeId(String freeId) {
         return freeRepository.findByFreeId(freeId)
                 .orElseThrow(() -> new EntityNotFoundException("Freelancer not found for freeId: " + freeId));
     }
-
-//    public String saveProfileImage(MultipartFile profileImage) {
-//        if (profileImage == null || profileImage.isEmpty()) {
-//            return null; // Handle case where no image is uploaded
-//        }
-//
-//        // Define the path where the profile images will be saved
-//        String fileName = UUID.randomUUID().toString() + "-" + profileImage.getOriginalFilename();
-//        Path targetLocation = Paths.get("src/main/resources/static/images/profile_images/" + fileName);
-//
-//        try {
-//            // Save the file to the target location
-//            Files.copy(profileImage.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return null; // Handle exception if file saving fails
-//        }
-//
-//        // Return the relative URL to the image
-//        return "/images/profile_images/" + fileName;
-//    }
-//
-//    public String saveFile(MultipartFile file) {
-//        if (file != null && !file.isEmpty()) {
-//            // Save file to the local storage
-//            String fileName = UUID.randomUUID().toString() + "-" + file.getOriginalFilename();
-//            Path targetLocation = Paths.get("src/main/resources/static/uploads/" + fileName);
-//
-//            try {
-//                // Save the file to the target location
-//                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-//                // Return the relative path to the image
-//                return "/uploads/" + fileName;
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                return null; // Handle exception if file saving fails
-//            }
-//        }
-//        return null; // Return null if both file and link are empty
-//    }
 
     public String saveProfileImage(MultipartFile profileImage) {
         if (profileImage == null || profileImage.isEmpty()) {
@@ -138,16 +95,14 @@ public class FreelancerService {
     }
 
     public void hashExistingFreelancerPasswords() {
-        List<Freelancer> freelancers = freeRepository.findAll(); // Fetch all freelancers
+        List<Freelancer> freelancers = freeRepository.findAll();
 
         for (Freelancer freelancer : freelancers) {
             String password = freelancer.getPassword();
-
-            // Check if the password is not already hashed
-            if (!password.startsWith("$2a$")) { // BCrypt hash prefix
+            if (!password.startsWith("$2a$")) {
                 String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                 freelancer.setPassword(hashedPassword);
-                freeRepository.save(freelancer); // Update the freelancer with the hashed password
+                freeRepository.save(freelancer);
             }
         }
     }
@@ -159,5 +114,4 @@ public class FreelancerService {
     public Freelancer findByResetToken(String resetToken) {
         return freeRepository.findByResetToken(resetToken);
     }
-
 }

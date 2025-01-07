@@ -84,8 +84,6 @@ public class FreelancerController {
         List<String> missingSkills = jobSkills.stream()
                 .filter(skill -> !freelancerSkills.contains(skill))
                 .toList();
-
-        // Calculate matched skills
         long matchedSkillsCount = jobSkills.stream()
                 .filter(freelancerSkills::contains)
                 .count();
@@ -134,7 +132,6 @@ public class FreelancerController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Freelancer not found."));
         }
 
-        // Match skills
         List<String> jobSkills = job.getSkillsAsList();
         List<String> freelancerSkills = freelancer.getSkillsAsList();
         long matchedSkillsCount = jobSkills.stream()
@@ -153,7 +150,6 @@ public class FreelancerController {
                     .body(Map.of("message", "Failed to save job application: " + e.getMessage()));
         }
         notificationService.addNotification(job.getClientId(), "One of your jobs got an application!");
-        // Return JSON response with message
         return ResponseEntity.ok(Map.of("message", "Application submitted successfully"));
     }
 
@@ -215,9 +211,9 @@ public class FreelancerController {
 
     @GetMapping("/explore")
     public String showExplorePage(Model model, HttpSession session) {
-        String userId = (String) session.getAttribute("userId");// Fetch freelancer ID from session
+        String userId = (String) session.getAttribute("userId");
         if (userId == null) {
-            return "redirect:/login"; // Redirect to login if the freelancer is not logged in
+            return "redirect:/login";
         }
 
         List<ClientJob> clientJobs = clientJobRepository.findJobsExcludingApplied("pending", userId);
@@ -235,16 +231,13 @@ public class FreelancerController {
     @GetMapping("/profile/freelancer")
     public ResponseEntity<Map<String, Object>> getFreelancerProfile(@RequestParam String userId) {
         try {
-            // Fetch freelancer profile by userId
             Optional<Freelancer> freelancer = freelancerRepository.findByFreeId(userId);
             if (freelancer.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Freelancer not found"));
             }
-
-            // Fetch ongoing and completed jobs for the freelancer
             List<FreelancerJob> ongoingJobs = freeJobRepository.findByFreeIdAndProgress(userId, "ongoing");
             for (FreelancerJob job : freeJobRepository.findByFreeIdAndProgress(userId, "unverified")) {
-                ongoingJobs.add(job); // Include unverified jobs in ongoing jobs
+                ongoingJobs.add(job);
             }
             List<FreelancerJob> completedJobs = freeJobRepository.findByFreeIdAndProgress(userId, "completed");
 
@@ -256,21 +249,16 @@ public class FreelancerController {
                         previousWorkLinks.addAll(jobItem.getPreviousWorkLinksAsList());
                     }
                 }
-                // for (String val : previousWorkLinks) {
-                // System.out.println(val);
-                // }
             }
 
-            // Prepare the response
             Map<String, Object> response = new HashMap<>();
-            response.put("freelancer", freelancer.get()); // Add freelancer data
-            response.put("ongoingJobs", ongoingJobs); // Add ongoing jobs
-            response.put("completedJobs", completedJobs); // Add completed jobs
+            response.put("freelancer", freelancer.get());
+            response.put("ongoingJobs", ongoingJobs);
+            response.put("completedJobs", completedJobs);
             response.put("previousWorkLinks", previousWorkLinks);
 
-            return ResponseEntity.ok(response); // Return the response as JSON
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            // Handle error and return an internal server error response
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(Map.of("error", "An error occurred while fetching freelancer profile"));
         }
@@ -297,8 +285,6 @@ public class FreelancerController {
                 .orElseThrow(() -> new RuntimeException("Freelancer not found"));
         System.out.print(resume);
         System.out.print(profileImage);
-
-        // Update only editable fields
         String imageUrl = profileImage != null ? freelancerservice.saveProfileImage(profileImage)
                 : existingFreelancer.getProfile_image();
         String pdfUrl = resume != null ? freelancerservice.saveFile(resume) : existingFreelancer.getResume();

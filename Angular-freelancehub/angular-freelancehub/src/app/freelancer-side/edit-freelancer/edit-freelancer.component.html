@@ -152,7 +152,6 @@
           <span>Re-type password is required</span>
         </div>
         
-        <!-- 'else' part for 'passwordMismatch' error -->
         <ng-template #passwordMismatch>
           <div *ngIf="freelancerForm.hasError('passwordMismatch') && (freelancerForm.touched || freelancerForm.dirty)"
             class="error-message">

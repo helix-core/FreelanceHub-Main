@@ -24,8 +24,6 @@ export class EditClientFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeForm();
-
-    // Fetch client details using userId from localStorage
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('userId') || localStorage.getItem('userId');
     if (this.userId) {
@@ -73,14 +71,12 @@ export class EditClientFormComponent implements OnInit {
   if (this.editClientForm.valid) {
     const updatedClient = this.editClientForm.value;
     if (this.userId) {
-      updatedClient.userId = this.userId; // Add userId to the request body
+      updatedClient.userId = this.userId;
       this.clientService.updateClientDetails(updatedClient).subscribe(
         () => {
            if (localStorage.getItem('userId')) {
-            // Redirect to profile page if userId is in localStorage
             this.notificationService.showNotification('Profile edited successfully!', 'success', '/profile/client');
           } else {
-            // Redirect to login page if userId is not in localStorage
             this.notificationService.showNotification('Password reset successfully! Please log in.', 'success', '/login');
           }
 

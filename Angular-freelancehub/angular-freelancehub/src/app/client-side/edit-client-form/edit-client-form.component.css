@@ -1,4 +1,3 @@
-/* General Styles */
 * {
     margin: 0;
     padding: 0;
@@ -12,12 +11,10 @@
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: #f8f9fa;
-  
-    /* To adjust for fixed navbar */
+    background-color: #f8f9fa; 
 }
 
-/* Navbar Styles */
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -28,7 +25,6 @@
     width: 100%;
     height: 60px;
     z-index: 1000;
-    /*background-color: #232B50;*/
 }
 
 .navbar-left {
@@ -49,7 +45,7 @@
     font-family: 'Mulish', sans-serif;
 }
 
-/* Form Container */
+
 .form-container {
     width: 100%;
     max-width: 500px;
@@ -69,7 +65,7 @@
     font-weight: 800;
 }
 
-/* Form Elements */
+
 form input,
 form textarea {
     width: 100%;
@@ -110,7 +106,7 @@ form button:hover {
     margin-bottom: 8px;
     display: block;
 }
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .form-container {
         transform: none;
@@ -124,41 +120,25 @@ form button:hover {
 }
 
 .email {
-    /*display: flex;*/
     align-items: center;
-    /* Align items vertically in the center */
     gap: 10px;
-    /* Space between the label and input */
 }
 
 .email p {
     margin: 0;
-    /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    /* margin-bottom: revert; */
 }
 
-/*.email input {
-    flex-shrink: 1;  Allow input to shrink if necessary 
-}*/
-/*#compEmail{
-	width:200%;
-}*/
-
 .companyname {
-    /*display: flex;*/
     align-items: center;
-    /* Align items vertically in the center */
     gap: 10px;
-    /* Space between the label and input */
 }
 
 .companyname p {
     margin: 0;
     color: #232B50;
     font-weight: bolder;
-    /* margin-bottom: revert; */
 }
 
 .companyname input {
@@ -166,99 +146,69 @@ form button:hover {
 }
 
 .projects {
-    /*display: flex;*/
     align-items: center;
-    /* Align items vertically in the center */
     gap: 10px;
-    /* Space between the label and input */
 }
 
 .projects p {
     margin: 0;
-    /* Remove default margin to avoid extra spacing */
     color: #232B50;
-    font-weight: bolder;
-    /* margin-bottom: revert; */
+    font-weight: bolder; 
 }
 
 .desc {
-    /*display: flex;*/
     align-items: center;
-    /* Align items vertically in the center */
     gap: 10px;
-    /* Space between the label and input */
 }
 
 .desc p {
     margin: 0;
-    /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    /* margin-bottom: revert; */
 }
 
 .repname {
-    /*display: flex;*/
     align-items: center;
-    /* Align items vertically in the center */
     gap: 10px;
-    /* Space between the label and input */
 }
 
 .repname p {
     margin: 0;
-    /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    /* margin-bottom: revert; */
 }
 
 .desig {
-    /*display: flex;*/
     align-items: center;
-    /* Align items vertically in the center */
     gap: 10px;
-    /* Space between the label and input */
 }
 
 .desig p {
     margin: 0;
-    /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    /* margin-bottom: revert; */
 }
 
 .password {
-    /*display: flex;*/
     align-items: center;
-    /* Align items vertically in the center */
     gap: 10px;
-    /* Space between the label and input */
 }
 
 .password p {
     margin: 0;
-    /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    /* margin-bottom: revert; */
 }
 
 .retype {
-    /*display: flex;*/
     align-items: center;
-    /* Align items vertically in the center */
     gap: 10px;
-    /* Space between the label and input */
 }
 
 .retype p {
     margin: 0;
-    /* Remove default margin to avoid extra spacing */
     color: #232B50;
     font-weight: bolder;
-    /* margin-bottom: revert; */
 }
 a.home{
     text-decoration: none; 
@@ -272,8 +222,8 @@ a.home{
 
   .tooltiptext {
     position: absolute;
-    top: 110%;               /* Position the tooltip below the text */
-    left:10%;              /* Center the tooltip horizontally */
+    top: 110%;               
+    left:10%;              
     transform: translateX(-50%);
     background-color: rgba(0, 0, 0, 0.8);
     color: #fff;
@@ -281,13 +231,13 @@ a.home{
     border-radius: 5px;
     font-size: 0.5em;
     white-space: nowrap;
-    opacity: 0;              /* Initially hidden */
-    visibility: hidden;      /* Not interactable when hidden */
-    transition: opacity 0.3s ease; /* Smooth fade-in effect */
-    z-index: 10;             /* Ensure tooltip appears above other elements */
+    opacity: 0;             
+    visibility: hidden;      
+    transition: opacity 0.3s ease; 
+    z-index: 10;            
   }
 
-  /* Adjustments for smaller tablets and large mobile devices */
+  
 @media (max-width: 600px) {
     .navbar {
         flex-direction: column;
@@ -313,7 +263,7 @@ a.home{
     .form-container {
         width: 90%;
         padding: 15px;
-        margin-top: 80px; /* Adjust to account for navbar height */
+        margin-top: 80px; 
     }
 
     form input,
@@ -332,7 +282,7 @@ a.home{
     }
 }
 
-/* Extra small devices (e.g., phones) */
+
 @media (max-width: 400px) {
     .navbar-title {
         font-size: 18px;
@@ -365,7 +315,7 @@ a.home{
     .form-container {
         width: 100%;
         padding: 20px;
-        margin-top: 70px; /* To ensure proper spacing below the navbar */
+        margin-top: 70px; 
     }
 
     form input,
@@ -380,7 +330,7 @@ a.home{
     }
 }
 
-/* Small Desktops and Laptops (max-width: 1024px) */
+
 @media (max-width: 1024px) {
     .navbar-title {
         font-size: 28px;
@@ -391,7 +341,7 @@ a.home{
     }
 }
 
-/* Responsive Design for max-width: 808px */
+
 @media (max-width: 808px) {
     .navbar {
         flex-direction: column;
@@ -417,7 +367,7 @@ a.home{
     .form-container {
         width: 95%;
         padding: 20px;
-        margin-top: 80px; /* To ensure proper spacing below the navbar */
+        margin-top: 80px; 
     }
 
     form input,

@@ -92,7 +92,7 @@ export class LandingComponent {
     );
   }
   handleLogout(): void {
-    this.authService.logout(); // Call the logout function in the service
+    this.authService.logout(); 
   }
 
  

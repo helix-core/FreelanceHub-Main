@@ -8,7 +8,6 @@ public class SpaController {
 
     @GetMapping(value = "//{path:[^\\.]*}")
     public String redirect() {
-        // Redirect all routes to the Angular index.html
         return "forward:/index.html";
     }
 

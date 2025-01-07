@@ -64,16 +64,6 @@ public class ClientController {
     @Autowired
     private HttpSession session;
 
-    // Display the job creation form
-    @GetMapping("/postjob")
-    public String showJobForm(Model model) {
-        String clientId = (String) session.getAttribute("userId");
-        model.addAttribute("clientId", clientId);
-        model.addAttribute("clientJob", new ClientJob());
-        return "postjob";
-    }
-
-    // Handle form submission
     @PostMapping("/postjob")
     public ResponseEntity<Map<String, String>> createJob(
             @RequestBody ClientJob clientJob,
@@ -113,7 +103,6 @@ public class ClientController {
             @RequestParam(name = "userId") String userId,
             Model model) {
         String clientId = userId;
-        // Fetch all jobs for the client
         List<ClientJob> jobs = clientJobService.findByClientId(clientId);
         if (jobs == null || jobs.isEmpty()) {
             return ResponseEntity.ok(Collections.singletonMap("jobsWithBids", new ArrayList<>()));
@@ -136,8 +125,6 @@ public class ClientController {
                         bidData.put("freelancerRating", freelancer.getRating() != null ? freelancer.getRating() : 0);
                         return bidData;
                     }).collect(Collectors.toList());
-
-                    // Sort based on the chosen criterion
                     switch (sortBy) {
                         case "duration":
                             enrichedBids.sort(Comparator.comparingInt(
@@ -235,8 +222,6 @@ public class ClientController {
         ongoingJobs.addAll(freelancerJobRepository.findByClientIdAndProgress(clientId, "ongoing"));
 
         List<FreelancerJob> completedJobs = freelancerJobRepository.findByClientIdAndProgress(clientId, "completed");
-
-        // Separate unpaid and paid jobs
         List<FreelancerJob> unpaidJobs = new ArrayList<>();
         List<FreelancerJob> paidJobs = new ArrayList<>();
 
@@ -249,10 +234,7 @@ public class ClientController {
             }
         }
         Collections.reverse(paidJobs);
-        // Combine unpaid jobs first, followed by paid jobs
         unpaidJobs.addAll(paidJobs);
-
-        // Update completedJobs with sorted jobs
         completedJobs = unpaidJobs;
 
         Map<String, List<FreelancerJob>> response = new HashMap<>();
@@ -261,64 +243,11 @@ public class ClientController {
         return ResponseEntity.ok(response);
     }
 
-    // @PostMapping("/verify-project")
-    // public ResponseEntity<String> verifyProject(@RequestParam("jobId") Integer
-    // jobId) {
-    // Jobs job = jobRepository.findById(jobId).orElseThrow(() -> new
-    // RuntimeException("Job not found"));
-    // String freeId = job.getFreeId().getFreeId();
-    // job.setProgress("completed");
-    // notificationService.addNotification(freeId, "One of your projects was
-    // verified. Job marked as complete!");
-    // jobRepository.save(job);
-    // return ResponseEntity.ok("Project verified successfully!");
-    // }
-
-    // @PostMapping("/update-job-status")
-    // public ResponseEntity<String> updateJobStatus(@RequestBody Map<String,
-    // Object> requestData) {
-    // Integer jobId = (Integer) requestData.get("jobId");
-    // String status = (String) requestData.get("status");
-    // String paymentStatus = (String) requestData.get("paymentStatus");
-    // Jobs job = jobRepository.findById(jobId).orElseThrow(() -> new
-    // RuntimeException("Job not found"));
-    // job.setPayment_stat(paymentStatus);
-    // jobRepository.saveAndFlush(job);
-    // if (job.getPayment_stat().equals(paymentStatus)) {
-    // notificationService.addNotification(job.getFreeId().getFreeId(), "Your
-    // project has been completed and payment status is " + paymentStatus);
-    // }
-    //
-    // return ResponseEntity.ok("Job status updated successfully!");
-    // }
-
-    // @PostMapping("/update-job-status")
-    // public ResponseEntity<String> updateJobStatus(@RequestBody Map<String,
-    // Object> requestData) {
-    // Integer jobId = (Integer) requestData.get("jobId");
-    // String status = (String) requestData.get("status");
-    // String paymentStatus = (String) requestData.get("paymentStatus");
-    // Jobs job = jobRepository.findById(jobId).orElseThrow(() -> new
-    // RuntimeException("Job not found"));
-    //
-    // System.out.println(job.getPayment_stat());
-    // if(status.equals("completed")) {
-    // job.setPayment_stat(paymentStatus);
-    // }
-    // System.out.println(job.getPayment_stat());
-    // notificationService.addNotification(job.getFreeId().getFreeId(), "One of your
-    // projects has been marked complete and payment status is " + paymentStatus);
-    // jobRepository.save(job);
-    //
-    // return ResponseEntity.ok("Job status updated successfully!");
-    // }
-
     @PostMapping("/update-job")
     public ResponseEntity<String> updateJob(@RequestBody Map<String, Object> requestData) {
         Integer jobId = (Integer) requestData.get("jobId");
         String progress = (String) requestData.get("progress");
         String paymentStatus = (String) requestData.get("paymentStatus");
-
         Jobs job = jobRepository.findById(jobId).orElseThrow(() -> new RuntimeException("Job not found"));
         String notif = "";
 
@@ -338,11 +267,8 @@ public class ClientController {
             }
             job.setPayment_stat(paymentStatus);
         }
-
         jobRepository.save(job);
-
         notificationService.addNotification(job.getFreeId().getFreeId(), notif);
-
         return ResponseEntity.ok("Job updated successfully!");
     }
 
@@ -353,13 +279,11 @@ public class ClientController {
             if (client == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("error", "Client not found"));
             }
-
             List<FreelancerJob> ongoingJobs = freelancerJobRepository.findByClientIdAndProgress(userId, "ongoing");
             for (FreelancerJob job : freelancerJobRepository.findByClientIdAndProgress(userId, "unverified")) {
                 ongoingJobs.add(job);
             }
             List<FreelancerJob> completedJobs = freelancerJobRepository.findByClientIdAndProgress(userId, "completed");
-
             Map<String, Object> response = new HashMap<>();
             response.put("client", client);
             response.put("ongoingJobs", ongoingJobs);
@@ -377,10 +301,9 @@ public class ClientController {
         Client client = clientService.findByClientId(clientId);
         client.setPassword(null);
 
-        return ResponseEntity.ok(client); // Returns JSON response
+        return ResponseEntity.ok(client);
     }
 
-    // Handle form submission for updating client details
     @PostMapping("/client/edit")
     public ResponseEntity<String> updateClient(@RequestBody Map<String, Object> requestBody) {
         String userId = (String) requestBody.get("userId");
@@ -392,20 +315,16 @@ public class ClientController {
         if (existingClient == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
         }
-
-        // Update the client fields
         existingClient.setCompEmail((String) requestBody.get("compEmail"));
         existingClient.setCompanyName((String) requestBody.get("companyName"));
         existingClient.setCompanyDescription((String) requestBody.get("companyDescription"));
         existingClient.setTypeOfProject((String) requestBody.get("typeOfProject"));
         existingClient.setRepName((String) requestBody.get("repName"));
         existingClient.setRepDesignation((String) requestBody.get("repDesignation"));
-
         String hashedPassword = BCrypt.hashpw(requestBody.get("password").toString(), BCrypt.gensalt());
         existingClient.setPassword(hashedPassword);
         existingClient.setResetToken(null);
         existingClient.setTokenExpiry(null);
-
         clientRepository.save(existingClient);
         return ResponseEntity.ok("Client updated successfully");
     }
@@ -414,8 +333,6 @@ public class ClientController {
     public ResponseEntity<String> verifyPassword(@RequestBody Map<String, String> payload) {
         String clientId = payload.get("clientId");
         String password = payload.get("password");
-
-        // Fetch client details
         Client client = clientRepository.findByClientId(clientId);
         String mail = client.getCompEmail();
         if (clientService.validateClient(mail, password)) {

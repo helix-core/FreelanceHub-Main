@@ -102,7 +102,7 @@ input[type="radio"]:checked + .radio-btn circle {
     fill: rgba(21, 201, 180, 0.3); 
 }
 
-/* Style for the label text */
+
 .option span {
     font-size: x-large;
     cursor: pointer;
@@ -155,7 +155,7 @@ input[type="radio"]:checked + .radio-btn circle {
 }
 
 
-/* Adjust the navbar for smaller screens */
+
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -181,7 +181,7 @@ input[type="radio"]:checked + .radio-btn circle {
     }
 }
 
-/* Adjust the container padding and layout for smaller screens */
+
 @media (max-width: 768px) {
     .container {
         padding: 20px;
@@ -201,7 +201,7 @@ input[type="radio"]:checked + .radio-btn circle {
     }
 }
 
-/* Adjust options layout for smaller screens */
+
 @media (max-width: 600px) {
     .options {
         flex-direction: column;
@@ -220,7 +220,7 @@ input[type="radio"]:checked + .radio-btn circle {
     }
 }
 
-/* Adjust the Create Account button for smaller screens */
+
 @media (max-width: 600px) {
     .create-account {
         width: 100%;
@@ -238,7 +238,7 @@ input[type="radio"]:checked + .radio-btn circle {
     }
 }
 
-/* Adjust radio button size and alignment on smaller screens */
+
 @media (max-width: 480px) {
     .radio-btn {
         width: 25px;

@@ -88,7 +88,6 @@ Chart.register(
   providers: [
     provideHttpClient(
       withFetch()
-      // withInterceptors([AuthInterceptor])
     ),
     ClientService,
     RoleService,

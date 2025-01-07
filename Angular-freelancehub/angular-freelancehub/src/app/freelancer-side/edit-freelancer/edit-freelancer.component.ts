@@ -122,12 +122,10 @@ userId: string | null = null;
   const password = control.get('password');
   const retypedPassword = control.get('retypePassword');
 
-  // If passwords don't match, return error object
+  
   if (password && retypedPassword && password.value !== retypedPassword.value) {
     return { passwordMismatch: true };
   }
-
-  // If passwords match, return null (no error)
   return null;
 };
 
@@ -135,11 +133,10 @@ userId: string | null = null;
     const input = event.target as HTMLInputElement;
   if (input.files && input.files.length > 0) {
     const file = input.files[0];
-    this.freelancerForm.patchValue({ profileImage: file }); // Update FormControl with the file
-    // this.freelancerForm.get('profileImage')?.setValue(file);
+    this.freelancerForm.patchValue({ profileImage: file }); 
     this.freelancerForm.get('profileImage')?.updateValueAndValidity();
 
-    // Preview the image
+
     const reader = new FileReader();
     reader.onload = () => {
       this.imagePreview = reader.result;
@@ -178,11 +175,11 @@ userId: string | null = null;
 
    addSkill(skill?: string): void {
     const input = document.getElementById('skills-input') as HTMLInputElement;
-    const skillToAdd = skill || input.value.trim(); // Use the provided skill or input value
+    const skillToAdd = skill || input.value.trim(); 
     if (skillToAdd) {
         this.skills.push(skillToAdd);
         this.freelancerForm.get('skills')?.setValue(this.skills.join(','));
-        if (!skill) input.value = ''; // Clear input field only when coming from the button click
+        if (!skill) input.value = ''; 
     }
 }
   updateFreelancer(): void {
@@ -195,34 +192,32 @@ userId: string | null = null;
 
       const formData = new FormData();
       
-    // Append the form fields to formData
+
     Object.keys(this.freelancerForm.value).forEach(key => {
       if (key !== 'profileImage' && key !=='resume' && key!=='freeId') {
         formData.append(key, this.freelancerForm.value[key]);
       }
     });
 
-    // Append the profile image file if it exists
+
     const profileImage = this.freelancerForm.get('profileImage')?.value;
       if (profileImage instanceof File) {
         formData.append('profileImage', profileImage);
       }
 
-      // Append resume file from the form control (not from input element)
+
       const resume = this.freelancerForm.get('resume')?.value;
       if (resume instanceof File) {
         formData.append('resume', resume);
       }
-      formData.append('freeId', this.userId);  // Append user ID
+      formData.append('freeId', this.userId);  
 
       this.freelancerService.updateFreelancer(formData).subscribe(
         () => {
           if (localStorage.getItem('userId')) {
-            // Redirect to profile page if userId is in localStorage
             this.router.navigate([`/profile/freelancer/${this.userId}`]);
             this.notificationService.showNotification('Profile edited successfully!', 'success');
           } else {
-            // Redirect to login page if userId is not in localStorage
             this.notificationService.showNotification('Password reset successfully! Please log in.', 'success', '/login');
           }
         },

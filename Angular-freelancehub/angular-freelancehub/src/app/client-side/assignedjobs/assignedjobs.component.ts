@@ -31,7 +31,7 @@ export class AssignedjobsComponent implements OnInit {
     this.fetchAssignedJobs();
   }
 
-  // Fetch ongoing and completed jobs
+ 
   fetchAssignedJobs() {
     const userId= localStorage.getItem('userId');
     if (!userId) {
@@ -61,7 +61,7 @@ export class AssignedjobsComponent implements OnInit {
     const paymentAmnt = job.salary * 0.7;
     this.selectedJob = job.jobDetails;
     this.selectedFreelancerId = job.freeId.freeId;
-    this.selectedBidAmount =  Math.round(paymentAmnt * 100) / 100; // Assuming 70% payment
+    this.selectedBidAmount =  Math.round(paymentAmnt * 100) / 100; 
     this.showPaymentModal = true;
   }
 
@@ -73,7 +73,7 @@ export class AssignedjobsComponent implements OnInit {
   }
 
   openPasswordModal(): void {
-    this.showPasswordModal = true; // Open the password modal
+    this.showPasswordModal = true;
     this.showPaymentModal=false;
   }
 
@@ -89,13 +89,12 @@ export class AssignedjobsComponent implements OnInit {
     this.selectedJob = job;
     this.selectedFreelancerId = job.freeId.freeId;
     this.selectedBidAmount =  Math.round(paymentAmnt * 100) / 100;
-    // Open the payment decision popup
     this.showPaymentDecisionPopup = true;
   }
   
-  // Handle "Pay Now" or "Pay Later"
+
   confirmPayment(isPayNow: boolean): void {
-    const clientId = localStorage.getItem('userId'); // Client's user ID
+    const clientId = localStorage.getItem('userId'); 
     if (!this.selectedJob.id || !this.selectedFreelancerId || !this.selectedBidAmount) {
       console.log('Missing details:', this.selectedJob.id, this.selectedFreelancerId, this.selectedBidAmount);
       return;
@@ -108,7 +107,7 @@ export class AssignedjobsComponent implements OnInit {
           .post(`${this.URL}/verify-password`, { clientId, password: this.password }, { responseType: 'text' })
           .subscribe(
             (response: any) => {
-          // Pay Now logic
+      
           
           if (balance < this.selectedBidAmount!) {
             this.notificationService.showNotification('Insufficient balance. Please add funds.', 'error');
@@ -118,11 +117,10 @@ export class AssignedjobsComponent implements OnInit {
               .makePayment(clientId!, this.selectedFreelancerId!, this.selectedBidAmount!)
               .subscribe(
                 (response: any) => {
-                  this.updateJob('completed', 'Paid'); // Update job to completed and payment status to 'Paid'
+                  this.updateJob('completed', 'Paid'); 
                   this.notificationService.showNotification('Project verified successfully! Payment Closed!', 'success');
                   this.ratingService.openRatingPopup(this.selectedJob!);
                   this.closePaymentModal();
-                   // Open the rating popup after payment
                 },
                 (error) => {
                   this.notificationService.showNotification('Error processing payment.', 'error');
@@ -134,12 +132,9 @@ export class AssignedjobsComponent implements OnInit {
           this.notificationService.showNotification('Incorrect password.', 'error');
         });
       } else {
-          // Pay Later logic
-          this.updateJob('completed', 'Unpaid'); // Update job to completed and payment status to 'Unpaid'
+          this.updateJob('completed', 'Unpaid'); 
           this.notificationService.showNotification('Project verified successfully! Payment Pending!', 'success');
-          // this.ratingService.openRatingPopup(this.selectedJob!);
           this.closePaymentModal();
-           // Open the rating popup after decision
         }
       },
       (error) => {
@@ -149,7 +144,7 @@ export class AssignedjobsComponent implements OnInit {
   );
   }
   
-  // Unified job update method
+
   updateJob(progress: string, paymentStatus: string): void {
     const requestData = {
       jobId: this.selectedJob.id,
@@ -157,10 +152,10 @@ export class AssignedjobsComponent implements OnInit {
       paymentStatus: paymentStatus,
     };
   
-    // Call backend to update the job
+ 
     this.http.post(`${this.URL}/update-job`, requestData, { responseType: 'text' }).subscribe(
       (response) => {
-        this.fetchAssignedJobs(); // Refresh the job list
+        this.fetchAssignedJobs(); 
       },
       (error) => {
         this.notificationService.showNotification('Error updating job.', 'error');
@@ -177,7 +172,7 @@ export class AssignedjobsComponent implements OnInit {
     this.showPasswordModal=false;
   }
 
-  // Getter for payment decision popup visibility
+
   get showPaymentDecision(): boolean {
     return this.showPaymentDecisionPopup;
   }
@@ -186,7 +181,7 @@ export class AssignedjobsComponent implements OnInit {
     this.showPaymentDecisionPopup = false;
   }
 
-  //rating
+
   get showRatingPopup(): boolean {
     return this.ratingService.showRatingPopup;
   }
@@ -196,15 +191,15 @@ export class AssignedjobsComponent implements OnInit {
   }
 
   rateFreelancer(star: number): void {
-    this.ratingService.rateFreelancer(star); // Use the service method
+    this.ratingService.rateFreelancer(star); 
   }
 
   submitRating(): void {
-    this.ratingService.submitRating(); // Use the service method to submit the rating
+    this.ratingService.submitRating();
   }
 
   closePopup(): void {
-    this.ratingService.closePopup(); // Use the service method to close the popup
+    this.ratingService.closePopup(); 
   }
 
 
